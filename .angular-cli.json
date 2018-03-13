@@ -18,10 +18,8 @@
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
-      "styles": [
-        "styles.css"
-      ],
-      "scripts": [],
+      "styles": ["../node_modules/semantic-ui/dist/semantic.min.css"],
+      "scripts": [ "../node_modules/jquery/dist/jquery.min.js" ,"../node_modules/semantic-ui/dist/semantic.min.js"],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
