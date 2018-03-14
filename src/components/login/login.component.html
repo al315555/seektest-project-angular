@@ -1,0 +1,42 @@
+
+<div class="ui middle aligned centered grid">
+
+  <div class="ui column">
+    <h1 class="ui image header">
+      <img src="../../assets/images/logo_seekTest.png" class="image">
+      <div class="content">
+        Autentificación <br> SeekTest
+      </div>
+    </h1>
+
+
+    <h1 *ngIf="authService.user | async">Autenticado con el correo  {{ (authService.user | async)?.email }}!</h1>
+
+    <div class="ui raised segment " *ngIf="!(authService.user | async)">
+      <div class="ui large form">
+        <div class="field">
+          <label>Usuario</label>
+          <input type="email" [(ngModel)]="email" placeholder="email">
+        </div>
+        <div class="field">
+          <label>Contraseña</label>
+          <input type="password" [(ngModel)]="password" placeholder="password">
+        </div>
+        <button class="ui fluid submit button" (click)="login()" [disabled]="!email || !password">
+          Autentificarse
+        </button>
+        <br/>
+        <button class="ui fluid button" (click)="signup()" [disabled]="!email || !password">
+          Registrarse y autentificarse
+        </button>
+        <div class="ui error message" *ngIf="errorHappened">
+          <div class="header">Action Forbidden</div>
+          <p>You can only sign up for an account once with a given e-mail address.</p>
+        </div>
+      </div>
+    </div>
+    <button class="ui secondary button" (click)="logout()" *ngIf="authService.user | async">
+      Log out
+    </button>
+  </div>
+</div>
