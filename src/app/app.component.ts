@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LoginSpinnerComponent } from '../components/login-spinner/login-spinner.component';
 
 @Component({
   selector: 'app-root',
