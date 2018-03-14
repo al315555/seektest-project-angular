@@ -7,6 +7,9 @@ import { LoginSpinnerComponent } from '../components/login-spinner/login-spinner
 import { LoginFormComponent } from '../components/login-form/login-form.component';
 
 
+import { environment } from '../environments/environment';
+
+
 @NgModule({
   declarations: [
     AppComponent,
