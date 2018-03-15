@@ -25,6 +25,6 @@ import {FormsModule} from '@angular/forms';
     AngularFireAuthModule , FormsModule
   ],
   providers: [AuthService],
-  bootstrap: [AppComponent, LoginComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

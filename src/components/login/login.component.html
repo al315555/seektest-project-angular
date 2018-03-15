@@ -1,5 +1,22 @@
+<div class="ui attached stackable menu" *ngIf="authService.user | async">
+  <div class="left item">
+    <img src="../../assets/images/logo_seekTest.png" class="image">
+  </div>
+  <div class="right item">
+    <div class="ui label">
+      <button class="ui button">
+          <i class="user icon"></i>
+        {{ (authService.user | async)?.email }}
 
-<div class="ui middle aligned centered grid">
+      <div class="ui button" (click)="logout()" *ngIf="authService.user | async">
+        <i class="sign out icon"></i>
+      </div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="ui middle aligned centered grid" *ngIf="!(authService.user | async)">
 
   <div class="ui column">
     <h1 class="ui image header">
@@ -9,10 +26,7 @@
       </div>
     </h1>
 
-
-    <h1 *ngIf="authService.user | async">Autenticado con el correo  {{ (authService.user | async)?.email }}!</h1>
-
-    <div class="ui raised segment " *ngIf="!(authService.user | async)">
+    <div class="ui raised segment " >
       <div class="ui large form">
         <div class="field">
           <label>Usuario</label>
@@ -29,14 +43,12 @@
         <button class="ui fluid button" (click)="signup()" [disabled]="!email || !password">
           Registrarse y autentificarse
         </button>
-        <div class="ui error message" *ngIf="errorHappened">
+        <div class="ui error message" *ngIf="errorHappened | async">
           <div class="header">Action Forbidden</div>
           <p>You can only sign up for an account once with a given e-mail address.</p>
         </div>
       </div>
     </div>
-    <button class="ui secondary button" (click)="logout()" *ngIf="authService.user | async">
-      Log out
-    </button>
+
   </div>
 </div>
