@@ -1,19 +1,30 @@
-<div class="ui attached stackable menu" *ngIf="authService.user | async">
+<div class="ui stackable attached menu" *ngIf="authService.user | async">
   <div class="left item">
     <img src="../../assets/images/logo_seekTest.png" class="image">
+    <h2>Aplicación SeekTest</h2>
   </div>
   <div class="right item">
-    <div class="ui label">
-      <button class="ui button">
+
+      <button class="ui icon button">
           <i class="user icon"></i>
         {{ (authService.user | async)?.email }}
-
-      <div class="ui button" (click)="logout()" *ngIf="authService.user | async">
-        <i class="sign out icon"></i>
-      </div>
       </button>
-    </div>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button class="ui icon button" (click)="logout()" *ngIf="authService.user | async">
+        <i class="sign out icon"></i>
+      </button>
   </div>
+</div>
+
+<div class="ui raised very padded text container segment" *ngIf="authService.user | async">
+  <h2 class="ui header">Experimentos publicados</h2>
+  <p></p><p></p>
+  <p></p><p></p>
+  <p></p><p></p>
+</div>
+
+<div class="ui error message" *ngIf="(authService.error)">
+  <div class="ui header">Error en la autentificación, pruebe de nuevo.</div>
 </div>
 
 <div class="ui middle aligned centered grid" *ngIf="!(authService.user | async)">
@@ -30,11 +41,11 @@
       <div class="ui large form">
         <div class="field">
           <label>Usuario</label>
-          <input type="email" [(ngModel)]="email" placeholder="email">
+          <input type="email" [(ngModel)]="email" placeholder="dirección de correo">
         </div>
         <div class="field">
           <label>Contraseña</label>
-          <input type="password" [(ngModel)]="password" placeholder="password">
+          <input type="password" [(ngModel)]="password" placeholder="contraseña">
         </div>
         <button class="ui fluid submit button" (click)="login()" [disabled]="!email || !password">
           Autentificarse

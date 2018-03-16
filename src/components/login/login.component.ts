@@ -15,29 +15,12 @@ export class LoginComponent {
   constructor(public authService: AuthService) {}
 
   signup() {
-    let result: string;
-    result = this.authService.signup(this.email, this.password);
-    if ( result === 'OK' ) {
-      this.errorHappened = false;
-      this.logged = true;
-    } else {
-      this.errorHappened = true;
-      this.logged = false;
-    }
+    this.authService.signup(this.email, this.password);
     this.email = this.password = '';
   }
 
   login() {
-    let result: string;
-    result =
-      this.authService.login(this.email, this.password);
-    if ( result === 'OK' ) {
-      this.errorHappened = false;
-      this.logged = true;
-    } else {
-      this.errorHappened = true;
-      this.logged = false;
-    }
+    this.authService.login(this.email, this.password);
     this.email = this.password = '';
   }
 

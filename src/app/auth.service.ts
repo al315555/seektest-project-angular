@@ -8,39 +8,39 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class AuthService {
   user: Observable<firebase.User>;
+  error: boolean;
 
   constructor(private firebaseAuth: AngularFireAuth) {
     this.user = firebaseAuth.authState;
+    this.error = false;
   }
 
-  signup(email: string, password: string): string {
+  signup(email: string, password: string) {
     this.firebaseAuth
       .auth
       .createUserWithEmailAndPassword(email, password)
       .then(value => {
         console.log('Success!', value);
-        return 'OK';
+        this.error = false;
       })
       .catch(err => {
-        console.log('Something went wrong:',err.message);
-        return 'KO';
+        console.log('Something went wrong:', err.message);
+        this.error = true;
       });
-    return 'KO';
   }
 
-  login(email: string, password: string): string {
+  login(email: string, password: string) {
     this.firebaseAuth
       .auth
       .signInWithEmailAndPassword(email, password)
       .then(value => {
-        console.log('Nice, it worked!');
-        return 'OK';
+        this.error = false;
+        console.log('Nice, it worked!', value.message);
       })
       .catch(err => {
-        console.log('Something went wrong:',err.message);
-        return 'KO';
+        this.error = true;
+        console.log('Something went wrong:', err.message);
       });
-    return 'KO';
   }
 
   logout() {
