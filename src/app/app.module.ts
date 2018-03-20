@@ -12,8 +12,9 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { AuthService } from './auth.service';
 import { LoginComponent } from '../components/login/login.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { UserFormComponent } from './ui/user-form/user-form.component';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { UserFormComponent } from './ui/user-form/user-form.component';
   ],
   imports: [
     BrowserModule, AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule , FormsModule
+    AngularFireAuthModule , FormsModule, 
+    ReactiveFormsModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

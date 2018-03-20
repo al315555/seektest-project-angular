@@ -17,8 +17,6 @@ export class UserFormComponent implements OnInit {
 
   constructor(public fb: FormBuilder, public auth: AuthService) { }
 
-  
-
   ngOnInit() {
 
     this.userState = this.auth.user.map(user => {
