@@ -45,7 +45,7 @@ export class UserFormComponent implements OnInit {
 
     // Second Step
     this.detailForm = this.fb.group({
-      'catchPhrase': ['', [ Validators.required ] ]
+      'catchPhrase': ['', [ ] ]
     });
     
   }

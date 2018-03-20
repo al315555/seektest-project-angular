@@ -29,8 +29,14 @@ import { UserFormComponent } from './ui/user-form/user-form.component';
     UserFormComponent
   ],
   imports: [
-    BrowserModule, AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule , FormsModule, 
+    BrowserModule, 
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule , 
+    FormsModule, 
+    HttpModule,
+    FormsModule,
+    AppRoutingModule,
+    CoreModule,
     ReactiveFormsModule
   ],
   providers: [AuthService],
