@@ -13,12 +13,14 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthService } from './auth.service';
 import { LoginComponent } from '../components/login/login.component';
 import {FormsModule} from '@angular/forms';
+import { UserFormComponent } from './ui/user-form/user-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginSpinnerComponent,
-    LoginComponent
+    LoginComponent,
+    UserFormComponent
   ],
   imports: [
     BrowserModule, AngularFireModule.initializeApp(environment.firebase),
