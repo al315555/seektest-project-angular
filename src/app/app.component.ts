@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { LoginSpinnerComponent } from '../components/login-spinner/login-spinner.component';
+import { AuthService } from './core/auth.service';
+import { NotifyService } from './core/notify.service';
 
 @Component({
   selector: 'app-root',
