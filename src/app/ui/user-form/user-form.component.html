@@ -11,14 +11,6 @@
         </div>
         </div>
         <div class="field">
-            <label for="name">Nombre</label>
-            <input type="test" class="input" formControlName="name" (ngSubmit)="setName(user)" required autocomplete="off">
-        </div>
-        <div class="field">
-            <label for="name">Apellidos</label>
-            <input type="test" class="input" formControlName="surname" (ngSubmit)="setSurname(user)" required autocomplete="off">
-        </div>
-        <div class="field">
           <label>Contraseña</label>
           <input type="password" placeholder="contraseña" class="input" [class.is-danger]="password.invalid && password.touched"
           formControlName="password" required>
@@ -41,7 +33,7 @@
       <div class="ui raised segment " >
           <div class="ui large form">
     <h3>Datos personales</h3>
-
+    
     <label for="name">Nombre</label>
     <input type="test" class="input" formControlName="name" required autocomplete="off">
     <button type="submit" class="button is-primary" [disabled]="!detailForm.valid">Enviar</button>

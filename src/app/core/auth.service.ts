@@ -58,8 +58,6 @@ export class AuthService {
     return this.afs.doc(`users/${user.uid}`).update(data)
   }
 
-
-
   // If error, console log and notify user
   private handleError(error) {
     console.error(error)
@@ -75,8 +73,6 @@ export class AuthService {
       uid: user.uid,
       email: user.email || null,
       photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz',
-      name: user.name,
-      surname: user.name
     }
     return userRef.set(data)
 

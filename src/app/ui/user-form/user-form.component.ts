@@ -39,12 +39,12 @@ export class UserFormComponent implements OnInit {
         ]
       ],
       'region': ['', []],
-      'name': ['', [ Validators.required] ],
-      'surname': ['', [ Validators.required ] ],
     });
 
     // Second Step
     this.detailForm = this.fb.group({
+      'name': ['', [  ]],
+      'surname': ['', [ ] ],
       'age': ['', [ ] ],
       'genero': ['', [ ] ],
       'alergias': ['', [ ] ],
@@ -57,8 +57,8 @@ export class UserFormComponent implements OnInit {
   get email() { return this.signupForm.get('email') }
   get password() { return this.signupForm.get('password') }
 
-  get name() { return this.signupForm.get('name') }
-  get surname() { return this.signupForm.get('surname') }
+  get name() { return this.detailForm.get('name') }
+  get surname() { return this.detailForm.get('surn') }
   get age() { return this.detailForm.get('age') }
   get genero() { return this.detailForm.get('genero') }
   get alergias() { return this.detailForm.get('alergias') }
@@ -71,6 +71,9 @@ export class UserFormComponent implements OnInit {
 
   setName(user) {
     return this.auth.updateUser(user, { name:  this.name.value, surname:  this.surname.value } )
+  }
+  setSurname(user) {
+    return this.auth.updateUser(user, { surname:  this.surname.value } )
   }
   setAge(user) {
     return this.auth.updateUser(user, { age:  this.age.value })
