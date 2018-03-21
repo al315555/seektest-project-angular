@@ -12,7 +12,9 @@ interface User {
   uid: string;
   email: string;
   photoURL: string;
-  catchPhrase?: string;
+  fullName?: string;
+  location?: string;
+  age?: string;
 }
 
 
@@ -68,7 +70,7 @@ export class AuthService {
     const data: User = {
       uid: user.uid,
       email: user.email || null,
-      photoURL: 'https://goo.gl/Fz9nrQ'
+      photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz'
     }
 
     return userRef.set(data)

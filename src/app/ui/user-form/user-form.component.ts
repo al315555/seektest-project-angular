@@ -21,7 +21,7 @@ export class UserFormComponent implements OnInit {
 
     this.userState = this.auth.user.map(user => {
       if (user) {
-        return user.catchPhrase ? 'complete' : 'incomplete';
+        return user.fullName ? 'complete' : 'incomplete';
       }
     })
 
@@ -45,7 +45,8 @@ export class UserFormComponent implements OnInit {
 
     // Second Step
     this.detailForm = this.fb.group({
-      'catchPhrase': ['', [ ] ]
+      'fullName': ['', [ ] ],
+      'age': ['', [ ] ],
     });
     
   }
@@ -54,7 +55,7 @@ export class UserFormComponent implements OnInit {
   get email() { return this.signupForm.get('email') }
   get password() { return this.signupForm.get('password') }
 
-  get catchPhrase() { return this.detailForm.get('catchPhrase') }
+  get fullName() { return this.detailForm.get('fullName') }
 
 
   // Step 1
@@ -64,6 +65,6 @@ export class UserFormComponent implements OnInit {
 
   // Step 2
   setCatchPhrase(user) {
-    return this.auth.updateUser(user, { catchPhrase:  this.catchPhrase.value })
+    return this.auth.updateUser(user, { catchPhrase:  this.fullName.value })
   }
 }
