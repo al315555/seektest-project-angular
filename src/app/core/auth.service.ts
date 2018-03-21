@@ -14,7 +14,6 @@ interface Student {
   photoURL: string;
   name?: string;
   surname?: string;
-  location?: string;
   age?: string;
   genero?: string;
   alergias?: string;

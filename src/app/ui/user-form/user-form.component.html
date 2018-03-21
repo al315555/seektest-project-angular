@@ -11,8 +11,12 @@
         </div>
         </div>
         <div class="field">
-            <label for="fullName">Nombre</label>
-            <input type="test" class="input" formControlName="fullName" required autocomplete="off">
+            <label for="name">Nombre</label>
+            <input type="test" class="input" formControlName="name" (ngSubmit)="setName(user)" required autocomplete="off">
+        </div>
+        <div class="field">
+            <label for="name">Apellidos</label>
+            <input type="test" class="input" formControlName="surname" (ngSubmit)="setSurname(user)" required autocomplete="off">
         </div>
         <div class="field">
           <label>Contraseña</label>
@@ -20,7 +24,7 @@
           formControlName="password" required>
         </div>
         
-        <button type="submit" class="button is-primary" (click)="login()" [disabled]="!signupForm.valid">
+        <button type="submit" class="button is-primary" [disabled]="!signupForm.valid">
           Registrarse
         </button>
         <br/>
@@ -33,17 +37,17 @@
   </div>
   </form>
       
-  <form [formGroup]="detailForm" *ngIf="user.uid && !user.fullName" (ngSubmit)="setfullName(user)">
+  <!--<form [formGroup]="detailForm" *ngIf="user.uid && !user.age" (ngSubmit)="setName(user)">
       <div class="ui raised segment " >
           <div class="ui large form">
     <h3>Datos personales</h3>
 
-    <label for="fullName">Nombre</label>
-    <input type="test" class="input" formControlName="fullName" required autocomplete="off">
+    <label for="name">Nombre</label>
+    <input type="test" class="input" formControlName="name" required autocomplete="off">
     <button type="submit" class="button is-primary" [disabled]="!detailForm.valid">Enviar</button>
     </div>
     </div>
-  </form>
+  </form>-->
 </ng-container>
     
     

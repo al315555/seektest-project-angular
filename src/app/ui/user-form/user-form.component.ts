@@ -21,7 +21,7 @@ export class UserFormComponent implements OnInit {
 
     this.userState = this.auth.user.map(user => {
       if (user) {
-        return user.fullName ? 'complete' : 'incomplete';
+        return user.age ? 'complete' : 'incomplete';
       }
     })
 
@@ -38,15 +38,18 @@ export class UserFormComponent implements OnInit {
         Validators.maxLength(25)
         ]
       ],
-      'region': ['', [
-        ]
-      ],
+      'region': ['', []],
+      'name': ['', [ Validators.required] ],
+      'surname': ['', [ Validators.required ] ],
     });
 
     // Second Step
     this.detailForm = this.fb.group({
-      'fullName': ['', [ ] ],
       'age': ['', [ ] ],
+      'genero': ['', [ ] ],
+      'alergias': ['', [ ] ],
+      'observacionesMedicas': ['', [ ] ],
+      'infoAdicional': ['', [ ] ],
     });
     
   }
@@ -54,13 +57,34 @@ export class UserFormComponent implements OnInit {
   get email() { return this.signupForm.get('email') }
   get password() { return this.signupForm.get('password') }
 
-  get fullName() { return this.detailForm.get('fullName') }
+  get name() { return this.signupForm.get('name') }
+  get surname() { return this.signupForm.get('surname') }
+  get age() { return this.detailForm.get('age') }
+  get genero() { return this.detailForm.get('genero') }
+  get alergias() { return this.detailForm.get('alergias') }
+  get observacionesMedicas() { return this.detailForm.get('observacionesMedicas') }
+  get infoAdicional() { return this.detailForm.get('infoAdicional') }
 
   signup() {
     return this.auth.emailSignUp(this.email.value, this.password.value)
   }
 
-  setfullName(user) {
-    return this.auth.updateUser(user, { fullName:  this.fullName.value })
+  setName(user) {
+    return this.auth.updateUser(user, { name:  this.name.value, surname:  this.surname.value } )
+  }
+  setAge(user) {
+    return this.auth.updateUser(user, { age:  this.age.value })
+  }
+  setGenero(user) {
+    return this.auth.updateUser(user, { genero:  this.genero.value })
+  }
+  setAlergias(user) {
+    return this.auth.updateUser(user, { alergias:  this.alergias.value })
+  }
+  setObservacionesMedicas(user) {
+    return this.auth.updateUser(user, { observacionesMedicas:  this.observacionesMedicas.value })
+  }
+  setInfoAdicional(user) {
+    return this.auth.updateUser(user, { infoAdicional:  this.infoAdicional.value })
   }
 }
