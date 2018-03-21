@@ -10,10 +10,12 @@ export class FunctionsService {
   user: Observable<firebase.User>;
   error: boolean;
   showMainPage: boolean;
+  isLogged: boolean;
 
   constructor() {
     this.error = false;
     this.showMainPage = true;
+    this.isLogged = false;
   }
 
   changeShowMainPageToTrue() {
@@ -22,5 +24,13 @@ export class FunctionsService {
 
   changeShowMainPageToFalse() {
     this.showMainPage = false;
+  }
+
+  changeToLogged() {
+    this.isLogged = true;
+  }
+
+  changeToNotLogged() {
+    this.isLogged = false;
   }
 }
