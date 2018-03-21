@@ -4,13 +4,14 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 
 import { Observable } from 'rxjs/Observable';
+import {FunctionsService} from './functions.service';
 
 @Injectable()
 export class AuthService {
   user: Observable<firebase.User>;
   error: boolean;
 
-  constructor(private firebaseAuth: AngularFireAuth) {
+  constructor(private firebaseAuth: AngularFireAuth, public functions: FunctionsService) {
     this.user = firebaseAuth.authState;
     this.error = false;
   }
@@ -47,6 +48,8 @@ export class AuthService {
     this.firebaseAuth
       .auth
       .signOut();
+    this.functions.changeShowMainPageToTrue();
+    this.functions.changeToNotLogged();
   }
 
 }

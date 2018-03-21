@@ -71,9 +71,11 @@ export class UserFormComponent implements OnInit {
   }
 
   setUserInfo(user) {
-    return this.auth.updateUser(user, { name:  this.name.value, surname:  this.surname.value,
+    this.auth.updateUser(user, { name:  this.name.value, surname:  this.surname.value,
       age:  this.age.value, alergias:  this.alergias.value, sexo: this.sexo.value,
       observacionesMedicas:  this.observacionesMedicas.value, infoAdicional:  this.infoAdicional.value } );
+    this.functions.changeShowMainPageToFalse();
+    this.functions.changeToLogged();
   }
   setName(user) {
     return this.auth.updateUser(user, { name:  this.name.value} );
