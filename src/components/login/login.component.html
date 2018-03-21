@@ -25,7 +25,7 @@
 </div>
 
 
-<!--
+
 <div class="ui error message" *ngIf="(authService.error)">
   <div class="ui header">Error en la autentificación, pruebe de nuevo.</div>
 </div>
@@ -54,9 +54,14 @@
           Autentificarse
         </button>
         <br/>
+        <button class="ui button" (click)="goBackLogin()">
+          Atrás
+        </button>
+        <!--
         <button class="ui fluid button" (click)="signup()" [disabled]="!email || !password">
           Registrarse y autentificarse
         </button>
+        -->
         <div class="ui error message" *ngIf="errorHappened | async">
           <div class="header">Action Forbidden</div>
           <p>You can only sign up for an account once with a given e-mail address.</p>
@@ -66,4 +71,4 @@
 
   </div>
 </div>
--->
+

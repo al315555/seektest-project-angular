@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -17,8 +17,9 @@ import { AuthService } from './auth.service';
 import { LoginComponent } from '../components/login/login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { UserFormComponent } from './ui/user-form/user-form.component';
+import {FunctionsService} from './functions.service';
 
-//import { AngularFirestoreModule } from 'angularfire2/firestore';
+// import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 
 @NgModule({
@@ -29,17 +30,17 @@ import { UserFormComponent } from './ui/user-form/user-form.component';
     UserFormComponent
   ],
   imports: [
-    BrowserModule, 
+    BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule , 
-    FormsModule, 
+    AngularFireAuthModule ,
+    FormsModule,
     HttpModule,
     FormsModule,
     AppRoutingModule,
     CoreModule,
     ReactiveFormsModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, FunctionsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

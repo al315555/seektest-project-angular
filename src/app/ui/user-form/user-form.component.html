@@ -6,7 +6,7 @@
         <h3>Registro Usuario</h3>
         <div class="field">
           <label>Correo electronico</label>
-          <input type="email" class="input" placeholder="dirección de correo" [class.is-danger]="email.invalid && email.dirty"
+          <input type="email" class="ui input" placeholder="dirección de correo" [class.is-danger]="email.invalid && email.dirty"
           formControlName="email" required autocomplete="off">
           <div *ngIf="email.invalid && email.dirty" class="notification is-danger">
             Correo no válido.
@@ -14,28 +14,34 @@
         </div>
         <div class="field">
           <label>Contraseña</label>
-          <input type="password" placeholder="contraseña" class="input" [class.is-danger]="password.invalid && password.touched"
+          <input type="password" placeholder="contraseña" class="ui input" [class.is-danger]="password.invalid && password.touched"
           formControlName="password" required>
+          <div *ngIf="password.invalid && password.dirty" class="notification is-danger">
+            La contraseña debe tener entre 6 - 24 caracteres y contener una letra y número.
+          </div>
         </div>
-        
+
         <button type="submit" class="ui button" [disabled]="!signupForm.valid">
           Registrarse
+        </button>
+        <button class="ui button" (click)="goBackRegister()">
+          Atrás
         </button>
         <br/>
         <div class="ui error message" *ngIf="errorHappened | async">
         <div *ngIf="password.invalid && password.touched" class="notification is-danger">
-          La contraseña debe tener entre 6 y 24 caracteres 
+          La contraseña debe tener entre 6 y 24 caracteres
         </div>
       </div>
     </div>
   </div>
   </form>
-      
+
   <form [formGroup]="detailForm" *ngIf="user.uid && !user.age" (ngSubmit)="setUserInfo(user)">
       <div class="ui raised segment " >
           <div class="ui large form">
           <h3>Datos personales</h3>
-          
+
           <div class="field">
               <label>Nombre</label>
               <input type="text" class="input" formControlName="name" required autocomplete="off">

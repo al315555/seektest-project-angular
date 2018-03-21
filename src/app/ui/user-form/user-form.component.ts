@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../core/auth.service';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
+import {FunctionsService} from '../../functions.service';
 
 @Component({
-  selector: 'user-form',
+  selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss']
 })
@@ -15,7 +16,7 @@ export class UserFormComponent implements OnInit {
 
   userState;
 
-  constructor(public fb: FormBuilder, public auth: AuthService) { }
+  constructor(public fb: FormBuilder, public auth: AuthService, public functions: FunctionsService) { }
 
   ngOnInit() {
 
@@ -23,7 +24,7 @@ export class UserFormComponent implements OnInit {
       if (user) {
         return user.age ? 'complete' : 'incomplete';
       }
-    })
+    });
 
     // First Step
     this.signupForm = this.fb.group({
@@ -51,46 +52,50 @@ export class UserFormComponent implements OnInit {
       'observacionesMedicas': ['', [ ] ],
       'infoAdicional': ['', [ ] ],
     });
-    
+
   }
 
-  get email() { return this.signupForm.get('email') }
-  get password() { return this.signupForm.get('password') }
+  get email() { return this.signupForm.get('email'); }
+  get password() { return this.signupForm.get('password'); }
 
-  get name() { return this.detailForm.get('name') }
-  get surname() { return this.detailForm.get('surname') }
-  get age() { return this.detailForm.get('age') }
-  get sexo() { return this.detailForm.get('sexo') }
-  get alergias() { return this.detailForm.get('alergias') }
-  get observacionesMedicas() { return this.detailForm.get('observacionesMedicas') }
-  get infoAdicional() { return this.detailForm.get('infoAdicional') }
+  get name() { return this.detailForm.get('name'); }
+  get surname() { return this.detailForm.get('surname'); }
+  get age() { return this.detailForm.get('age'); }
+  get sexo() { return this.detailForm.get('sexo'); }
+  get alergias() { return this.detailForm.get('alergias'); }
+  get observacionesMedicas() { return this.detailForm.get('observacionesMedicas'); }
+  get infoAdicional() { return this.detailForm.get('infoAdicional'); }
 
   signup() {
-    return this.auth.emailSignUp(this.email.value, this.password.value)
+    return this.auth.emailSignUp(this.email.value, this.password.value);
   }
 
-  setUserInfo(user){
+  setUserInfo(user) {
     return this.auth.updateUser(user, { name:  this.name.value, surname:  this.surname.value,
       age:  this.age.value, alergias:  this.alergias.value, sexo: this.sexo.value,
-      observacionesMedicas:  this.observacionesMedicas.value, infoAdicional:  this.infoAdicional.value } ) 
+      observacionesMedicas:  this.observacionesMedicas.value, infoAdicional:  this.infoAdicional.value } );
   }
   setName(user) {
-    return this.auth.updateUser(user, { name:  this.name.value} )
+    return this.auth.updateUser(user, { name:  this.name.value} );
   }
   setSurname(user) {
-    return this.auth.updateUser(user, { surname:  this.surname.value } )
+    return this.auth.updateUser(user, { surname:  this.surname.value } );
   }
   setAge(user) {
-    return this.auth.updateUser(user, { age:  this.age.value })
+    return this.auth.updateUser(user, { age:  this.age.value });
   }
- 
+
   setAlergias(user) {
-    return this.auth.updateUser(user, { alergias:  this.alergias.value })
+    return this.auth.updateUser(user, { alergias:  this.alergias.value });
   }
   setObservacionesMedicas(user) {
-    return this.auth.updateUser(user, { observacionesMedicas:  this.observacionesMedicas.value })
+    return this.auth.updateUser(user, { observacionesMedicas:  this.observacionesMedicas.value });
   }
   setInfoAdicional(user) {
-    return this.auth.updateUser(user, { infoAdicional:  this.infoAdicional.value })
+    return this.auth.updateUser(user, { infoAdicional:  this.infoAdicional.value });
+  }
+
+  goBackRegister() {
+    this.functions.changeShowMainPageToTrue();
   }
 }

@@ -1,3 +1,17 @@
+<div *ngIf="functionsService.showMainPage">
+  <div>
+    <img src="../../assets/images/Logofinal.png" class="image" style="margin-top: 100px; margin-bottom: 60px">
+  </div>
+  <div style="margin-left: 40%; margin-right: 40%">
+    <button class="fluid huge ui inverted blue button"style="margin-bottom: 20px" (click)="clickOnLogin()" >
+      Iniciar Sesión
+    </button>
+    <br>
+    <button class="fluid huge ui inverted blue button" (click)="clickOnRegister()" >
+      Regístrate
+    </button>
+  </div>
+</div>
 
-<user-form></user-form>
-<app-login></app-login>
+<user-form *ngIf="register && !functionsService.showMainPage"></user-form>
+<app-login *ngIf="login && !functionsService.showMainPage"></app-login>

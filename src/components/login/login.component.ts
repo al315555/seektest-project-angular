@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../app/auth.service';
+import {FunctionsService} from '../../app/functions.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ export class LoginComponent {
   errorHappened: boolean;
   logged: boolean;
 
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService, public functions: FunctionsService) {}
 
   signup() {
     this.authService.signup(this.email, this.password);
@@ -26,5 +27,9 @@ export class LoginComponent {
 
   logout() {
     this.authService.logout();
+  }
+
+  goBackLogin() {
+    this.functions.changeShowMainPageToTrue();
   }
 }
