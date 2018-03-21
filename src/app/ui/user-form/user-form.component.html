@@ -1,6 +1,6 @@
 <ng-container *ngIf="(auth.user | async) || {} as user" class="ui column">
   <form [formGroup]="signupForm" *ngIf="!user.uid" (ngSubmit)="signup()">
-    <div class="ui raised segment " >
+    <div class="ui raised segment" >
       <div class="ui large form">
         <div class="field">
           <label>Correo electronico</label>
@@ -16,7 +16,7 @@
           formControlName="password" required>
         </div>
         
-        <button type="submit" class="button is-primary" [disabled]="!signupForm.valid">
+        <button type="submit" class="ui button" [disabled]="!signupForm.valid">
           Registrarse
         </button>
         <br/>
@@ -32,29 +32,62 @@
   <form [formGroup]="detailForm" *ngIf="user.uid && !user.age" (ngSubmit)="setUserInfo(user)">
       <div class="ui raised segment " >
           <div class="ui large form">
-    <h3>Datos personales</h3>
-    
-    <label for="name">Nombre</label>
-    <input type="test" class="input" formControlName="name" required autocomplete="off">
-    <label for="name">Surname</label>
-    <input type="test" class="input" formControlName="surname" required autocomplete="off">
-    <label for="name">Edad</label>
-    <input type="test" class="input" formControlName="age" required autocomplete="off">
-    <label for="name">Sexo</label>
-    <input type="test" class="input" formControlName="sexo" required autocomplete="off">
-    <label for="name">Alergias</label>
-    <input type="test" class="input" formControlName="alergias" required autocomplete="off">
-    <label for="name">Observaciones Médicas</label>
-    <input type="test" class="input" formControlName="observacionesMedicas" required autocomplete="off">
-    <label for="name">Información Adicional</label>
-    <input type="test" class="input" formControlName="infoAdicional" required autocomplete="off">
-    <button type="submit" class="button is-primary" [disabled]="!detailForm.valid">Enviar</button>
+          <h3>Datos personales</h3>
+          
+          <div class="field">
+              <label>Nombre</label>
+              <input type="text" class="input" formControlName="name" required autocomplete="off">
+          </div>
+          <div class="field">
+              <label>Surname</label>
+              <input type="text" class="input" formControlName="surname" required autocomplete="off">
+          </div>
+          <div class="field">
+              <label>Edad</label>
+              <input type="text" class="input" formControlName="age" required autocomplete="off">
+          </div>
+          <div class="field">
+              <label>Sexo</label>
+              <div class="ui radio">
+                <input ng-model="sexo" type="radio" name="sexo" value="hombre"  ng-value="hombre" formControlName="sexo"> Hombre
+                <input ng-model="sexo" type="radio" name="sexo" value="mujer" ng-value="muujer" formControlName="sexo"> Mujer
+              </div>
+            </div>
+          <div class="field">
+              <label >Alergias</label>
+              <input type="text" class="input" formControlName="alergias">
+          </div>
+          <div class="field">
+              <label>Observaciones Médicas</label>
+              <input type="text" class="input" formControlName="observacionesMedicas">
+          </div>
+          <div class="field">
+              <label>Información Adicional</label>
+              <input type="text" class="input" formControlName="infoAdicional" >
+          </div>
+          <button type="submit" class="ui button" [disabled]="!detailForm.valid">Enviar</button>
     </div>
     </div>
   </form>
 </ng-container>
     
-    
+<!--<form class="ui form">
+    <div class="field">
+      <label>First Name</label>
+      <input type="text" name="first-name" placeholder="First Name">
+    </div>
+    <div class="field">
+      <label>Last Name</label>
+      <input type="text" name="last-name" placeholder="Last Name">
+    </div>
+    <div class="field">
+      <div class="ui checkbox">
+        <input type="checkbox" tabindex="0" class="hidden">
+        <label>I agree to the Terms and Conditions</label>
+      </div>
+    </div>
+    <button class="ui button" type="submit">Submit</button>
+  </form>-->
     
     
 
