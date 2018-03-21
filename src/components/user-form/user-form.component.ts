@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../core/auth.service';
+import { AuthService } from '../../app/core/auth.service';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-import {FunctionsService} from '../../functions.service';
+import {FunctionsService} from '../../app/functions.service';
 
 @Component({
   selector: 'app-user-form',

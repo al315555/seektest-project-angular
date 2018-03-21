@@ -16,7 +16,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthService } from './auth.service';
 import { LoginComponent } from '../components/login/login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { UserFormComponent } from './ui/user-form/user-form.component';
+import { UserFormComponent } from '../components/user-form/user-form.component';
 import {FunctionsService} from './functions.service';
 
 // import { AngularFirestoreModule } from 'angularfire2/firestore';
