@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
 
       return this.auth.user
            .take(1)
-           .map(user => !!(user && user.catchPhrase) )
+           .map(user => !!(user && user.fullName) )
            .do(loggedIn => {
              if (!loggedIn) {
                this.notify.update('You must be logged in and have a catch phrase!', 'error')

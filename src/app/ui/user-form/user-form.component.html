@@ -1,51 +1,52 @@
-<ng-container *ngIf="(auth.user | async) || {} as user">
+<ng-container *ngIf="(auth.user | async) || {} as user" class="ui column">
 
   <form [formGroup]="signupForm" *ngIf="!user.uid" (ngSubmit)="signup()">
-      
-    <h3>New User Signup</h3>
-  
-    <label for="email">Email</label>
-    <input type="email" class="input" [class.is-danger]="email.invalid && email.dirty"
-            formControlName="email" required autocomplete="off">
-    
 
-    <div *ngIf="email.invalid && email.dirty" class="notification is-danger">
-        Your email doesn't look quite right...
+    <div class="ui raised segment " >
+      <div class="ui large form">
+        <div class="field">
+          <label>Correo electronico</label>
+          <input type="email" class="input" placeholder="dirección de correo" [class.is-danger]="email.invalid && email.dirty"
+          formControlName="email" required autocomplete="off">
+          <div *ngIf="email.invalid && email.dirty" class="notification is-danger">
+            Correo no válido.
+        </div>
+        </div>
+        <div class="field">
+          <label>Contraseña</label>
+          <input type="password" placeholder="contraseña" class="input" [class.is-danger]="password.invalid && password.touched"
+          formControlName="password" required>
+        </div>
+        <button type="submit" class="button is-primary" (click)="login()" [disabled]="!signupForm.valid">
+          Registrarse
+        </button>
+        <br/>
+        <div class="ui error message" *ngIf="errorHappened | async">
+        <div *ngIf="password.invalid && password.touched" class="notification is-danger">
+          Password must be between 6 and 24 chars and have at least one number 
+        </div>
+      </div>
     </div>
-  
-    <label for="password">Password</label>
-    <input type="password" class="input" [class.is-danger]="password.invalid && password.touched"
-            formControlName="password" required>
-  
-    <div *ngIf="password.invalid && password.touched" class="notification is-danger">
-      Password must be between 6 and 24 chars and have at least one number 
-    </div>
-  
-    <div *ngIf="signupForm.valid" class="notification is-success">Form looks good! Let's do this.</div>
-  
-    <button type="submit" class="button is-primary" [disabled]="!signupForm.valid">Submit</button>
-  
-  
+  </div>
   </form>
       
-      
-      
-  <form [formGroup]="detailForm" *ngIf="user.uid && !user.catchPhrase" (ngSubmit)="setCatchPhrase(user)">
-    
-    <h3>Set your Catch Phrase</h3>
+  <form [formGroup]="detailForm" *ngIf="user.uid && !user.fullName" (ngSubmit)="setfullName(user)">
+      <div class="ui raised segment " >
+          <div class="ui large form">
+    <h3>Datos personales</h3>
 
-    <label for="catchPhrase">CatchPhrase</label>
+    <label for="fullName">Nombre</label>
     <input type="test" class="input"
-            formControlName="catchPhrase" required autocomplete="off">
+            formControlName="fullName" required autocomplete="off">
     
   
     <button type="submit" class="button is-success" [disabled]="!detailForm.valid">Submit</button>
-    
-    
+    </div>
+    </div>
   </form>
 
-  <p *ngIf="user.catchPhrase" class="text-success">
-      You have completed the form!
+  <p *ngIf="user.fullName" class="text-success">
+      Registro completado!
   </p>
   
       

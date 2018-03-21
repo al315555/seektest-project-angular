@@ -51,20 +51,16 @@ export class UserFormComponent implements OnInit {
     
   }
 
-  // Using getters will make your code look pretty
   get email() { return this.signupForm.get('email') }
   get password() { return this.signupForm.get('password') }
 
   get fullName() { return this.detailForm.get('fullName') }
 
-
-  // Step 1
   signup() {
     return this.auth.emailSignUp(this.email.value, this.password.value)
   }
 
-  // Step 2
-  setCatchPhrase(user) {
-    return this.auth.updateUser(user, { catchPhrase:  this.fullName.value })
+  setfullName(user) {
+    return this.auth.updateUser(user, { fullName:  this.fullName.value })
   }
 }
