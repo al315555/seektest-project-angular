@@ -33,9 +33,9 @@
 <div class="ui middle aligned centered grid" *ngIf="!(authService.user | async)">
 
   <div class="ui column">
-    <h1 class="ui image header">
+    <h1 class="ui image header" style="margin-left: 10%; margin-right: 10%">
       <img src="../../assets/images/logo_seekTest.png" class="image">
-      <div class="content">
+      <div class="content"style="color: #2a5569">
         Autentificación <br> SeekTest
       </div>
     </h1>
@@ -50,13 +50,16 @@
           <label>Contraseña</label>
           <input type="password" [(ngModel)]="password" placeholder="contraseña">
         </div>
-        <button class="ui fluid submit button" (click)="login()" [disabled]="!email || !password">
-          Autentificarse
-        </button>
-        <br/>
-        <button class="ui button" (click)="goBackLogin()">
-          Atrás
-        </button>
+        <div style="margin-left: 20%; margin-right: 20%">
+          <button class="ui fluid inverted blue submit button" (click)="login()" [disabled]="!email || !password">
+            Autentificarse
+          </button>
+          <br/>
+          <button class="ui fluid inverted blue labeled icon button" (click)="goBackLogin()">
+            <i class="left arrow icon"></i>
+            Atrás
+          </button>
+        </div>
         <!--
         <button class="ui fluid button" (click)="signup()" [disabled]="!email || !password">
           Registrarse y autentificarse
