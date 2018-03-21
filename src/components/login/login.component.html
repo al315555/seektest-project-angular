@@ -1,3 +1,4 @@
+<ng-container *ngIf="user.uid && user.fullName">
 <div class="ui stackable attached menu" *ngIf="authService.user | async">
   <div class="left item">
     <img src="../../assets/images/logo_seekTest.png" class="image">
@@ -23,6 +24,7 @@
   <p></p><p></p>
 </div>
 
+<!--
 <div class="ui error message" *ngIf="(authService.error)">
   <div class="ui header">Error en la autentificación, pruebe de nuevo.</div>
 </div>
@@ -63,3 +65,5 @@
 
   </div>
 </div>
+-->
+</ng-container>
