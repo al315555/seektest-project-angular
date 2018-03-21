@@ -8,20 +8,25 @@ import { NotifyService } from './notify.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 
-interface User {
+interface Student {
   uid: string;
   email: string;
   photoURL: string;
-  fullName?: string;
+  name?: string;
+  surname?: string;
   location?: string;
   age?: string;
+  genero?: string;
+  alergias?: string;
+  observacionesMedicas?: string;
+  infoAdicional?: string;
 }
 
 
 @Injectable()
 export class AuthService {
 
-  user: Observable<User>;
+  user: Observable<Student>;
 
   constructor(private afAuth: AngularFireAuth,
               private afs: AngularFirestore,
@@ -31,7 +36,7 @@ export class AuthService {
       this.user = this.afAuth.authState
         .switchMap(user => {
           if (user) {
-            return this.afs.doc<User>(`users/${user.uid}`).valueChanges()
+            return this.afs.doc<Student>(`users/${user.uid}`).valueChanges()
           } else {
             return Observable.of(null)
           }
@@ -50,7 +55,7 @@ export class AuthService {
   }
 
   // Update properties on the user document
-  updateUser(user: User, data: any) { 
+  updateUser(user: Student, data: any) { 
     return this.afs.doc(`users/${user.uid}`).update(data)
   }
 
@@ -65,26 +70,24 @@ export class AuthService {
   // Sets user data to firestore after succesful login
   private setUserDoc(user) {
 
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+    const userRef: AngularFirestoreDocument<Student> = this.afs.doc(`users/${user.uid}`);
 
-    const data: User = {
+    const data: Student = {
       uid: user.uid,
       email: user.email || null,
-      photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz'
+      photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz',
+      name: user.name,
+      surname: user.name
     }
-
     return userRef.set(data)
 
   }
 
-
-  /// Additional useful methods, not used in video
   emailLogin(email: string, password: string) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .catch(error => this.handleError(error) );
   }
   
-  // Sends email allowing user to reset password
   resetPassword(email: string) {
     const fbAuth = firebase.auth();
 
