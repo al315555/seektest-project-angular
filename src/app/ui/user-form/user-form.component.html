@@ -29,17 +29,29 @@
   </div>
   </form>
       
-  <!--<form [formGroup]="detailForm" *ngIf="user.uid && !user.age" (ngSubmit)="setName(user)">
+  <form [formGroup]="detailForm" *ngIf="user.uid && !user.age" (ngSubmit)="setUserInfo(user)">
       <div class="ui raised segment " >
           <div class="ui large form">
     <h3>Datos personales</h3>
     
     <label for="name">Nombre</label>
     <input type="test" class="input" formControlName="name" required autocomplete="off">
+    <label for="name">Surname</label>
+    <input type="test" class="input" formControlName="surname" required autocomplete="off">
+    <label for="name">Edad</label>
+    <input type="test" class="input" formControlName="age" required autocomplete="off">
+    <label for="name">Sexo</label>
+    <input type="test" class="input" formControlName="sexo" required autocomplete="off">
+    <label for="name">Alergias</label>
+    <input type="test" class="input" formControlName="alergias" required autocomplete="off">
+    <label for="name">Observaciones Médicas</label>
+    <input type="test" class="input" formControlName="observacionesMedicas" required autocomplete="off">
+    <label for="name">Información Adicional</label>
+    <input type="test" class="input" formControlName="infoAdicional" required autocomplete="off">
     <button type="submit" class="button is-primary" [disabled]="!detailForm.valid">Enviar</button>
     </div>
     </div>
-  </form>-->
+  </form>
 </ng-container>
     
     

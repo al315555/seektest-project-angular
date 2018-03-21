@@ -16,6 +16,7 @@ interface Student {
   surname?: string;
   age?: string;
   genero?: string;
+  sexo?:string;
   alergias?: string;
   observacionesMedicas?: string;
   infoAdicional?: string;
