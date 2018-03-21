@@ -43,10 +43,10 @@ export class UserFormComponent implements OnInit {
 
     // Second Step
     this.detailForm = this.fb.group({
-      'name': ['', [  ]],
+      'name': ['', [ ]],
       'surname': ['', [ ] ],
       'age': ['', [ ] ],
-      'genero': ['', [ ] ],
+      'sexo': ['', [ ] ],
       'alergias': ['', [ ] ],
       'observacionesMedicas': ['', [ ] ],
       'infoAdicional': ['', [ ] ],
@@ -58,9 +58,9 @@ export class UserFormComponent implements OnInit {
   get password() { return this.signupForm.get('password') }
 
   get name() { return this.detailForm.get('name') }
-  get surname() { return this.detailForm.get('surn') }
+  get surname() { return this.detailForm.get('surname') }
   get age() { return this.detailForm.get('age') }
-  get genero() { return this.detailForm.get('genero') }
+  get sexo() { return this.detailForm.get('sexo') }
   get alergias() { return this.detailForm.get('alergias') }
   get observacionesMedicas() { return this.detailForm.get('observacionesMedicas') }
   get infoAdicional() { return this.detailForm.get('infoAdicional') }
@@ -69,8 +69,13 @@ export class UserFormComponent implements OnInit {
     return this.auth.emailSignUp(this.email.value, this.password.value)
   }
 
+  setUserInfo(user){
+    return this.auth.updateUser(user, { name:  this.name.value, surname:  this.surname.value,
+      age:  this.age.value, alergias:  this.alergias.value, sexo: this.sexo.value,
+      observacionesMedicas:  this.observacionesMedicas.value, infoAdicional:  this.infoAdicional.value } ) 
+  }
   setName(user) {
-    return this.auth.updateUser(user, { name:  this.name.value, surname:  this.surname.value } )
+    return this.auth.updateUser(user, { name:  this.name.value} )
   }
   setSurname(user) {
     return this.auth.updateUser(user, { surname:  this.surname.value } )
@@ -78,9 +83,7 @@ export class UserFormComponent implements OnInit {
   setAge(user) {
     return this.auth.updateUser(user, { age:  this.age.value })
   }
-  setGenero(user) {
-    return this.auth.updateUser(user, { genero:  this.genero.value })
-  }
+ 
   setAlergias(user) {
     return this.auth.updateUser(user, { alergias:  this.alergias.value })
   }
