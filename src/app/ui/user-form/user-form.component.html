@@ -1,5 +1,4 @@
 <ng-container *ngIf="(auth.user | async) || {} as user" class="ui column">
-
   <form [formGroup]="signupForm" *ngIf="!user.uid" (ngSubmit)="signup()">
 
     <div class="ui raised segment " >
@@ -36,21 +35,15 @@
     <h3>Datos personales</h3>
 
     <label for="fullName">Nombre</label>
-    <input type="test" class="input"
-            formControlName="fullName" required autocomplete="off">
-    
-  
-    <button type="submit" class="button is-success" [disabled]="!detailForm.valid">Submit</button>
+    <input type="test" class="input" formControlName="fullName" required autocomplete="off">
+    <button type="submit" class="button is-primary" [disabled]="!detailForm.valid">Enviar</button>
     </div>
     </div>
   </form>
 
   <p *ngIf="user.fullName" class="text-success">
       Registro completado!
-  </p>
-  
-      
-    
+  </p>  
 </ng-container>
     
     
