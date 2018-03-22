@@ -60,11 +60,6 @@
             Atrás
           </button>
         </div>
-        <!--
-        <button class="ui fluid button" (click)="signup()" [disabled]="!email || !password">
-          Registrarse y autentificarse
-        </button>
-        -->
         <div class="ui error message" *ngIf="errorHappened | async">
           <div class="header">Action Forbidden</div>
           <p>You can only sign up for an account once with a given e-mail address.</p>

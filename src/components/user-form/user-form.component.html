@@ -1,46 +1,67 @@
-<ng-container *ngIf="(auth.user | async) || {} as user" class="ui column">
-  <div class="column">
-  <form [formGroup]="signupForm" *ngIf="!user.uid" (ngSubmit)="signup()">
-    <div class="ui raised segment" >
-      <div class="ui large form">
-        <h3>Registro Usuario</h3>
-        <div class="field">
-          <label>Correo electronico</label>
-          <input type="email" class="ui input" placeholder="dirección de correo" [class.is-danger]="email.invalid && email.dirty"
-          formControlName="email" required autocomplete="off">
-          <div *ngIf="email.invalid && email.dirty" class="notification is-danger">
-            Correo no válido.
+<ng-container *ngIf="(auth.user | async) || {} as user" class="ui">
+<form [formGroup]="signupForm" *ngIf="!user.uid" (ngSubmit)="signup()">
+  <div class="ui middle aligned centered grid">
+    <div class="ui column">
+      <h1 class="ui image header" style="margin-left: 10%; margin-right: 10%">
+        <img src="../../assets/images/logo_seekTest.png" class="image">
+        <div class="content"style="color: #2a5569">
+          Registro <br> SeekTest
         </div>
-        </div>
-        <div class="field">
-          <label>Contraseña</label>
-          <input type="password" placeholder="contraseña" class="ui input" [class.is-danger]="password.invalid && password.touched"
-          formControlName="password" required>
-          <div *ngIf="password.invalid && password.dirty" class="notification is-danger">
-            La contraseña debe tener entre 6 - 24 caracteres y contener una letra y número.
+      </h1>
+  
+      <div class="ui raised segment " >
+        <div class="ui large form">
+          <div class="field">
+            <label>Correo electronico</label>
+            <input type="email" class="ui input" placeholder="dirección de correo" [class.is-danger]="email.invalid && email.dirty"
+            formControlName="email" required autocomplete="off">
+            <div *ngIf="email.invalid && email.dirty" class="notification is-danger">
+              Correo no válido.
           </div>
-        </div>
-
-        <button type="submit" class="ui button" [disabled]="!signupForm.valid">
-          Registrarse
-        </button>
-        <button class="ui button" (click)="goBackRegister()">
-          Atrás
-        </button>
-        <br/>
-        <div class="ui error message" *ngIf="errorHappened | async">
-        <div *ngIf="password.invalid && password.touched" class="notification is-danger">
-          La contraseña debe tener entre 6 y 24 caracteres
+          </div>
+          <div class="field">
+            <label>Contraseña</label>
+            <input type="password" placeholder="contraseña" class="ui input" [class.is-danger]="password.invalid && password.touched"
+            formControlName="password" required>
+            <div *ngIf="password.invalid && password.dirty" class="notification is-danger">
+              La contraseña debe tener entre 6 - 24 caracteres y contener una letra y número.
+            </div>
+          </div>
+          
+            <button class="ui fluid inverted blue submit button" type="submit" class="ui button" [disabled]="!signupForm.valid" >
+                Registrarse
+            </button>
+            <br/>
+            <button class="ui button" (click)="goBackRegister()">
+              Atrás
+            </button>
+           <br/>
+          <div class="ui error message" *ngIf="errorHappened | async">
+            <div *ngIf="password.invalid && password.touched" class="notification is-danger">
+              La contraseña debe tener entre 6 y 24 caracteres
+            </div>
+          </div>
+          <div class="ui error message" *ngIf="errorHappened | async">
+            <div class="header">Action Forbidden</div>
+            <p>You can only sign up for an account once with a given e-mail address.</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  </form>
-
+</form>
   <form [formGroup]="detailForm" *ngIf="user.uid && !user.age" (ngSubmit)="setUserInfo(user)">
+      <div class="ui middle aligned centered grid">
+      <div class="ui column">
+          <h1 class="ui image header" style="margin-left: 10%; margin-right: 10%">
+              <img src="../../assets/images/logo_seekTest.png" class="image">
+              <div class="content"style="color: #2a5569">
+                Datos Personales <br> SeekTest
+              </div>
+            </h1>
       <div class="ui raised segment " >
           <div class="ui large form">
-          <h3>Datos personales</h3>
+        
 
           <div class="field">
               <label>Nombre</label>
@@ -76,8 +97,9 @@
           <button type="submit" class="ui button" [disabled]="!detailForm.valid">Enviar</button>
     </div>
     </div>
+    </div>
+    </div>
   </form>
-</div>
 </ng-container>
 
 
