@@ -1,0 +1,44 @@
+
+<div class="ui grid">
+    <div class="three column row">
+        <div class="column"></div>
+        <div class="column">
+            <h2 class="ui header">Nuevo Experimento</h2>
+            <div class="ui form">
+              <div class="field">
+                <label>Titulo del experimento</label>
+                <input type="text" placeholder="titulo">
+              </div>
+              <div class="two fields">
+                <div class="field">
+                  <label>Fechas de las sesiones</label>
+                  <div class="ui left icon input">
+                     <i class="calendar icon"></i>
+                      <input suiDatepicker [(ngModel)]="dateHourSelected" [pickerMode]="mode" [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
+                  </div>
+                </div>
+                <div class="field">
+                  <label>-</label>
+                  <div class="ui vertical  animated button" (click)="addDate()" tabindex="0">
+                    <div class="hidden content">Añadir</div>
+                    <div class="visible content">
+                      <i class="plus icon"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <label></label>
+                <p *ngFor='let date of dateHourArray'>
+                  {{date}}
+                </p>
+              </div>
+              <div class="field">
+                <sui-progress class="tiny" [value]="changingValueProgres">Progreso</sui-progress>
+              </div>
+            </div>
+        </div>
+        <div class="column"></div>
+    </div>
+    
+  </div>

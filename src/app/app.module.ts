@@ -18,7 +18,8 @@ import { LoginComponent } from '../components/login/login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { UserFormComponent } from '../components/user-form/user-form.component';
 import {FunctionsService} from './functions.service';
-
+import { NewExperimentComponent } from '../components/new-experiment/new-experiment.component';
+import {SuiModule} from 'ng2-semantic-ui';
 // import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 
@@ -27,7 +28,8 @@ import {FunctionsService} from './functions.service';
     AppComponent,
     LoginSpinnerComponent,
     LoginComponent,
-    UserFormComponent
+    UserFormComponent,
+    NewExperimentComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,8 @@ import {FunctionsService} from './functions.service';
     FormsModule,
     AppRoutingModule,
     CoreModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SuiModule
   ],
   providers: [AuthService, FunctionsService],
   bootstrap: [AppComponent]
