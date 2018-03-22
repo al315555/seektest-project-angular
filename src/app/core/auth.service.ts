@@ -8,6 +8,8 @@ import { NotifyService } from './notify.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 
+import { switchMap } from 'rxjs/operators';
+
 interface Student {
   uid: string;
   email: string;

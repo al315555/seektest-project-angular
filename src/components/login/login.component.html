@@ -23,7 +23,7 @@
   <p></p><p></p>
   <p></p><p></p>
  
-    <h3>Nombre: {{authService.user.surname }}</h3>
+    <h3>Nombre: {{(authService.user | async)?.name }}</h3>
     <p class="text-truncate">UID: {{ (authService.user | async)?.uid }}</p>
 </div>
 

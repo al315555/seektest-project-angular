@@ -54,6 +54,14 @@ export class UserFormComponent implements OnInit {
     });
 
   }
+  get n(){
+    this.userState = this.auth.user.map(user => {
+      if (user) {
+        return user.name;
+      }
+    });
+    return null;
+  }
 
   get email() { return this.signupForm.get('email'); }
   get password() { return this.signupForm.get('password'); }
