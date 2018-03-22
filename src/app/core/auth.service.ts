@@ -65,9 +65,7 @@ export class AuthService {
     this.notify.update(error.message, 'error')
   }
 
-  public getName(){
-    this.user
-  }
+ 
   // Sets user data to firestore after succesful login
   private setUserDoc(user) {
 

@@ -26,8 +26,10 @@
   <div *ngIf="authService.user | async as user">
     <p class="text-truncate">Nombre: {{user.name }}</p>
     <p class="text-truncate">Apellidos: {{user.surname }}</p>
-    <p class="text-truncate">Edad: {{user.age }}</p>
+    <p class="text-truncate">Mail: {{(authService.user | async)?.email }}</p>
+    <p class="text-truncate">Edad: {{(authService.user | async)?.age }}</p>
     <p class="text-truncate">UID: {{user.uid }}</p>
+    <p class="text-truncate">Foto url: {{(authService.user | async).photoURL}}</p>
   </div>
 </div>
 
