@@ -22,9 +22,13 @@
   <p></p><p></p>
   <p></p><p></p>
   <p></p><p></p>
- 
-    <h3>Nombre: {{(authService.user | async)?.name }}</h3>
-    <p class="text-truncate">UID: {{ (authService.user | async)?.uid }}</p>
+  <h2 class="ui header">Prueba datos</h2>
+  <div *ngIf="authService.user | async as user">
+    <p class="text-truncate">Nombre: {{user.name }}</p>
+    <p class="text-truncate">Apellidos: {{user.surname }}</p>
+    <p class="text-truncate">Edad: {{user.age }}</p>
+    <p class="text-truncate">UID: {{user.uid }}</p>
+  </div>
 </div>
 
 
