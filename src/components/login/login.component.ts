@@ -13,7 +13,7 @@ export class LoginComponent {
   errorHappened: boolean;
   logged: boolean;
 
-  constructor(public authService: AuthService, public functions: FunctionsService) {}
+  constructor(public authService: AuthService, public functions: FunctionsService,public auth: AuthService) {}
 
   signup() {
     this.authService.signup(this.email, this.password);
