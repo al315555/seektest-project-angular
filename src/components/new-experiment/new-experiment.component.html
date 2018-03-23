@@ -1,44 +1,73 @@
-
-<div class="ui grid">
-    <div class="three column row">
-        <div class="column"></div>
-        <div class="column">
-            <h2 class="ui header">Nuevo Experimento</h2>
-            <div class="ui form">
-              <div class="field">
-                <label>Titulo del experimento</label>
-                <input type="text" placeholder="titulo">
-              </div>
-              <div class="two fields">
-                <div class="field">
-                  <label>Fechas de las sesiones</label>
-                  <div class="ui left icon input">
-                     <i class="calendar icon"></i>
-                      <input suiDatepicker [(ngModel)]="dateHourSelected" [pickerMode]="mode" [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
-                  </div>
-                </div>
-                <div class="field">
-                  <label>-</label>
-                  <div class="ui vertical  animated button" (click)="addDate()" tabindex="0">
-                    <div class="hidden content">Añadir</div>
-                    <div class="visible content">
-                      <i class="plus icon"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="field">
-                <label></label>
-                <p *ngFor='let date of dateHourArray'>
-                  {{date}}
-                </p>
-              </div>
-              <div class="field">
-                <sui-progress class="tiny" [value]="changingValueProgres">Progreso</sui-progress>
-              </div>
-            </div>
+<div class="ui padded segment form-size">
+  <h2 class="ui left floated header">Nuevo Experimento</h2>
+  <div class="ui clearing divider"></div>
+  <div class="ui form">
+    <div [suiCollapse]="!collapse">
+      <div class="field">
+        <label>Titulo del experimento</label>
+        <input type="text" placeholder="titulo">
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label>Fechas de las sesiones</label>
+          <div class="ui left icon input">
+            <i class="calendar icon"></i>
+            <input suiDatepicker [(ngModel)]="dateHourSelected" [pickerMode]="mode" [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
+          </div>
         </div>
-        <div class="column"></div>
+        <div class="field">
+          <label>&nbsp;</label>
+          <div class="ui vertical animated button maxsize" (click)="addDate()" tabindex="0">
+            <div class="hidden content">Añadir</div>
+            <div class="visible content">
+              <i class="plus icon"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label></label>
+        <div *ngFor='let date of dateHourArray; let i = index'>
+          <div class="ui animated hoverred maxsize fade button" (click)="deleteDate(i)" tabindex="0">
+            <div class="visible content">{{date| date: 'dd/MM/yyyy - hh:mm'}}</div>
+            <div class="hidden content">
+              Eliminar
+            </div>
+          </div>
+          <br><br>
+        </div>
+      </div>
+      <div class="two fields">
+        <div class="field">
+          <label>Lugar</label>
+          <input type="text" placeholder="lugar">
+        </div>
+        <div class="field">
+          <label>Numero de plazas</label>
+          <input type="number" min="0" max="99999999">
+        </div>
+      </div>
+      <div class="field">
+        <label>Descripcion</label>
+        <textarea rows="4"></textarea>
+      </div>
     </div>
-    
+    <br>
+    <div class="field">
+      <button class="ui primary button maxsize" (click)="collapse = !collapse">
+        Crear perfil de sujeto
+      </button>
+      <br>
+      <br>
+      <div [suiCollapse]="collapse">
+        <div class="ui segment">
+          <h4 class="ui header">Perfil de sujeto</h4>
+          <p>Content of the panel.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <sui-progress class="tiny" [value]="changingValueProgres">Progreso</sui-progress>
+    </div>
   </div>
