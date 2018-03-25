@@ -1,39 +1,5 @@
 <!--<ng-container *ngIf="(auth.user | async) || {} as user">-->
-<div class="ui stackable attached menu" *ngIf="authService.user | async">
-  <div class="left item">
-    <img src="../../assets/images/logo_seekTest.png" class="image">
-    <h2>Aplicación SeekTest</h2>
-  </div>
-  <div class="right item">
-
-      <button class="ui icon button">
-          <i class="user icon"></i>
-        {{ (authService.user | async)?.email }}
-      </button>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <button class="ui icon button" (click)="logout()" *ngIf="authService.user | async">
-        <i class="sign out icon"></i>
-      </button>
-  </div>
-</div>
-
-<div class="ui raised very padded text container segment" *ngIf="authService.user | async">
-  <h2 class="ui header">Experimentos publicados</h2>
-  <p></p><p></p>
-  <p></p><p></p>
-  <p></p><p></p>
-  <h2 class="ui header">Prueba datos</h2>
-  <div *ngIf="authService.user | async as user">
-    <p class="text-truncate">Nombre: {{user.name }}</p>
-    <p class="text-truncate">Apellidos: {{user.surname }}</p>
-    <p class="text-truncate">Mail: {{(authService.user | async)?.email }}</p>
-    <p class="text-truncate">Edad: {{(authService.user | async)?.age }}</p>
-    <p class="text-truncate">UID: {{user.uid }}</p>
-    <p class="text-truncate">Foto url: {{(authService.user | async).photoURL}}</p>
-  </div>
-</div>
-
-
+<app-logged *ngIf="authService.user | async"></app-logged>
 
 <div class="ui error message" *ngIf="(authService.error)">
   <div class="ui header">Error en la autentificación, pruebe de nuevo.</div>

@@ -24,6 +24,7 @@
     "angularfire2": "^5.0.0-rc.6",
     "core-js": "^2.4.1",
     "firebase": "^4.11.0",
+    "ng2-semantic-ui": "^0.9.7",
     "promise-polyfill": "7.1.0",
     "rxjs": "^5.5.6",
     "semantic-ui": "^2.3.0",

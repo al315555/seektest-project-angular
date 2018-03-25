@@ -1,0 +1,15 @@
+.maxsize{
+  width: 100%
+}
+.form-size{
+  width: 400px;
+}
+.button {
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+
+.hoverred:hover {
+  background:red;
+  color: whitesmoke;
+}

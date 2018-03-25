@@ -1,0 +1,17 @@
+<div class="ui stackable attached menu">
+  <div class="left item">
+    <img src="../../assets/images/logo_seekTest.png" class="image">
+    <h2>{{titleHeader}}</h2>
+  </div>
+  <div class="right item">
+
+    <button class="ui icon button" (click)="selectPerfil()">
+      <i class="user icon"></i>
+      {{ (authService.user | async)?.email }}
+    </button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button class="ui icon button" (click)="logout()" *ngIf="authService.user | async">
+      <i class="sign out icon"></i>
+    </button>
+  </div>
+</div>

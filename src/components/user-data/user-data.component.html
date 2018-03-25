@@ -1,0 +1,21 @@
+<div>
+  <br/><br/>
+  <div style="margin-left: 40%; margin-right: 40%;">
+    <button class="ui fluid inverted blue labeled icon button" (click)="goBackToExperiments()">
+      <i class="left arrow icon"></i>
+      <span>Volver</span>
+    </button>
+  </div>
+  <br/><br/>
+  <div class="ui raised very padded text container segment">
+    <h2 class="ui header">Mis datos</h2>
+    <div *ngIf="authService.user | async as user">
+      <p class="text-truncate">Nombre: {{user.name }}</p>
+      <p class="text-truncate">Apellidos: {{user.surname }}</p>
+      <p class="text-truncate">Mail: {{(authService.user | async)?.email }}</p>
+      <p class="text-truncate">Edad: {{user.age }}</p>
+      <p class="text-truncate">UID: {{user.uid }}</p>
+      <p class="text-truncate">Foto url: {{(authService.user | async).photoURL}}</p>
+    </div>
+  </div>
+</div>
