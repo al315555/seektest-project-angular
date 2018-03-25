@@ -1,5 +1,6 @@
 <ng-container *ngIf="(auth.user | async) || {} as user" class="ui">
 <form [formGroup]="signupForm" *ngIf="!user.uid" (ngSubmit)="signup()">
+  <br/><br/><br/><br/><br/>
   <div class="ui middle aligned centered grid">
     <div class="ui column">
       <h1 class="ui image header" style="margin-left: 10%; margin-right: 10%">
@@ -8,7 +9,7 @@
           Registro <br> SeekTest
         </div>
       </h1>
-  
+
       <div class="ui raised segment " >
         <div class="ui large form">
           <div class="field">
@@ -16,7 +17,7 @@
             <input type="email" class="ui input" placeholder="dirección de correo" [class.is-danger]="email.invalid && email.dirty"
             formControlName="email" required autocomplete="off">
             <div *ngIf="email.invalid && email.dirty" class="notification is-danger">
-              Correo no válido.
+              <p style="color: darkorange !important;">Correo no válido.</p>
           </div>
           </div>
           <div class="field">
@@ -24,26 +25,18 @@
             <input type="password" placeholder="contraseña" class="ui input" [class.is-danger]="password.invalid && password.touched"
             formControlName="password" required>
             <div *ngIf="password.invalid && password.dirty" class="notification is-danger">
-              La contraseña debe tener entre 6 - 24 caracteres y contener una letra y número.
+              <p style="color: darkorange !important;">La contraseña debe tener entre 6 - 24 caracteres y contener una letra y número.</p>
             </div>
           </div>
-          
-            <button class="ui fluid inverted blue submit button" type="submit" class="ui button" [disabled]="!signupForm.valid" >
-                Registrarse
+          <div style="margin-left: 20%; margin-right: 20%">
+            <button class="ui fluid inverted blue submit button" type="submit" [disabled]="!signupForm.valid" >
+              Registrarse
             </button>
             <br/>
-            <button class="ui button" (click)="goBackRegister()">
+            <button class="ui fluid inverted blue labeled icon button" (click)="goBackRegister()">
+              <i class="left arrow icon"></i>
               Atrás
             </button>
-           <br/>
-          <div class="ui error message" *ngIf="errorHappened | async">
-            <div *ngIf="password.invalid && password.touched" class="notification is-danger">
-              La contraseña debe tener entre 6 y 24 caracteres
-            </div>
-          </div>
-          <div class="ui error message" *ngIf="errorHappened | async">
-            <div class="header">Action Forbidden</div>
-            <p>You can only sign up for an account once with a given e-mail address.</p>
           </div>
         </div>
       </div>
@@ -61,7 +54,7 @@
             </h1>
       <div class="ui raised segment " >
           <div class="ui large form">
-        
+
 
           <div class="field">
               <label>Nombre</label>
@@ -94,7 +87,7 @@
               <label>Información Adicional</label>
               <input type="text" class="input" formControlName="infoAdicional" >
           </div>
-          <button type="submit" class="ui button" [disabled]="!detailForm.valid">Enviar</button>
+          <button type="submit" class="ui fluid inverted blue submit button" [disabled]="!detailForm.valid">Enviar</button>
     </div>
     </div>
     </div>
