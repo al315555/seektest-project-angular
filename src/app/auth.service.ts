@@ -6,57 +6,57 @@ import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
 import {FunctionsService} from './functions.service';
 import {User} from './core/User';
-
-/*@Injectable()
-export class AuthService {
-  user: Observable<firebase.User>;
-  error: boolean;
-
-  constructor(private firebaseAuth: AngularFireAuth, public functions: FunctionsService) {
-    this.user = firebaseAuth.authState;
-    this.error = false;
-  }
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 
 
-  login(email: string, password: string) {
-    this.firebaseAuth
-      .auth
-      .signInWithEmailAndPassword(email, password)
-      .then(value => {
-        this.error = false;
-        console.log('Nice, it worked!', value.message);
-      })
-      .catch(err => {
-        this.error = true;
-        console.log('Something went wrong:', err.message);
-      });
-  }
 
-  
+import { Router } from '@angular/router';
+import { NotifyService } from './core/notify.service';
 
-}*/
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/catch'
+
+import { switchMap } from 'rxjs/operators';
+
 @Injectable()
 export class AuthService {
   user: Observable<firebase.User>;
   error: boolean;
 
-  constructor(private firebaseAuth: AngularFireAuth, public functions: FunctionsService) {
+  constructor(private afAuth: AngularFireAuth,private firebaseAuth: AngularFireAuth,private afs: AngularFirestore, public functions: FunctionsService, private notify: NotifyService) {
     this.user = firebaseAuth.authState;
   }
 
   signup(email: string, password: string) {
-    this.firebaseAuth
-      .auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(value => {
-        console.log('Success!', value);
-        this.error = false;
+    return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+      .then(user => {
+        return this.setUserDoc(user) // create initial user document
       })
-      .catch(err => {
-        console.log('Something went wrong:', err.message);
-        this.error = true;
-      });
+      .catch();
   }
+  updateUser(user: User, data: any) { 
+    return this.afs.doc(`users/${user._uid}`).update(data)
+  }
+// Sets user data to firestore after succesful login
+private setUserDoc(user) {
+
+  const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+
+  const data: User = {
+    _uid: user.uid,
+    //_name: user.name,
+    //_surname: user.surname,
+    //_age: user.age,
+    _email: user.email,
+    //_alergias: user.alergias,
+    //_infoAdicional: user.infoAdicional,
+    //_observacionesMedicas: user.observacionesMedicas,
+    //_sexo: user.sexo,
+    _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz',
+  }
+  return userRef.set(data)
+
+}
 
   login(email: string, password: string){
     let user = new User({
@@ -77,7 +77,7 @@ export class AuthService {
         .signInWithEmailAndPassword(email, password)
         .then(value => {
           console.log("Loggeado correctamente")
-          user._name = value.displayName;
+          user._name = value.name;
           user._surname = value.surname;
           user._sexo = value.sexo;
           user._infoAdicional = value.infoAdicional;
