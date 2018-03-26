@@ -5,7 +5,7 @@
     <div [suiCollapse]="!collapse">
       <div class="field">
         <label>Titulo del experimento</label>
-        <input type="text" placeholder="titulo">
+        <input [(ngModel)]="title" type="text" placeholder="titulo" (input)="changeTitle()">
       </div>
       <div class="two fields">
         <div class="field">
@@ -17,7 +17,7 @@
         </div>
         <div class="field">
           <label>&nbsp;</label>
-          <div class="ui vertical animated button maxsize" (click)="addDate()" tabindex="0">
+          <div class="ui vertical animated button maxsize hovergreen" (click)="addDate()" tabindex="0">
             <div class="hidden content">Añadir</div>
             <div class="visible content">
               <i class="plus icon"></i>
@@ -40,16 +40,16 @@
       <div class="two fields">
         <div class="field">
           <label>Lugar</label>
-          <input type="text" placeholder="lugar">
+          <input type="text" [(ngModel)]="place" placeholder="lugar">
         </div>
         <div class="field">
           <label>Numero de plazas</label>
-          <input type="number" min="0" max="99999999">
+          <input type="number" [(ngModel)]="numberParticipants" min="0" max="99999999">
         </div>
       </div>
       <div class="field">
         <label>Descripcion</label>
-        <textarea rows="4"></textarea>
+        <textarea [(ngModel)]="description" rows="4"></textarea>
       </div>
     </div>
     <br>
