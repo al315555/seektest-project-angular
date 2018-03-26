@@ -2,7 +2,7 @@ export class User {
     _uid: string;
     _email: string;
     _photoURL: string;
-    _name: string;
+    _name?: string;
     _surname?: string;
     _age?: string;
     _sexo?:string;
@@ -16,7 +16,7 @@ export class User {
       }
     }
   
-    get uid(): string {
+   /* get uid(): string {
       return this._uid;
     }
   
@@ -93,6 +93,6 @@ export class User {
     
     set infoAdicional(value: string) {
         this._infoAdicional = value;
-    }
+    }*/
   }
   

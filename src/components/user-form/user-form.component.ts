@@ -4,6 +4,9 @@ import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angula
 import { Observable } from 'rxjs/Observable';
 import {FunctionsService} from '../../app/functions.service';
 import {User} from '../../app/core/User';
+import * as firebase from 'firebase/app';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 
 @Component({
   selector: 'app-user-form',
@@ -17,7 +20,7 @@ export class UserFormComponent implements OnInit {
 
   userState;
 
-  constructor(public fb: FormBuilder, public auth: AuthService, public functions: FunctionsService) { }
+  constructor(public fb: FormBuilder,private afs: AngularFirestore, public auth: AuthService, public functions: FunctionsService) { }
 
   ngOnInit() {
 
@@ -78,11 +81,13 @@ export class UserFormComponent implements OnInit {
   signup() {
     return this.auth.signup(this.email.value, this.password.value);
   }
+  
 
   setUserInfo(user) {
-    /*this.auth.updateUser(user, { name:  this.name.value, surname:  this.surname.value,
+    this.auth.updateUser(user, { name:  this.name.value, surname:  this.surname.value,
       age:  this.age.value, alergias:  this.alergias.value, sexo: this.sexo.value,
-      observacionesMedicas:  this.observacionesMedicas.value, infoAdicional:  this.infoAdicional.value } );*/
+      observacionesMedicas:  this.observacionesMedicas.value, infoAdicional:  this.infoAdicional.value } );
+
     user.name = this.name.value;
     user.surname = this.surname.value;
     user.age = this.age.value;
@@ -90,27 +95,32 @@ export class UserFormComponent implements OnInit {
     user.sexo = this.sexo.value;
     user.observacionesMedicas = this.observacionesMedicas.value;
     user.infoAdicional = this.infoAdicional.value;
+
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+
     this.functions.changeShowMainPageToFalse();
     this.functions.changeToLogged();
+    return userRef.set(user)
+     
   }
   setName(user) {
-    //return this.auth.updateUser(user, { name:  this.name.value} );
+    return this.auth.updateUser(user, { name:  this.name.value} );
   }
   setSurname(user) {
-    //return this.auth.updateUser(user, { surname:  this.surname.value } );
+    return this.auth.updateUser(user, { surname:  this.surname.value } );
   }
   setAge(user) {
-    //return this.auth.updateUser(user, { age:  this.age.value });
+    return this.auth.updateUser(user, { age:  this.age.value });
   }
 
   setAlergias(user) {
-    //return this.auth.updateUser(user, { alergias:  this.alergias.value });
+    return this.auth.updateUser(user, { alergias:  this.alergias.value });
   }
   setObservacionesMedicas(user) {
-    //return this.auth.updateUser(user, { observacionesMedicas:  this.observacionesMedicas.value });
+    return this.auth.updateUser(user, { observacionesMedicas:  this.observacionesMedicas.value });
   }
   setInfoAdicional(user) {
-    //return this.auth.updateUser(user, { infoAdicional:  this.infoAdicional.value });
+    return this.auth.updateUser(user, { infoAdicional:  this.infoAdicional.value });
   }
 
   goBackRegister() {
