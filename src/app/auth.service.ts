@@ -78,11 +78,11 @@ export class AuthService {
         .then(value => {
           console.log("Loggeado correctamente")
           user._name = value.displayName;
-          user.surname = value.surname;
-          user._sexo = value._sexo;
-          user._infoAdicional = value._infoAdicional;
+          user._surname = value.surname;
+          user._sexo = value.sexo;
+          user._infoAdicional = value.infoAdicional;
           user._alergias = value._alergias;
-          user._observacionesMedicas = value._observacionesMedicas;
+          user._observacionesMedicas = value.observacionesMedicas;
           user._email = email;
           user._photoURL = value.photoURL;
           user._uid = value.uid;

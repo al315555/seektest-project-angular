@@ -7,6 +7,8 @@
 
     <button class="ui icon button" (click)="selectPerfil()">
       <i class="user icon"></i>
+      {{ (authService.user | async)?.name }}
+      &nbsp;
       {{ (authService.user | async)?.surname }}
     </button>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
