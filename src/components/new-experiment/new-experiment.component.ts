@@ -154,8 +154,15 @@ export class NewExperimentComponent implements OnInit {
     this.edadFinal = null;
     this.edadInicio = null;
     this.perfilSexo = null;
-    this.alergias = "";
-    this.medicalObs = "";
+    this.alergias = null;
+    this.medicalObs = null;
+    this.titleEntered = false;
+    this.dateHourEntered = false;
+    this.placeEntered = false;
+    this.numberParticipantsEntered = false;
+    this.descriptionEntered = false;
+    this.buttonEnabled = false;
+    this.spinnerLoading = false;
     this.buttonEnabled = false;
   }
 
@@ -169,7 +176,6 @@ export class NewExperimentComponent implements OnInit {
       this.experimentAdded = true;
     }).catch(value => {
       this.spinnerLoading = false;
-
     });
   }
 
