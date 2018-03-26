@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../app/core/auth.service';
+import { AuthService } from '../../app/auth.service';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import {FunctionsService} from '../../app/functions.service';
+import {User} from '../../app/core/User';
 
 @Component({
   selector: 'app-user-form',
@@ -22,7 +23,7 @@ export class UserFormComponent implements OnInit {
 
     this.userState = this.auth.user.map(user => {
       if (user) {
-        return user.age ? 'complete' : 'incomplete';
+        return user.displayName ? 'complete' : 'incomplete';
       }
     });
 
@@ -57,7 +58,7 @@ export class UserFormComponent implements OnInit {
   get n(){
     this.userState = this.auth.user.map(user => {
       if (user) {
-        return user.name;
+        return user.displayName;
       }
     });
     return null;
@@ -75,34 +76,41 @@ export class UserFormComponent implements OnInit {
   get infoAdicional() { return this.detailForm.get('infoAdicional'); }
 
   signup() {
-    return this.auth.emailSignUp(this.email.value, this.password.value);
+    return this.auth.signup(this.email.value, this.password.value);
   }
 
   setUserInfo(user) {
-    this.auth.updateUser(user, { name:  this.name.value, surname:  this.surname.value,
+    /*this.auth.updateUser(user, { name:  this.name.value, surname:  this.surname.value,
       age:  this.age.value, alergias:  this.alergias.value, sexo: this.sexo.value,
-      observacionesMedicas:  this.observacionesMedicas.value, infoAdicional:  this.infoAdicional.value } );
+      observacionesMedicas:  this.observacionesMedicas.value, infoAdicional:  this.infoAdicional.value } );*/
+    user.name = this.name.value;
+    user.surname = this.surname.value;
+    user.age = this.age.value;
+    user.alergias = this.alergias.value;
+    user.sexo = this.sexo.value;
+    user.observacionesMedicas = this.observacionesMedicas.value;
+    user.infoAdicional = this.infoAdicional.value;
     this.functions.changeShowMainPageToFalse();
     this.functions.changeToLogged();
   }
   setName(user) {
-    return this.auth.updateUser(user, { name:  this.name.value} );
+    //return this.auth.updateUser(user, { name:  this.name.value} );
   }
   setSurname(user) {
-    return this.auth.updateUser(user, { surname:  this.surname.value } );
+    //return this.auth.updateUser(user, { surname:  this.surname.value } );
   }
   setAge(user) {
-    return this.auth.updateUser(user, { age:  this.age.value });
+    //return this.auth.updateUser(user, { age:  this.age.value });
   }
 
   setAlergias(user) {
-    return this.auth.updateUser(user, { alergias:  this.alergias.value });
+    //return this.auth.updateUser(user, { alergias:  this.alergias.value });
   }
   setObservacionesMedicas(user) {
-    return this.auth.updateUser(user, { observacionesMedicas:  this.observacionesMedicas.value });
+    //return this.auth.updateUser(user, { observacionesMedicas:  this.observacionesMedicas.value });
   }
   setInfoAdicional(user) {
-    return this.auth.updateUser(user, { infoAdicional:  this.infoAdicional.value });
+    //return this.auth.updateUser(user, { infoAdicional:  this.infoAdicional.value });
   }
 
   goBackRegister() {

@@ -5,8 +5,9 @@ import * as firebase from 'firebase/app';
 
 import { Observable } from 'rxjs/Observable';
 import {FunctionsService} from './functions.service';
+import {User} from './core/User';
 
-@Injectable()
+/*@Injectable()
 export class AuthService {
   user: Observable<firebase.User>;
   error: boolean;
@@ -14,6 +15,33 @@ export class AuthService {
   constructor(private firebaseAuth: AngularFireAuth, public functions: FunctionsService) {
     this.user = firebaseAuth.authState;
     this.error = false;
+  }
+
+
+  login(email: string, password: string) {
+    this.firebaseAuth
+      .auth
+      .signInWithEmailAndPassword(email, password)
+      .then(value => {
+        this.error = false;
+        console.log('Nice, it worked!', value.message);
+      })
+      .catch(err => {
+        this.error = true;
+        console.log('Something went wrong:', err.message);
+      });
+  }
+
+  
+
+}*/
+@Injectable()
+export class AuthService {
+  user: Observable<firebase.User>;
+  error: boolean;
+
+  constructor(private firebaseAuth: AngularFireAuth, public functions: FunctionsService) {
+    this.user = firebaseAuth.authState;
   }
 
   signup(email: string, password: string) {
@@ -30,20 +58,41 @@ export class AuthService {
       });
   }
 
-  login(email: string, password: string) {
-    this.firebaseAuth
-      .auth
-      .signInWithEmailAndPassword(email, password)
-      .then(value => {
-        this.error = false;
-        console.log('Nice, it worked!', value.message);
-      })
-      .catch(err => {
-        this.error = true;
-        console.log('Something went wrong:', err.message);
-      });
+  login(email: string, password: string){
+    let user = new User({
+      uid: "",
+      email: "",
+      name: "",
+      surname:"",
+      photoURL: "",
+      sexo:"",
+      infoAdicional:"",
+      observacionesMedicas:"",
+      age:"",
+      alergias:""
+    })
+    
+   return new Promise((resolve, reject) => {this.firebaseAuth
+        .auth
+        .signInWithEmailAndPassword(email, password)
+        .then(value => {
+          console.log("Loggeado correctamente")
+          user._name = value.displayName;
+          user.surname = value.surname;
+          user._sexo = value._sexo;
+          user._infoAdicional = value._infoAdicional;
+          user._alergias = value._alergias;
+          user._observacionesMedicas = value._observacionesMedicas;
+          user._email = email;
+          user._photoURL = value.photoURL;
+          user._uid = value.uid;
+          resolve(user);
+        })
+        .catch(err => {
+          console.log("Error: ", err.message);
+          reject(err);
+        });});
   }
-
   logout() {
     this.firebaseAuth
       .auth
@@ -51,5 +100,4 @@ export class AuthService {
     this.functions.changeShowMainPageToTrue();
     this.functions.changeToNotLogged();
   }
-
 }
