@@ -38,6 +38,8 @@ export class NewExperimentComponent implements OnInit {
 
   buttonEnabled: boolean;
 
+  textoDesplegable: String;
+
   constructor(private afs: AngularFirestore) {
     this.dateHourArray = new Array<Date>();
     this.changingValueProgres = 0;
@@ -56,6 +58,7 @@ export class NewExperimentComponent implements OnInit {
     this.descriptionEntered = false;
     this.buttonEnabled = false;
     this.spinnerLoading = false;
+    this.textoDesplegable = "Añadir perfil de sujeto";
   }
 
   ngOnInit() {
@@ -143,7 +146,7 @@ export class NewExperimentComponent implements OnInit {
       this.buttonEnabled = false;
     }
   }
-  
+
   clearFields(){
     this.dateHourArray = new Array<Date>();
     this.changingValueProgres = 0;
@@ -179,4 +182,11 @@ export class NewExperimentComponent implements OnInit {
     });
   }
 
+  cambiaMensaje(){
+    if(!this.collapse){
+      this.textoDesplegable = "Cerrar"
+    }else {
+      this.textoDesplegable = "Añadir perfil de sujeto"
+    }
+  }
 }
