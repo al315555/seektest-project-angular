@@ -58,14 +58,7 @@ export class UserFormComponent implements OnInit {
     });
 
   }
-  get n(){
-    this.userState = this.auth.user.map(user => {
-      if (user) {
-        return user.displayName;
-      }
-    });
-    return null;
-  }
+  
 
   get email() { return this.signupForm.get('email'); }
   get password() { return this.signupForm.get('password'); }
@@ -84,10 +77,11 @@ export class UserFormComponent implements OnInit {
   
 
   setUserInfo(user) {
-    this.auth.updateUser(user, { name:  this.name.value, surname:  this.surname.value,
+    /*this.auth.updateUser(user, { name:  this.name.value, surname:  this.surname.value,
       age:  this.age.value, alergias:  this.alergias.value, sexo: this.sexo.value,
-      observacionesMedicas:  this.observacionesMedicas.value, infoAdicional:  this.infoAdicional.value } );
+      observacionesMedicas:  this.observacionesMedicas.value, infoAdicional:  this.infoAdicional.value } );*/
 
+    
     user.name = this.name.value;
     user.surname = this.surname.value;
     user.age = this.age.value;
@@ -95,6 +89,11 @@ export class UserFormComponent implements OnInit {
     user.sexo = this.sexo.value;
     user.observacionesMedicas = this.observacionesMedicas.value;
     user.infoAdicional = this.infoAdicional.value;
+    
+    /*this.auth.updateUser(user, { name:  this.name.value, surname:  this.surname.value,
+      age:  this.age.value, alergias:  this.alergias.value, sexo: this.sexo.value,
+      observacionesMedicas:  this.observacionesMedicas.value, infoAdicional:  this.infoAdicional.value } );*/
+    this.auth.setUserDoc(user);
 
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
 
