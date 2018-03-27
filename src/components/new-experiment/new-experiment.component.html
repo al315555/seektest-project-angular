@@ -1,12 +1,4 @@
-<div *ngIf="experimentAdded">
-    <sui-message class="success">
-        <div class="header">
-            Experimento añadido!
-        </div>
-        <p>El experimento se ha añadido correctamente.</p>
-    </sui-message>
-</div>
-
+<app-message-toast></app-message-toast>
 <div class="ui padded segment form-size">
 
   <h2 class="ui left floated header">Nuevo Experimento</h2>
@@ -14,12 +6,12 @@
   <div class="ui form">
     <div [suiCollapse]="!collapse">
       <div class="field">
-        <label>Titulo del experimento</label>
+        <label>Titulo del experimento*</label>
         <input [(ngModel)]="title" type="text" placeholder="titulo" (input)="changeTitle()" required>
       </div>
       <div class="two fields">
         <div class="field">
-          <label>Fechas de las sesiones</label>
+          <label>Fechas de las sesiones*</label>
           <div class="ui left icon input">
             <i class="calendar icon"></i>
             <input suiDatepicker [(ngModel)]="dateHourSelected" [pickerMode]="mode" [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
@@ -48,19 +40,27 @@
           <br>
         </div>
       </div>
+      <div class="field">
+        <label>Lugar*</label>
+        <input type="text" [(ngModel)]="place" placeholder="lugar" (input)="changePlace()" required>
+      </div>
       <div class="two fields">
         <div class="field">
-          <label>Lugar</label>
-          <input type="text" [(ngModel)]="place" placeholder="lugar" (input)="changePlace()" required>
+          <label>Duración*</label>
+          <input type="number" [(ngModel)]="duration" placeholder="duracion en horas" (input)="changeDuration()" min="0" max="99999999" required>
         </div>
         <div class="field">
-          <label>Numero de plazas</label>
-          <input type="number" [(ngModel)]="numberParticipants" (input)="changeNumberParticipants()" min="0" max="99999999" required>
+          <label>Numero de plazas*</label>
+          <input type="number" [(ngModel)]="numberParticipants" placeholder="numero de plazas" (input)="changeNumberParticipants()" min="0" max="99999999" required>
         </div>
       </div>
       <div class="field">
-        <label>Descripcion</label>
-        <textarea [(ngModel)]="description" rows="4" (input)="changeDescription()" required></textarea>
+        <label>Descripcion*</label>
+        <textarea placeholder="descripcion" [(ngModel)]="description" rows="4" (input)="changeDescription()" required></textarea>
+      </div>
+      <div class="field">
+        <label>Premio</label>
+        <input type="text" [(ngModel)]="gift" placeholder="premio">
       </div>
     </div>
     <br>
@@ -88,7 +88,8 @@
           <label>Sexo de preferencia</label>
           <div class="ui radio">
             <input [(ngModel)]="perfilSexo" type="radio" name="sexo" value="hombre"> Hombre &nbsp;
-            <input [(ngModel)]="perfilSexo" type="radio" name="sexo" value="mujer"> Mujer
+            <input [(ngModel)]="perfilSexo" type="radio" name="sexo" value="mujer"> Mujer &nbsp;
+            <input [(ngModel)]="perfilSexo" type="radio" name="sexo" value=null> Indefinido
           </div>
         </div>
         <div class="field">

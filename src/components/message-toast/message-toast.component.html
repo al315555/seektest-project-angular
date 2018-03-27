@@ -1,0 +1,8 @@
+<div *ngFor="let message of messages">
+    <sui-message class={{message.type}}>
+        <div class="header">
+            {{message.title}}
+        </div>
+        <p>{{message.description}}</p>
+    </sui-message>
+</div>
