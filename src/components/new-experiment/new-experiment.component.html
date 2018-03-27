@@ -8,7 +8,7 @@
 </div>
 
 <div class="ui padded segment form-size">
-    
+
   <h2 class="ui left floated header">Nuevo Experimento</h2>
   <div class="ui clearing divider"></div>
   <div class="ui form">
@@ -65,8 +65,8 @@
     </div>
     <br>
     <div class="field">
-      <button class="ui primary button maxsize" (click)="collapse = !collapse">
-        Crear perfil de sujeto
+      <button class="ui primary button maxsize" (click)="collapse = !collapse; cambiaMensaje()">
+        {{textoDesplegable}}
       </button>
       <br>
       <br>
