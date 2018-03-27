@@ -1,11 +1,16 @@
 <!--<ng-container *ngIf="(auth.user | async) || {} as user">-->
 <app-logged *ngIf="authService.user | async"></app-logged>
 
+<br/><br/><br/><br/><br/>
+<div *ngIf="!(authService.user | async)">
 <div class="ui error message" *ngIf="(authService.error)">
-  <div class="ui header">Error en la autentificación, pruebe de nuevo.</div>
+  <div class="ui header" >Credenciales incorrectas o usuario deshabilitado, pruebe de nuevo.</div>
 </div>
 
-<div class="ui middle aligned centered grid" *ngIf="!(authService.user | async)">
+<app-login-spinner showed="{{autentify}}" message="Autenticando usuario..." >
+</app-login-spinner>
+
+<div class="ui middle aligned centered grid" >
 
   <div class="ui column">
     <h1 class="ui image header" style="margin-left: 10%; margin-right: 10%">
@@ -26,7 +31,7 @@
           <input type="password" [(ngModel)]="password" placeholder="contraseña">
         </div>
         <div style="margin-left: 20%; margin-right: 20%">
-          <button class="ui fluid inverted blue submit button" (click)="login()" [disabled]="!email || !password">
+          <button class="ui fluid inverted blue submit button" (click)="login()" [disabled]="!email || !password" >
             Autentificarse
           </button>
           <br/>
@@ -41,3 +46,4 @@
   </div>
 </div>
 
+</div>

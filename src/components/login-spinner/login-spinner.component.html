@@ -1,3 +1,6 @@
-<div class="ui active dimmer">
-  <div class="ui massive text loader">{{message}}</div>
+<div *ngIf="showed" class="ui active dimmer">
+  <div class="ui text loader">
+    {{message}}
+  </div>
 </div>
+

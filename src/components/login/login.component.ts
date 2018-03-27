@@ -13,17 +13,26 @@ export class LoginComponent {
   password: string;
   errorHappened: boolean;
   logged: boolean;
+  autentify: boolean;
 
   constructor(public authService: AuthService, public functions: FunctionsService) {}
-  
+
   signup() {
     this.authService.signup(this.email, this.password);
     this.email = this.password = '';
   }
 
   login() {
-    this.authService.login(this.email, this.password);
-    this.email = this.password = '';
+    this.autentify = true;
+    this.authService.login(this.email, this.password)
+      .catch(errr => {
+        this.autentify = false;
+      } )
+      .then( value => {
+        this.autentify = false;
+        this.email = this.password = '';
+    });
+
   }
 
   logout() {

@@ -9,11 +9,22 @@ import {FunctionsService} from './functions.service';
 @Injectable()
 export class AuthService {
   user: Observable<firebase.User>;
+  private isLogged: boolean;
   error: boolean;
 
-  constructor(private firebaseAuth: AngularFireAuth, public functions: FunctionsService) {
+  constructor(public firebaseAuth: AngularFireAuth, public functions: FunctionsService) {
     this.user = firebaseAuth.authState;
     this.error = false;
+    this.isLogged = firebaseAuth.authState === null ? false : true;
+    if (this.isLogged) {
+      this.functions.changeToLogged();
+    } else {
+      this.functions.changeToNotLogged();
+    }
+  }
+
+  isAnyoneLogged(): boolean {
+    return this.isLogged;
   }
 
   signup(email: string, password: string) {
@@ -23,26 +34,38 @@ export class AuthService {
       .then(value => {
         console.log('Success!', value);
         this.error = false;
+        this.isLogged = true;
+        this.functions.changeToLogged();
       })
       .catch(err => {
         console.log('Something went wrong:', err.message);
         this.error = true;
+        this.isLogged = false;
+        this.functions.changeToNotLogged();
       });
   }
 
   login(email: string, password: string) {
-    this.firebaseAuth
+
+    return new Promise((resolve, reject) => {this.firebaseAuth
       .auth
       .signInWithEmailAndPassword(email, password)
       .then(value => {
         this.error = false;
+        this.isLogged = true;
+        this.functions.changeToLogged();
         console.log('Nice, it worked!', value.message);
+        resolve(value.message);
       })
       .catch(err => {
         this.error = true;
+        this.isLogged = false;
+        this.functions.changeToNotLogged();
         console.log('Something went wrong:', err.message);
-      });
+        reject(err.message);
+      }); });
   }
+
 
   logout() {
     this.firebaseAuth
@@ -50,6 +73,7 @@ export class AuthService {
       .signOut();
     this.functions.changeShowMainPageToTrue();
     this.functions.changeToNotLogged();
+    this.isLogged = false;
   }
 
 }

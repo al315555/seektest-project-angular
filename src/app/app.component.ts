@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { LoginSpinnerComponent } from '../components/login-spinner/login-spinner.component';
-import { AuthService } from './core/auth.service';
+import { AuthService } from './auth.service';
 import { NotifyService } from './core/notify.service';
 import {FunctionsService} from './functions.service';
 
@@ -18,6 +18,13 @@ export class AppComponent {
 
   constructor(public authService: AuthService, public functionsService: FunctionsService) {
     this.login = false; this.register = false; this.showMainPage = this.functionsService.showMainPage;
+    const isLogged = this.authService.firebaseAuth.authState === null ? false : true;
+    if (isLogged) {
+      this.functionsService.changeToLogged();
+      this.clickOnLogin();
+    } else {
+      this.functionsService.changeToNotLogged();
+    }
   }
 
   clickOnRegister() {

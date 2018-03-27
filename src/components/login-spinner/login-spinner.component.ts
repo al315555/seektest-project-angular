@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import {AuthService} from '../../app/auth.service';
 
 @Component({
   selector: 'app-login-spinner',
@@ -7,9 +8,9 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class LoginSpinnerComponent implements OnInit {
   @Input() message: string;
+  @Input() showed: boolean;
 
-  constructor() { 
-  }
+  constructor(public authService: AuthService) { }
 
   ngOnInit() {
   }
