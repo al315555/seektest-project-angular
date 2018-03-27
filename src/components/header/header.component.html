@@ -7,7 +7,9 @@
 
     <button class="ui icon button" (click)="selectPerfil()">
       <i class="user icon"></i>
-      {{ (authService.user | async)?.email }}
+      {{ (authService.user | async)?.name }}
+      &nbsp;
+      {{ (authService.user | async)?.surname }}
     </button>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <button class="ui icon button" (click)="logout()" *ngIf="authService.user | async">

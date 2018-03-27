@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../app/core/auth.service';
+import { AuthService } from '../../app/auth.service';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import {FunctionsService} from '../../app/functions.service';
+import {User} from '../../app/core/User';
+import * as firebase from 'firebase/app';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 
 @Component({
   selector: 'app-user-form',
@@ -16,13 +20,13 @@ export class UserFormComponent implements OnInit {
 
   userState;
 
-  constructor(public fb: FormBuilder, public auth: AuthService, public functions: FunctionsService) { }
+  constructor(public fb: FormBuilder,private afs: AngularFirestore, public auth: AuthService, public functions: FunctionsService) { }
 
   ngOnInit() {
 
     this.userState = this.auth.user.map(user => {
       if (user) {
-        return user.age ? 'complete' : 'incomplete';
+        return user.displayName ? 'complete' : 'incomplete';
       }
     });
 
@@ -57,7 +61,7 @@ export class UserFormComponent implements OnInit {
   get n(){
     this.userState = this.auth.user.map(user => {
       if (user) {
-        return user.name;
+        return user.displayName;
       }
     });
     return null;
@@ -75,15 +79,29 @@ export class UserFormComponent implements OnInit {
   get infoAdicional() { return this.detailForm.get('infoAdicional'); }
 
   signup() {
-    return this.auth.emailSignUp(this.email.value, this.password.value);
+    return this.auth.signup(this.email.value, this.password.value);
   }
+  
 
   setUserInfo(user) {
     this.auth.updateUser(user, { name:  this.name.value, surname:  this.surname.value,
       age:  this.age.value, alergias:  this.alergias.value, sexo: this.sexo.value,
       observacionesMedicas:  this.observacionesMedicas.value, infoAdicional:  this.infoAdicional.value } );
+
+    user.name = this.name.value;
+    user.surname = this.surname.value;
+    user.age = this.age.value;
+    user.alergias = this.alergias.value;
+    user.sexo = this.sexo.value;
+    user.observacionesMedicas = this.observacionesMedicas.value;
+    user.infoAdicional = this.infoAdicional.value;
+
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+
     this.functions.changeShowMainPageToFalse();
     this.functions.changeToLogged();
+    return userRef.set(user)
+     
   }
   setName(user) {
     return this.auth.updateUser(user, { name:  this.name.value} );

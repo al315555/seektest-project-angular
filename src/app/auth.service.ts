@@ -5,6 +5,18 @@ import * as firebase from 'firebase/app';
 
 import { Observable } from 'rxjs/Observable';
 import {FunctionsService} from './functions.service';
+import {User} from './core/User';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+
+
+
+import { Router } from '@angular/router';
+import { NotifyService } from './core/notify.service';
+
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/catch'
+
+import { switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
@@ -13,6 +25,7 @@ export class AuthService {
   error: boolean;
 
   constructor(public firebaseAuth: AngularFireAuth, public functions: FunctionsService) {
+  constructor(private afAuth: AngularFireAuth,private firebaseAuth: AngularFireAuth,private afs: AngularFirestore, public functions: FunctionsService, private notify: NotifyService) {
     this.user = firebaseAuth.authState;
     this.error = false;
     this.isLogged = firebaseAuth.authState === null ? false : true;
@@ -36,36 +49,29 @@ export class AuthService {
         this.error = false;
         this.isLogged = true;
         this.functions.changeToLogged();
+    return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+      .then(user => {
+        return this.setUserDoc(user) // create initial user document
       })
       .catch(err => {
         console.log('Something went wrong:', err.message);
         this.error = true;
-        this.isLogged = false;
-        this.functions.changeToNotLogged();
       });
   }
 
   login(email: string, password: string) {
-
-    return new Promise((resolve, reject) => {this.firebaseAuth
+    this.firebaseAuth
       .auth
       .signInWithEmailAndPassword(email, password)
       .then(value => {
         this.error = false;
-        this.isLogged = true;
-        this.functions.changeToLogged();
         console.log('Nice, it worked!', value.message);
-        resolve(value.message);
       })
       .catch(err => {
         this.error = true;
-        this.isLogged = false;
-        this.functions.changeToNotLogged();
         console.log('Something went wrong:', err.message);
-        reject(err.message);
-      }); });
+      });
   }
-
 
   logout() {
     this.firebaseAuth
@@ -73,7 +79,6 @@ export class AuthService {
       .signOut();
     this.functions.changeShowMainPageToTrue();
     this.functions.changeToNotLogged();
-    this.isLogged = false;
   }
 
 }

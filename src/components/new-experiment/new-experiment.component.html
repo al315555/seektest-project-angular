@@ -1,18 +1,21 @@
-<div class="ui raised very padded text container segment">
-  <div style="margin-left: 40%; margin-right: 40%;">
-    <button class="ui inverted blue labeled icon button" (click)="functions.selectExperimentos()">
-      <i class="left arrow icon"></i>
-      <span class="ui text">Volver</span>
-    </button>
-  </div>
-  <br/><br/>
+<div *ngIf="experimentAdded">
+    <sui-message class="success">
+        <div class="header">
+            Experimento añadido!
+        </div>
+        <p>El experimento se ha añadido correctamente.</p>
+    </sui-message>
+</div>
+
+<div class="ui padded segment form-size">
+    
   <h2 class="ui left floated header">Nuevo Experimento</h2>
   <div class="ui clearing divider"></div>
   <div class="ui form">
     <div [suiCollapse]="!collapse">
       <div class="field">
         <label>Titulo del experimento</label>
-        <input type="text" placeholder="titulo">
+        <input [(ngModel)]="title" type="text" placeholder="titulo" (input)="changeTitle()" required>
       </div>
       <div class="two fields">
         <div class="field">
@@ -24,7 +27,7 @@
         </div>
         <div class="field">
           <label>&nbsp;</label>
-          <div class="ui vertical animated button maxsize" (click)="addDate()" tabindex="0">
+          <div class="ui vertical animated button maxsize hovergreen" (click)="addDate()" tabindex="0">
             <div class="hidden content">Añadir</div>
             <div class="visible content">
               <i class="plus icon"></i>
@@ -41,22 +44,23 @@
               Eliminar
             </div>
           </div>
-          <br><br>
+          <br>
+          <br>
         </div>
       </div>
       <div class="two fields">
         <div class="field">
           <label>Lugar</label>
-          <input type="text" placeholder="lugar">
+          <input type="text" [(ngModel)]="place" placeholder="lugar" (input)="changePlace()" required>
         </div>
         <div class="field">
           <label>Numero de plazas</label>
-          <input type="number" min="0" max="99999999">
+          <input type="number" [(ngModel)]="numberParticipants" (input)="changeNumberParticipants()" min="0" max="99999999" required>
         </div>
       </div>
       <div class="field">
         <label>Descripcion</label>
-        <textarea rows="4"></textarea>
+        <textarea [(ngModel)]="description" rows="4" (input)="changeDescription()" required></textarea>
       </div>
     </div>
     <br>
@@ -67,15 +71,40 @@
       <br>
       <br>
       <div [suiCollapse]="collapse">
-        <div class="ui segment">
-          <h4 class="ui header">Perfil de sujeto</h4>
-          <p>Content of the panel.</p>
+        <h4 class="ui header">Perfil de sujeto a buscar</h4>
+        <div class="two fields">
+          <div class="field">
+            <label>Rango de edad</label>
+            De &nbsp;
+            <input [(ngModel)]="edadInicio" type="number" placeholder="años" min="0" max="999999">
+          </div>
+          <div class="field">
+            <label>&nbsp;</label>
+            a &nbsp;
+            <input [(ngModel)]="edadFinal" type="number" placeholder="años" min="0" max="999999">
+          </div>
         </div>
+        <div class="field">
+          <label>Sexo de preferencia</label>
+          <div class="ui radio">
+            <input [(ngModel)]="perfilSexo" type="radio" name="sexo" value="hombre"> Hombre &nbsp;
+            <input [(ngModel)]="perfilSexo" type="radio" name="sexo" value="mujer"> Mujer
+          </div>
+        </div>
+        <div class="field">
+          <label>Alergias</label>
+          <input [(ngModel)]="alergias" type="text" class="input">
+        </div>
+        <div class="field">
+          <label>Observaciones Médicas</label>
+          <input [(ngModel)]="medicalObs" type="text" class="input">
+        </div>
+        <br>
       </div>
-    </div>
-
-    <div class="field">
-      <sui-progress class="tiny" [value]="changingValueProgres">Progreso</sui-progress>
+      <button [ngClass]="{disabled : !buttonEnabled}" (click)="addExperiment()" class="ui fluid inverted blue submit button">Crear nuevo experimento</button>
     </div>
   </div>
-</div>
+  <sui-progress class="bottom attached indicating active" [value]="changingValueProgres">Progreso</sui-progress>
+  <div *ngIf="spinnerLoading" class="ui active inverted dimmer">
+    <div  class="ui text loader">Subiendo experimento...</div>
+  </div>
