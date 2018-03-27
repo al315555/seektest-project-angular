@@ -92,7 +92,7 @@ setUserDoc(user) {
         .auth
         .signInWithEmailAndPassword(email, password)
         .then(value => {
-          console.log("Loggeado correctamente: "+value)
+          console.log(value)
           user._name = value.name;
           user._surname = value.surname;
           user._sexo = value.sexo;

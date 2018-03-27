@@ -1,14 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { MessageToast } from '../../models/message-toast';
+import { MessageToastComponent } from '../message-toast/message-toast.component';
 @Component({
   selector: 'app-new-experiment',
   templateUrl: './new-experiment.component.html',
   styleUrls: ['./new-experiment.component.css']
 })
-export class NewExperimentComponent implements OnInit {
-  experimentAdded: boolean;
+export class NewExperimentComponent{
+  @ViewChild(MessageToastComponent) messageToast: MessageToastComponent;
+
+  messages: MessageToast[];
   spinnerLoading: boolean;
   collapse: boolean;
   changingValueProgres: number;
@@ -49,12 +53,13 @@ export class NewExperimentComponent implements OnInit {
     this.dateHourArray = new Array<Date>();
     this.changingValueProgres = 0;
     this.collapse = true;
-    this.experimentAdded = false;
+    this.messages = [];
     this.edadInicio = null;
     this.edadFinal = null;
     this.alergias = null;
     this.medicalObs = null;
     this.perfilSexo = null;
+    this.gift = null;
     
     this.durationEntered = false;
     this.titleEntered = false;
@@ -65,10 +70,6 @@ export class NewExperimentComponent implements OnInit {
     this.buttonEnabled = false;
     this.spinnerLoading = false;
     this.textoDesplegable = "Añadir perfil de sujeto";
-  }
-
-  ngOnInit() {
-
   }
 
   addDate() {
@@ -192,23 +193,28 @@ export class NewExperimentComponent implements OnInit {
   }
 
   addExperiment(){
-    this.spinnerLoading = true
-    let userProfile = {sexo: this.perfilSexo, rangoEdad: {inicio: this.edadInicio, final: this.edadFinal}, alergias: this.alergias, medicalObs: this.medicalObs}
-    this.afs.collection('experiments').add({title:this.title,place:this.place,numberParticipants:this.numberParticipants,description: this.description,dates: this.dateHourArray, gift:this.gift, duration: this.duration ,userProfile: userProfile})
-    .then(value => {
-      this.spinnerLoading = false;
-      this.clearFields();
-      this.experimentAdded = true;
-    }).catch(value => {
-      this.spinnerLoading = false;
-    });
+    if(this.edadInicio!=null && this.edadFinal!=null && this.edadInicio > this.edadFinal){
+      this.messageToast.pushMessage({title:"Error!",description:"La edad de inicio no puede ser mayor que la de fin.",type:"error"});
+    }else{
+      this.spinnerLoading = true
+      let userProfile = {sexo: this.perfilSexo, rangoEdad: {inicio: this.edadInicio, final: this.edadFinal}, alergias: this.alergias, medicalObs: this.medicalObs}
+      this.afs.collection('experiments').add({title:this.title,place:this.place,numberParticipants:this.numberParticipants,description: this.description,dates: this.dateHourArray, gift:this.gift, duration: this.duration ,userProfile: userProfile})
+      .then(value => {
+        this.spinnerLoading = false;
+        this.clearFields();
+        this.messageToast.pushMessage({title: "Experimento añadido!", description:"El experimento ha sido añadido correctamente",type:"success"})
+      }).catch(value => {
+        this.spinnerLoading = false;
+        this.messages.push({title: "Ha habido un error!", description:"No se ha podido subir el experimento, intentelo mas tarde.",type:"error"})
+      });
+    }
   }
 
   cambiaMensaje(){
     if(!this.collapse){
       this.textoDesplegable = "Cerrar"
     }else {
-      this.textoDesplegable = "Añadir perfil de sujeto"
+      this.textoDesplegable = "Añadir un perfil de sujeto"
     }
   }
 }

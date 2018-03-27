@@ -1,12 +1,4 @@
-<div *ngIf="experimentAdded">
-    <sui-message class="success">
-        <div class="header">
-            Experimento añadido!
-        </div>
-        <p>El experimento se ha añadido correctamente.</p>
-    </sui-message>
-</div>
-
+<app-message-toast></app-message-toast>
 <div class="ui padded segment form-size">
 
   <h2 class="ui left floated header">Nuevo Experimento</h2>
@@ -64,7 +56,7 @@
       </div>
       <div class="field">
         <label>Descripcion*</label>
-        <textarea [(ngModel)]="description" rows="4" (input)="changeDescription()" required></textarea>
+        <textarea placeholder="descripcion" [(ngModel)]="description" rows="4" (input)="changeDescription()" required></textarea>
       </div>
       <div class="field">
         <label>Premio</label>
@@ -96,7 +88,8 @@
           <label>Sexo de preferencia</label>
           <div class="ui radio">
             <input [(ngModel)]="perfilSexo" type="radio" name="sexo" value="hombre"> Hombre &nbsp;
-            <input [(ngModel)]="perfilSexo" type="radio" name="sexo" value="mujer"> Mujer
+            <input [(ngModel)]="perfilSexo" type="radio" name="sexo" value="mujer"> Mujer &nbsp;
+            <input [(ngModel)]="perfilSexo" type="radio" name="sexo" value=null> Indefinido
           </div>
         </div>
         <div class="field">
