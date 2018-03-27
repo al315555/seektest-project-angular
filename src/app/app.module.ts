@@ -24,6 +24,7 @@ import {UserDataComponent} from '../components/user-data/user-data.component';
 import {LoggedComponent} from '../components/logged/logged.component';
 import {NewExperimentComponent } from '../components/new-experiment/new-experiment.component';
 import {SuiModule} from 'ng2-semantic-ui';
+import { ExperimentCardComponent } from '../components/experiment-card/experiment-card.component';
 import { MessageToastComponent } from '../components/message-toast/message-toast.component';
 
 // import { AngularFirestoreModule } from 'angularfire2/firestore';
@@ -40,7 +41,7 @@ import { MessageToastComponent } from '../components/message-toast/message-toast
     UserDataComponent,
     LoggedComponent,
     NewExperimentComponent,
-    MessageToastComponent
+    ExperimentCardComponent
   ],
   imports: [
     BrowserModule,
