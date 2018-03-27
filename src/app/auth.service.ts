@@ -28,7 +28,7 @@ export class AuthService {
   }
 
   signup(email: string, password: string) {
-   /* return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+    /*return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then(user => {
         return this.setUserDoc(user) // create initial user document
       })
@@ -56,7 +56,7 @@ export class AuthService {
 // Sets user data to firestore after succesful login
 setUserDoc(user) {
 
-  const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user._uid}`);
+  const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
 
   const data: User = {
     _uid: user.uid,
