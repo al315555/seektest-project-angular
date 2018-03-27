@@ -14,12 +14,12 @@
   <div class="ui form">
     <div [suiCollapse]="!collapse">
       <div class="field">
-        <label>Titulo del experimento</label>
+        <label>Titulo del experimento*</label>
         <input [(ngModel)]="title" type="text" placeholder="titulo" (input)="changeTitle()" required>
       </div>
       <div class="two fields">
         <div class="field">
-          <label>Fechas de las sesiones</label>
+          <label>Fechas de las sesiones*</label>
           <div class="ui left icon input">
             <i class="calendar icon"></i>
             <input suiDatepicker [(ngModel)]="dateHourSelected" [pickerMode]="mode" [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
@@ -48,25 +48,33 @@
           <br>
         </div>
       </div>
+      <div class="field">
+        <label>Lugar*</label>
+        <input type="text" [(ngModel)]="place" placeholder="lugar" (input)="changePlace()" required>
+      </div>
       <div class="two fields">
         <div class="field">
-          <label>Lugar</label>
-          <input type="text" [(ngModel)]="place" placeholder="lugar" (input)="changePlace()" required>
+          <label>Duración*</label>
+          <input type="number" [(ngModel)]="duration" placeholder="duracion en horas" (input)="changeDuration()" min="0" max="99999999" required>
         </div>
         <div class="field">
-          <label>Numero de plazas</label>
-          <input type="number" [(ngModel)]="numberParticipants" (input)="changeNumberParticipants()" min="0" max="99999999" required>
+          <label>Numero de plazas*</label>
+          <input type="number" [(ngModel)]="numberParticipants" placeholder="numero de plazas" (input)="changeNumberParticipants()" min="0" max="99999999" required>
         </div>
       </div>
       <div class="field">
-        <label>Descripcion</label>
+        <label>Descripcion*</label>
         <textarea [(ngModel)]="description" rows="4" (input)="changeDescription()" required></textarea>
+      </div>
+      <div class="field">
+        <label>Premio</label>
+        <input type="text" [(ngModel)]="gift" placeholder="premio">
       </div>
     </div>
     <br>
     <div class="field">
       <button class="ui primary button maxsize" (click)="collapse = !collapse">
-        Crear perfil de sujeto
+        Añadir perfil de sujeto
       </button>
       <br>
       <br>

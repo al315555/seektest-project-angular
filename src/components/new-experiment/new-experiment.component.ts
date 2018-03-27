@@ -12,7 +12,7 @@ export class NewExperimentComponent implements OnInit {
   spinnerLoading: boolean;
   collapse: boolean;
   changingValueProgres: number;
-  progresIncrement: number = 20;
+  progresIncrement: number = 16.7;
 
   dateHourArray: Date[];
   dateHourSelected: Date;
@@ -24,11 +24,16 @@ export class NewExperimentComponent implements OnInit {
   place: String;
   placeEntered: boolean;
 
+  duration: number;
+  durationEntered: boolean;
+
   numberParticipants: number;
   numberParticipantsEntered: boolean;
 
   description: String;
   descriptionEntered: boolean;
+
+  gift: String;
 
   perfilSexo: String;
   edadInicio: Number;
@@ -48,7 +53,8 @@ export class NewExperimentComponent implements OnInit {
     this.alergias = null;
     this.medicalObs = null;
     this.perfilSexo = null;
-
+    
+    this.durationEntered = false;
     this.titleEntered = false;
     this.dateHourEntered = false;
     this.placeEntered = false;
@@ -110,6 +116,19 @@ export class NewExperimentComponent implements OnInit {
     this.buttonEnable();
   }
 
+  changeDuration(){
+    if ((this.durationEntered) && (this.duration == null || this.duration <= 0)) {
+      this.durationEntered = false;
+      this.changingValueProgres -= this.progresIncrement;
+    } else {
+      if (!this.durationEntered && this.duration > 0) {
+        this.durationEntered = true;
+        this.changingValueProgres += this.progresIncrement;
+      }
+    }
+    this.buttonEnable();
+  }
+
   changeNumberParticipants() {
     if ((this.numberParticipantsEntered) && (this.numberParticipants == null || this.numberParticipants <= 0)) {
       this.numberParticipantsEntered = false;
@@ -152,6 +171,8 @@ export class NewExperimentComponent implements OnInit {
     this.numberParticipants = null;
     this.description = "";
     this.edadFinal = null;
+    this.duration = null;
+    this.gift = null;
     this.edadInicio = null;
     this.perfilSexo = null;
     this.alergias = null;
@@ -164,12 +185,13 @@ export class NewExperimentComponent implements OnInit {
     this.buttonEnabled = false;
     this.spinnerLoading = false;
     this.buttonEnabled = false;
+    this.durationEntered = false;
   }
 
   addExperiment(){
     this.spinnerLoading = true
     let userProfile = {sexo: this.perfilSexo, rangoEdad: {inicio: this.edadInicio, final: this.edadFinal}, alergias: this.alergias, medicalObs: this.medicalObs}
-    this.afs.collection('experiments').add({title:this.title,place:this.place,numberParticipants:this.numberParticipants,description: this.description,dates: this.dateHourArray, userProfile: userProfile})
+    this.afs.collection('experiments').add({title:this.title,place:this.place,numberParticipants:this.numberParticipants,description: this.description,dates: this.dateHourArray, gift:this.gift, duration: this.duration ,userProfile: userProfile})
     .then(value => {
       this.spinnerLoading = false;
       this.clearFields();
