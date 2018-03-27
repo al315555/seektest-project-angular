@@ -42,7 +42,11 @@ export class FunctionsService {
     this.experimentsSelected = false;
   }
   changeShowMainPageToTrue() {
+    this.perfilSelected = false;
+    this.newExperimentSelected = false;
+    this.experimentsSelected = false;
     this.showMainPage = true;
+    this.isLogged = false;
   }
 
   changeShowMainPageToFalse() {

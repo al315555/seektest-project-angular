@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 import { NotifyService } from './core/notify.service';
 
 import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/catch'
+import 'rxjs/add/operator/catch';
 
 import { switchMap } from 'rxjs/operators';
 
@@ -22,8 +22,10 @@ import { switchMap } from 'rxjs/operators';
 export class AuthService {
   user: Observable<firebase.User>;
   error: boolean;
+  errorMessage: string;
 
-  constructor(private afAuth: AngularFireAuth,private firebaseAuth: AngularFireAuth,private afs: AngularFirestore, public functions: FunctionsService, private notify: NotifyService) {
+  constructor(private afAuth: AngularFireAuth, public firebaseAuth: AngularFireAuth, private afs: AngularFirestore,
+              public functions: FunctionsService, private notify: NotifyService) {
     this.user = firebaseAuth.authState;
   }
 
@@ -35,8 +37,8 @@ export class AuthService {
       .catch();*/
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password);
   }
-  updateUser(user: User, data: any) { 
-    //return this.afs.doc(`users/${user._uid}`).update(data)
+  updateUser(user: User, data: any) {
+    // return this.afs.doc(`users/${user._uid}`).update(data)
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user._uid}`);
     const data1: User = {
       _uid: user._uid,
@@ -49,9 +51,9 @@ export class AuthService {
       _observacionesMedicas: user._observacionesMedicas,
       _sexo: user._sexo,
       _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz',
-  }
-  return userRef.set(data1)
-    
+  };
+  return userRef.set(data1);
+
   }
 // Sets user data to firestore after succesful login
 setUserDoc(user) {
@@ -69,30 +71,30 @@ setUserDoc(user) {
     _observacionesMedicas: user.observacionesMedicas,
     _sexo: user.sexo,
     _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz',
-  }
-  return userRef.set(data)
+  };
+  return userRef.set(data);
 
 }
 
-  login(email: string, password: string){
-    let user = new User({
-      uid: "",
-      email: "",
-      name: "",
-      surname:"",
-      photoURL: "",
-      sexo:"",
-      infoAdicional:"",
-      observacionesMedicas:"",
-      age:"",
-      alergias:""
-    })
-    
+  login(email: string, password: string) {
+    const user = new User({
+      uid: '',
+      email: '',
+      name: '',
+      surname: '',
+      photoURL: '',
+      sexo: '',
+      infoAdicional: '',
+      observacionesMedicas: '',
+      age: '',
+      alergias: ''
+    });
+
    return new Promise((resolve, reject) => {this.firebaseAuth
         .auth
         .signInWithEmailAndPassword(email, password)
         .then(value => {
-          console.log(value)
+          console.log('Loggeado correctamente: ' + value);
           user._name = value.name;
           user._surname = value.surname;
           user._sexo = value.sexo;
@@ -105,9 +107,10 @@ setUserDoc(user) {
           resolve(user);
         })
         .catch(err => {
-          console.log("Error: ", err.message);
+          console.log('Error: ', err.message);
+          this.errorMessage = err.message;
           reject(err);
-        });});
+        }); });
   }
   logout() {
     this.firebaseAuth

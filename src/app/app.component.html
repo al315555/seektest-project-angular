@@ -19,5 +19,5 @@
   </div>
 </div>
 
-<app-user-form *ngIf="register && !functionsService.showMainPage"></app-user-form>
-<app-login *ngIf="(functionsService.isLogged)||(login && !functionsService.showMainPage)"></app-login>
+<app-user-form *ngIf="register && !functionsService.showMainPage && !login"></app-user-form>
+<app-login *ngIf="!register && ((functionsService.isLogged)||(login && !functionsService.showMainPage))"></app-login>

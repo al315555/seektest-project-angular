@@ -14,23 +14,33 @@
         <div class="ui large form">
           <div class="field">
             <label>Correo electronico</label>
-            <input type="email" class="ui input" placeholder="dirección de correo" [class.is-danger]="email.invalid && email.dirty"
+            <input type="email" class="ui input" placeholder="Dirección de correo" [class.is-danger]="email.invalid && email.dirty"
             formControlName="email" required autocomplete="off">
             <div *ngIf="email.invalid && email.dirty" class="notification is-danger">
               <p style="color: darkorange !important;">Correo no válido.</p>
           </div>
           </div>
           <div class="field">
-            <label>Contraseña</label>
-            <input type="password" placeholder="contraseña" class="ui input" [class.is-danger]="password.invalid && password.touched"
+            <label>Nueva contraseña</label>
+            <input type="password" placeholder="Contraseña" class="ui input" [class.is-danger]="password.invalid && password.touched"
             formControlName="password" required>
             <div *ngIf="password.invalid && password.dirty" class="notification is-danger">
               <p style="color: darkorange !important;">La contraseña debe tener entre 6 - 24 caracteres y contener una letra y número.</p>
             </div>
           </div>
+          <div class="field">
+            <label>Repetir contraseña</label>
+            <input type="password" placeholder="Repetir contraseña" class="ui input"
+                   formControlName="password2" required>
+            <div *ngIf="!areEqual()" class="notification is-danger">
+              <p style="color: darkorange !important;">Las contraseñas no coinciden.</p>
+            </div>
+          </div>
           <div style="margin-left: 20%; margin-right: 20%">
-            <button class="ui fluid inverted blue submit button" type="submit" [disabled]="!signupForm.valid" >
-              Registrarse
+            <button class="ui fluid inverted blue submit right labeled icon button" type="submit"
+                    [disabled]="(!signupForm.valid) || (!areEqual())" >
+              Siguiente
+              <i class="right arrow icon"></i>
             </button>
             <br/>
             <button class="ui fluid inverted blue labeled icon button" (click)="goBackRegister()">

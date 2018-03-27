@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../app/auth.service';
-import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {ReactiveFormsModule, FormGroup, FormBuilder, Validators, NgControlStatusGroup, AbstractControl} from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import {FunctionsService} from '../../app/functions.service';
 import {User} from '../../app/core/User';
@@ -20,7 +20,13 @@ export class UserFormComponent implements OnInit {
 
   userState;
 
-  constructor(public fb: FormBuilder,private afs: AngularFirestore, public auth: AuthService, public functions: FunctionsService) { }
+  constructor(public fb: FormBuilder, private afs: AngularFirestore,
+              public auth: AuthService, public functions: FunctionsService) { }
+
+  areEqual(): boolean {
+    console.log(this.password.value === this.password2.value);
+    return this.password.value === this.password2.value;
+  }
 
   ngOnInit() {
 
@@ -38,12 +44,15 @@ export class UserFormComponent implements OnInit {
         ]
       ],
       'password': ['', [
+        Validators.required,
         Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
         Validators.minLength(6),
         Validators.maxLength(25)
         ]
       ],
-      'region': ['', []],
+      'password2': ['', [
+        Validators.required
+      ]]
     });
 
     // Second Step
@@ -58,10 +67,11 @@ export class UserFormComponent implements OnInit {
     });
 
   }
-  
+
 
   get email() { return this.signupForm.get('email'); }
   get password() { return this.signupForm.get('password'); }
+  get password2() { return this.signupForm.get('password2'); }
 
   get name() { return this.detailForm.get('name'); }
   get surname() { return this.detailForm.get('surname'); }
@@ -74,14 +84,14 @@ export class UserFormComponent implements OnInit {
   signup() {
     return this.auth.signup(this.email.value, this.password.value);
   }
-  
+
 
   setUserInfo(user) {
     /*this.auth.updateUser(user, { name:  this.name.value, surname:  this.surname.value,
       age:  this.age.value, alergias:  this.alergias.value, sexo: this.sexo.value,
       observacionesMedicas:  this.observacionesMedicas.value, infoAdicional:  this.infoAdicional.value } );*/
 
-    
+
     user.name = this.name.value;
     user.surname = this.surname.value;
     user.age = this.age.value;
@@ -89,7 +99,7 @@ export class UserFormComponent implements OnInit {
     user.sexo = this.sexo.value;
     user.observacionesMedicas = this.observacionesMedicas.value;
     user.infoAdicional = this.infoAdicional.value;
-    
+
     /*this.auth.updateUser(user, { name:  this.name.value, surname:  this.surname.value,
       age:  this.age.value, alergias:  this.alergias.value, sexo: this.sexo.value,
       observacionesMedicas:  this.observacionesMedicas.value, infoAdicional:  this.infoAdicional.value } );*/
@@ -99,8 +109,8 @@ export class UserFormComponent implements OnInit {
 
     this.functions.changeShowMainPageToFalse();
     this.functions.changeToLogged();
-    return userRef.set(user)
-     
+    return userRef.set(user);
+
   }
   setName(user) {
     return this.auth.updateUser(user, { name:  this.name.value} );

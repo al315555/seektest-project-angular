@@ -8,7 +8,7 @@ import {AuthService} from '../../app/auth.service';
 })
 export class LoginSpinnerComponent implements OnInit {
   @Input() message: string;
-  @Input() showed: boolean;
+  @Input() showed: string;
 
   constructor(public authService: AuthService) { }
 

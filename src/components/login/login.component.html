@@ -3,12 +3,9 @@
 
 <br/><br/><br/><br/><br/>
 <div *ngIf="!(authService.user | async)">
-<div class="ui error message" *ngIf="(authService.error)">
-  <div class="ui header" >Credenciales incorrectas o usuario deshabilitado, pruebe de nuevo.</div>
-</div>
 
-<app-login-spinner showed="{{autentify}}" message="Autenticando usuario..." >
-</app-login-spinner>
+  <app-login-spinner showed="{{autentify}}" message="Autenticando usuario..." >
+  </app-login-spinner>
 
 <div class="ui middle aligned centered grid" >
 
@@ -21,6 +18,12 @@
     </h1>
 
     <div class="ui raised segment " >
+      <div class="ui error message" *ngIf="(errorHappened)">
+        <div class="header">
+          ¡Upps! Algo no ha ido bien.
+        </div>
+        {{errorMessage}}
+      </div>
       <div class="ui large form">
         <div class="field">
           <label>Usuario</label>
@@ -45,5 +48,4 @@
 
   </div>
 </div>
-
 </div>
