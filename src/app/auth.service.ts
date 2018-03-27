@@ -28,30 +28,46 @@ export class AuthService {
   }
 
   signup(email: string, password: string) {
-    return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+   /* return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then(user => {
         return this.setUserDoc(user) // create initial user document
       })
-      .catch();
+      .catch();*/
+    return this.afAuth.auth.createUserWithEmailAndPassword(email, password);
   }
   updateUser(user: User, data: any) { 
-    return this.afs.doc(`users/${user._uid}`).update(data)
+    //return this.afs.doc(`users/${user._uid}`).update(data)
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user._uid}`);
+    const data1: User = {
+      _uid: user._uid,
+      _name: user._name,
+      _surname: user._surname,
+      _age: user._age,
+      _email: user._email,
+      _alergias: user._alergias,
+      _infoAdicional: user._infoAdicional,
+      _observacionesMedicas: user._observacionesMedicas,
+      _sexo: user._sexo,
+      _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz',
+  }
+  return userRef.set(data1)
+    
   }
 // Sets user data to firestore after succesful login
-private setUserDoc(user) {
+setUserDoc(user) {
 
-  const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+  const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user._uid}`);
 
   const data: User = {
     _uid: user.uid,
-    //_name: user.name,
-    //_surname: user.surname,
-    //_age: user.age,
+    _name: user.name,
+    _surname: user.surname,
+    _age: user.age,
     _email: user.email,
-    //_alergias: user.alergias,
-    //_infoAdicional: user.infoAdicional,
-    //_observacionesMedicas: user.observacionesMedicas,
-    //_sexo: user.sexo,
+    _alergias: user.alergias,
+    _infoAdicional: user.infoAdicional,
+    _observacionesMedicas: user.observacionesMedicas,
+    _sexo: user.sexo,
     _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz',
   }
   return userRef.set(data)
