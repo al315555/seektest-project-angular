@@ -41,7 +41,8 @@ import { MessageToastComponent } from '../components/message-toast/message-toast
     UserDataComponent,
     LoggedComponent,
     NewExperimentComponent,
-    ExperimentCardComponent
+    ExperimentCardComponent,
+    MessageToastComponent
   ],
   imports: [
     BrowserModule,
