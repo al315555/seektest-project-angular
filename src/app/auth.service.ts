@@ -6,10 +6,12 @@ import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
 import {FunctionsService} from './functions.service';
 import {User} from './core/User';
-import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreDocument,  } from 'angularfire2/firestore';
+import { AngularFireDatabase, AngularFireObject, AngularFireList  } from 'angularfire2/database';
 
 
 
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotifyService } from './core/notify.service';
 
@@ -17,16 +19,31 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/catch';
 
 import { switchMap } from 'rxjs/operators';
+import { AngularFireDatabaseModule } from "angularfire2/database";
+
 
 @Injectable()
 export class AuthService {
   user: Observable<firebase.User>;
   error: boolean;
   errorMessage: string;
+  private userDoc: AngularFirestoreDocument<User>;
+  //userItem: Observable<any>;
+  //itemRef: AngularFireObject<any>;
+
+  private basePath: string = '/users';
+
+
+
+  items: AngularFireList<User[]> = null; //  list of objects
+  item: AngularFireObject<User> = null; //   single object
+
 
   constructor(private afAuth: AngularFireAuth, public firebaseAuth: AngularFireAuth, private afs: AngularFirestore,
-              public functions: FunctionsService, private notify: NotifyService) {
-    this.user = firebaseAuth.authState;
+              public functions: FunctionsService, private notify: NotifyService, public db: AngularFireDatabase) {     
+  this.user = firebaseAuth.authState;
+  this.items = db.list('/users');
+
   }
 
   signup(email: string, password: string) {
@@ -40,6 +57,7 @@ export class AuthService {
   updateUser(user: User, data: any) {
     // return this.afs.doc(`users/${user._uid}`).update(data)
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user._uid}`);
+    
     const data1: User = {
       _uid: user._uid,
       _name: user._name,
@@ -52,13 +70,14 @@ export class AuthService {
       _sexo: user._sexo,
       _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz',
   };
-  return userRef.set(data1);
+  //return userRef.set(data1);
 
   }
 // Sets user data to firestore after succesful login
 setUserDoc(user) {
 
-  const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+  //const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
+  //const relative = this.db.object('user').valueChanges();
 
   const data: User = {
     _uid: user.uid,
@@ -72,13 +91,17 @@ setUserDoc(user) {
     _sexo: user.sexo,
     _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz',
   };
-  return userRef.set(data);
+  //const itemRef = this.db.object(`seektest-3e130/users/${user.uid}`);
+  //this.itemRef.set(data);
+  console.log("ui data"+data._uid+"-")
+  this.addUser(data, data._uid);
+  //return userRef.set(data);
 
 }
 
   login(email: string, password: string) {
     const user = new User({
-      uid: '',
+      uid: ' ',
       email: '',
       name: '',
       surname: '',
@@ -90,11 +113,18 @@ setUserDoc(user) {
       alergias: ''
     });
 
+   //this.userItem = this.db.object('user').valueChanges();
    return new Promise((resolve, reject) => {this.firebaseAuth
         .auth
         .signInWithEmailAndPassword(email, password)
         .then(value => {
-          console.log('Loggeado correctamente: ' + value);
+          console.log('Loggeado correctamente: ' + value.uid);
+          
+          const user2 = this.db.object('users/'+value.uid);
+          //const user2 = this.db.object('/users/HHNacEBGWmgNOtFtOOJtFWMbfbg2');
+          
+
+          //console.log('Usuario: ' + user2);
           user._name = value.name;
           user._surname = value.surname;
           user._sexo = value.sexo;
@@ -118,5 +148,18 @@ setUserDoc(user) {
       .signOut();
     this.functions.changeShowMainPageToTrue();
     this.functions.changeToNotLogged();
+  }
+  
+
+  addUser(user, key) {
+    //this.items.push(user);
+   // var newKey  = key.replace('.', "");
+    const userList = this.db.list('/users');
+   // const user3 = null;
+    userList.set(key, user);
+  }
+
+  private handleError(error) {
+    console.log(error)
   }
 }

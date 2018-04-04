@@ -27,6 +27,10 @@ import {SuiModule} from 'ng2-semantic-ui';
 import { ExperimentCardComponent } from '../components/experiment-card/experiment-card.component';
 import { MessageToastComponent } from '../components/message-toast/message-toast.component';
 
+import { AngularFireDatabase } from 'angularfire2/database';
+
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+
 // import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 
@@ -48,6 +52,7 @@ import { MessageToastComponent } from '../components/message-toast/message-toast
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule ,
+    AngularFireDatabaseModule,
     FormsModule,
     HttpModule,
     FormsModule,
@@ -56,7 +61,7 @@ import { MessageToastComponent } from '../components/message-toast/message-toast
     ReactiveFormsModule,
     SuiModule,
   ],
-  providers: [AuthService, FunctionsService],
+  providers: [AuthService, FunctionsService, AngularFireDatabase],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
