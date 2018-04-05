@@ -19,7 +19,7 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/catch';
 
 import { switchMap } from 'rxjs/operators';
-import { AngularFireDatabaseModule } from "angularfire2/database";
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 
 @Injectable()
@@ -35,10 +35,8 @@ export class AuthService {
 
 
   constructor(private afAuth: AngularFireAuth, public firebaseAuth: AngularFireAuth, private afs: AngularFirestore,
-              public functions: FunctionsService, private notify: NotifyService, public db: AngularFireDatabase) {     
-  this.user = firebaseAuth.authState;
-  
-
+              public functions: FunctionsService, private notify: NotifyService, public db: AngularFireDatabase) {
+    this.user = firebaseAuth.authState;
   }
 
   signup(email: string, password: string) {
@@ -46,7 +44,6 @@ export class AuthService {
   }
 
   updateUser(user: User, data: any) {
-    
     const data1: User = {
       _uid: user._uid,
       _name: user._name,
@@ -59,7 +56,7 @@ export class AuthService {
       _sexo: user._sexo,
       _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz',
   };
-  //return userRef.set(data1);
+  // return userRef.set(data1);
 
   }
 // Sets user data to firestore after succesful login
@@ -77,7 +74,6 @@ setUserDoc(user) {
     _sexo: user.sexo,
     _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz',
   };
-  
   this.addUser(data, data._uid);
 }
 
@@ -94,24 +90,22 @@ setUserDoc(user) {
       age: '',
       alergias: ''
     });
-    
-   //this.userItem = this.db.object('user').valueChanges();
+   // this.userItem = this.db.object('user').valueChanges();
    return new Promise((resolve, reject) => {this.firebaseAuth
         .auth
         .signInWithEmailAndPassword(email, password)
         .then(value => {
           console.log('Loggeado correctamente: ' + value.uid);
-          
           console.log('Usuario: ');
           this.getUser(value.uid).subscribe(val => console.log(val));
           /*
           const user2$ = this.db.list('users/'+value.uid);
           this.db.object('users/'+value.uid).valueChanges().subscribe(users => {this.users = users;
           console.log(this.users)});
-          
+
           console.log('Usuario prueba: '+this.users);
-          
-       
+
+
 
           user._name = value.name;
           user._surname = value.surname;
@@ -122,16 +116,16 @@ setUserDoc(user) {
           user._email = email;
           user._photoURL = value.photoURL;
           user._uid = value.uid;
-          
-          
+
+
           */
-         resolve("");
+         resolve('');
         })
         .catch(err => {
           console.log('Error: ', err.message);
           this.errorMessage = err.message;
           reject(err);
-        });});
+        }); });
   }
   logout() {
     this.firebaseAuth
@@ -141,17 +135,16 @@ setUserDoc(user) {
     this.functions.changeToNotLogged();
   }
 
-  getUser(uid:string){
+  getUser(uid: string) {
     return this.db.list('users/', ref => ref.orderByChild('_uid').equalTo(uid))
           .snapshotChanges()
           .map (Changes => {
             return Changes.map(p => ({
                key: p.payload.key, ...p.payload.val()}));
-            }); 
+            });
   }
-
   addUser(user, key) {
-    //this.items.push(user);
+    // this.items.push(user);
    // var newKey  = key.replace('.', "");
     const userList = this.db.list('/users');
    // const user3 = null;
@@ -159,6 +152,6 @@ setUserDoc(user) {
   }
 
   private handleError(error) {
-    console.log(error)
+    console.log(error);
   }
 }

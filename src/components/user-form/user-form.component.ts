@@ -24,7 +24,6 @@ export class UserFormComponent implements OnInit {
               public auth: AuthService, public functions: FunctionsService) { }
 
   areEqual(): boolean {
-    console.log(this.password.value === this.password2.value);
     return this.password.value === this.password2.value;
   }
 

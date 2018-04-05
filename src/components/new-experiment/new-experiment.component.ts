@@ -9,7 +9,7 @@ import { MessageToastComponent } from '../message-toast/message-toast.component'
   templateUrl: './new-experiment.component.html',
   styleUrls: ['./new-experiment.component.css']
 })
-export class NewExperimentComponent{
+export class NewExperimentComponent {
   @ViewChild(MessageToastComponent) messageToast: MessageToastComponent;
 
   messages: MessageToast[];
@@ -60,7 +60,7 @@ export class NewExperimentComponent{
     this.medicalObs = null;
     this.perfilSexo = null;
     this.gift = null;
-    
+
     this.durationEntered = false;
     this.titleEntered = false;
     this.dateHourEntered = false;
@@ -69,33 +69,33 @@ export class NewExperimentComponent{
     this.descriptionEntered = false;
     this.buttonEnabled = false;
     this.spinnerLoading = false;
-    this.textoDesplegable = "Añadir perfil de sujeto";
+    this.textoDesplegable = 'Añadir perfil de sujeto';
   }
 
   addDate() {
     if (this.dateHourSelected != null) {
       this.dateHourArray.push(this.dateHourSelected);
-      this.dateHourSelected = null
+      this.dateHourSelected = null;
       if (!this.dateHourEntered) {
         this.dateHourEntered = true;
         this.changingValueProgres += this.progresIncrement;
       }
     } else {
-      //Alerta introducir hora
+      // Alerta introducir hora
     }
 
   }
 
   deleteDate(i) {
-    this.dateHourArray.splice(i, 1)
-    if (this.dateHourArray.length == 0) {
+    this.dateHourArray.splice(i, 1);
+    if (this.dateHourArray.length === 0) {
       this.dateHourEntered = false;
       this.changingValueProgres -= this.progresIncrement;
     }
   }
 
   changeTitle() {
-    if (this.title == "") {
+    if (this.title === '') {
       this.titleEntered = false;
       this.changingValueProgres -= this.progresIncrement;
     } else {
@@ -108,7 +108,7 @@ export class NewExperimentComponent{
   }
 
   changePlace() {
-    if (this.place == "") {
+    if (this.place === '') {
       this.placeEntered = false;
       this.changingValueProgres -= this.progresIncrement;
     } else {
@@ -120,7 +120,7 @@ export class NewExperimentComponent{
     this.buttonEnable();
   }
 
-  changeDuration(){
+  changeDuration() {
     if ((this.durationEntered) && (this.duration == null || this.duration <= 0)) {
       this.durationEntered = false;
       this.changingValueProgres -= this.progresIncrement;
@@ -147,7 +147,7 @@ export class NewExperimentComponent{
   }
 
   changeDescription() {
-    if (this.description == "") {
+    if (this.description === '') {
       this.descriptionEntered = false;
       this.changingValueProgres -= this.progresIncrement;
     } else {
@@ -159,21 +159,21 @@ export class NewExperimentComponent{
     this.buttonEnable();
   }
 
-  buttonEnable(){
-    if(this.changingValueProgres >= 100){
+  buttonEnable() {
+    if (this.changingValueProgres >= 100) {
       this.buttonEnabled = true;
-    }else{
+    } else {
       this.buttonEnabled = false;
     }
   }
 
-  clearFields(){
+  clearFields() {
     this.dateHourArray = new Array<Date>();
     this.changingValueProgres = 0;
-    this.title = "";
-    this.place = "";
+    this.title = '';
+    this.place = '';
     this.numberParticipants = null;
-    this.description = "";
+    this.description = '';
     this.edadFinal = null;
     this.duration = null;
     this.gift = null;
@@ -192,29 +192,34 @@ export class NewExperimentComponent{
     this.durationEntered = false;
   }
 
-  addExperiment(){
-    if(this.edadInicio!=null && this.edadFinal!=null && this.edadInicio > this.edadFinal){
-      this.messageToast.pushMessage({title:"Error!",description:"La edad de inicio no puede ser mayor que la de fin.",type:"error"});
-    }else{
-      this.spinnerLoading = true
-      let userProfile = {sexo: this.perfilSexo, rangoEdad: {inicio: this.edadInicio, final: this.edadFinal}, alergias: this.alergias, medicalObs: this.medicalObs}
-      this.afs.collection('experiments').add({title:this.title,place:this.place,numberParticipants:this.numberParticipants,description: this.description,dates: this.dateHourArray, gift:this.gift, duration: this.duration ,userProfile: userProfile})
+  addExperiment() {
+    if (this.edadInicio != null && this.edadFinal != null && this.edadInicio > this.edadFinal) {
+      this.messageToast.pushMessage({title: 'Error!', description: 'La edad de inicio no puede ser mayor que la de fin.', type: 'error'});
+    } else {
+      this.spinnerLoading = true;
+      const userProfile = {sexo: this.perfilSexo, rangoEdad: {inicio: this.edadInicio, final: this.edadFinal},
+        alergias: this.alergias, medicalObs: this.medicalObs};
+      this.afs.collection('experiments').add(
+        {title: this.title, place: this.place, numberParticipants: this.numberParticipants,
+          description: this.description, dates: this.dateHourArray, gift: this.gift, duration: this.duration, userProfile: userProfile})
       .then(value => {
         this.spinnerLoading = false;
         this.clearFields();
-        this.messageToast.pushMessage({title: "Experimento añadido!", description:"El experimento ha sido añadido correctamente",type:"success"})
+        this.messageToast.pushMessage({title: 'Experimento añadido!', description: 'El experimento ha sido añadido correctamente',
+          type: 'success'});
       }).catch(value => {
         this.spinnerLoading = false;
-        this.messages.push({title: "Ha habido un error!", description:"No se ha podido subir el experimento, intentelo mas tarde.",type:"error"})
+        this.messages.push({title: 'Ha habido un error!',
+          description: 'No se ha podido subir el experimento, intentelo mas tarde.', type: 'error'});
       });
     }
   }
 
-  cambiaMensaje(){
-    if(!this.collapse){
-      this.textoDesplegable = "Cerrar"
-    }else {
-      this.textoDesplegable = "Añadir un perfil de sujeto"
+  cambiaMensaje() {
+    if (!this.collapse) {
+      this.textoDesplegable = 'Cerrar';
+    } else {
+      this.textoDesplegable = 'Añadir un perfil de sujeto';
     }
   }
 }
