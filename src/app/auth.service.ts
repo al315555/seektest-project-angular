@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import {FunctionsService} from './functions.service';
 import {User} from './core/User';
 import { AngularFirestore, AngularFirestoreDocument,  } from 'angularfire2/firestore';
-import { AngularFireDatabase, AngularFireObject, AngularFireList  } from 'angularfire2/database';
+import { AngularFireDatabase  } from 'angularfire2/database';
 
 
 
@@ -28,35 +28,24 @@ export class AuthService {
   error: boolean;
   errorMessage: string;
   private userDoc: AngularFirestoreDocument<User>;
-  //userItem: Observable<any>;
-  //itemRef: AngularFireObject<any>;
-
-  private basePath: string = '/users';
 
 
 
-  items: AngularFireList<User[]> = null; //  list of objects
-  item: AngularFireObject<User> = null; //   single object
+  users: any;
 
 
   constructor(private afAuth: AngularFireAuth, public firebaseAuth: AngularFireAuth, private afs: AngularFirestore,
               public functions: FunctionsService, private notify: NotifyService, public db: AngularFireDatabase) {     
   this.user = firebaseAuth.authState;
-  this.items = db.list('/users');
+  
 
   }
 
   signup(email: string, password: string) {
-    /*return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-      .then(user => {
-        return this.setUserDoc(user) // create initial user document
-      })
-      .catch();*/
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password);
   }
+
   updateUser(user: User, data: any) {
-    // return this.afs.doc(`users/${user._uid}`).update(data)
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user._uid}`);
     
     const data1: User = {
       _uid: user._uid,
@@ -76,9 +65,6 @@ export class AuthService {
 // Sets user data to firestore after succesful login
 setUserDoc(user) {
 
-  //const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
-  //const relative = this.db.object('user').valueChanges();
-
   const data: User = {
     _uid: user.uid,
     _name: user.name,
@@ -91,12 +77,8 @@ setUserDoc(user) {
     _sexo: user.sexo,
     _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz',
   };
-  //const itemRef = this.db.object(`seektest-3e130/users/${user.uid}`);
-  //this.itemRef.set(data);
-  console.log("ui data"+data._uid+"-")
+  
   this.addUser(data, data._uid);
-  //return userRef.set(data);
-
 }
 
   login(email: string, password: string) {
@@ -112,7 +94,7 @@ setUserDoc(user) {
       age: '',
       alergias: ''
     });
-
+    
    //this.userItem = this.db.object('user').valueChanges();
    return new Promise((resolve, reject) => {this.firebaseAuth
         .auth
@@ -120,11 +102,15 @@ setUserDoc(user) {
         .then(value => {
           console.log('Loggeado correctamente: ' + value.uid);
           
-          const user2 = this.db.object('users/'+value.uid);
-          //const user2 = this.db.object('/users/HHNacEBGWmgNOtFtOOJtFWMbfbg2');
           
+          const user2$ = this.db.object('users/'+value.uid);
+          this.db.object('users/'+value.uid).valueChanges().subscribe(users => {this.users = users;
+          console.log(this.users)});
 
-          //console.log('Usuario: ' + user2);
+          console.log('Usuario prueba: '+this.users);
+          
+       
+
           user._name = value.name;
           user._surname = value.surname;
           user._sexo = value.sexo;
