@@ -102,11 +102,13 @@ setUserDoc(user) {
         .then(value => {
           console.log('Loggeado correctamente: ' + value.uid);
           
-          
-          const user2$ = this.db.object('users/'+value.uid);
+          console.log('Usuario: ');
+          this.getUser(value.uid).subscribe(val => console.log(val));
+          /*
+          const user2$ = this.db.list('users/'+value.uid);
           this.db.object('users/'+value.uid).valueChanges().subscribe(users => {this.users = users;
           console.log(this.users)});
-
+          
           console.log('Usuario prueba: '+this.users);
           
        
@@ -120,13 +122,16 @@ setUserDoc(user) {
           user._email = email;
           user._photoURL = value.photoURL;
           user._uid = value.uid;
-          resolve(user);
+          
+          
+          */
+         resolve("");
         })
         .catch(err => {
           console.log('Error: ', err.message);
           this.errorMessage = err.message;
           reject(err);
-        }); });
+        });});
   }
   logout() {
     this.firebaseAuth
@@ -135,7 +140,15 @@ setUserDoc(user) {
     this.functions.changeShowMainPageToTrue();
     this.functions.changeToNotLogged();
   }
-  
+
+  getUser(uid:string){
+    return this.db.list('users/', ref => ref.orderByChild('_uid').equalTo(uid))
+          .snapshotChanges()
+          .map (Changes => {
+            return Changes.map(p => ({
+               key: p.payload.key, ...p.payload.val()}));
+            }); 
+  }
 
   addUser(user, key) {
     //this.items.push(user);
