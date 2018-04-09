@@ -60,4 +60,8 @@ export class FunctionsService {
   changeToNotLogged() {
     this.isLogged = false;
   }
+
+  changeUserLogged(user: Observable<firebase.User>): void {
+    this.user = user;
+  }
 }

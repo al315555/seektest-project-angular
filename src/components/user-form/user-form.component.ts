@@ -58,7 +58,7 @@ export class UserFormComponent implements OnInit {
     this.detailForm = this.fb.group({
       'name': ['', [ ]],
       'surname': ['', [ ] ],
-      'age': ['', [ ] ],
+      'fechaNacimiento': ['', [ ] ],
       'sexo': ['', [ ] ],
       'alergias': ['', [ ] ],
       'observacionesMedicas': ['', [ ] ],
@@ -74,7 +74,7 @@ export class UserFormComponent implements OnInit {
 
   get name() { return this.detailForm.get('name'); }
   get surname() { return this.detailForm.get('surname'); }
-  get age() { return this.detailForm.get('age'); }
+  get fechaNacimiento() { return this.detailForm.get('fechaNacimiento'); }
   get sexo() { return this.detailForm.get('sexo'); }
   get alergias() { return this.detailForm.get('alergias'); }
   get observacionesMedicas() { return this.detailForm.get('observacionesMedicas'); }
@@ -86,30 +86,21 @@ export class UserFormComponent implements OnInit {
 
 
   setUserInfo(user) {
-    /*this.auth.updateUser(user, { name:  this.name.value, surname:  this.surname.value,
+   /*this.auth.updateUser(user, { name:  this.name.value, apellido:  this.surname.value,
       age:  this.age.value, alergias:  this.alergias.value, sexo: this.sexo.value,
-      observacionesMedicas:  this.observacionesMedicas.value, infoAdicional:  this.infoAdicional.value } );*/
-
+      observacionesMedicas:  this.observacionesMedicas.value, infoAdicional:  this.infoAdicional.value } );
+    */
 
     user.name = this.name.value;
     user.surname = this.surname.value;
-    user.age = this.age.value;
+    user.fechaNacimiento = this.fechaNacimiento.value;
     user.alergias = this.alergias.value;
     user.sexo = this.sexo.value;
     user.observacionesMedicas = this.observacionesMedicas.value;
     user.infoAdicional = this.infoAdicional.value;
-
-    /*this.auth.updateUser(user, { name:  this.name.value, surname:  this.surname.value,
-      age:  this.age.value, alergias:  this.alergias.value, sexo: this.sexo.value,
-      observacionesMedicas:  this.observacionesMedicas.value, infoAdicional:  this.infoAdicional.value } );*/
-    this.auth.setUserDoc(user);
-
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
-
     this.functions.changeShowMainPageToFalse();
     this.functions.changeToLogged();
-    return userRef.set(user);
-
+    return this.auth.setUserDoc(user);
   }
   setName(user) {
     return this.auth.updateUser(user, { name:  this.name.value} );
@@ -117,8 +108,8 @@ export class UserFormComponent implements OnInit {
   setSurname(user) {
     return this.auth.updateUser(user, { surname:  this.surname.value } );
   }
-  setAge(user) {
-    return this.auth.updateUser(user, { age:  this.age.value });
+  setFechaNacimiento(user) {
+    return this.auth.updateUser(user, { age:  this.fechaNacimiento.value });
   }
 
   setAlergias(user) {

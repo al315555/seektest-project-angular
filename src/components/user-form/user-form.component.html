@@ -67,21 +67,17 @@
 
 
           <div class="field">
-              <label>Nombre*</label>
+              <label>Nombre</label>
               <input type="text" class="input" formControlName="name" required autocomplete="off">
           </div>
           <div class="field">
-              <label>Apellidos*</label>
+              <label>Apellidos</label>
               <input type="text" class="input" formControlName="surname" required autocomplete="off">
           </div>
-            <div class="field">
-              <label>Fecha de nacimiento*</label>
-              <input type="date" required
-                     suiDatepicker [(ngModel)]="dateHourSelected"
-                     [pickerMode]="mode"
-                     [pickerFirstDayOfWeek]="firstDayOfWeek"
-                     [pickerUseNativeOnMobile]="false">
-            </div>
+          <div class="field">
+              <label>Fecha Nacimiento</label>
+              <input type="text" class="input" formControlName="fechaNacimiento" required autocomplete="off">
+          </div>
           <div class="field">
               <label>Sexo</label>
               <div class="ui radio">
