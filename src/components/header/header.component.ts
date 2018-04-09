@@ -20,4 +20,7 @@ export class HeaderComponent {
   selectPerfil() {
     this.functionsService.selectPerfil();
   }
+  goBackToExperiments() {
+    this.functionsService.selectExperimentos();
+  }
 }

@@ -4,6 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { MessageToast } from '../../models/message-toast';
 import { MessageToastComponent } from '../message-toast/message-toast.component';
+import {FunctionsService} from '../../app/functions.service';
+
 @Component({
   selector: 'app-new-experiment',
   templateUrl: './new-experiment.component.html',
@@ -49,7 +51,7 @@ export class NewExperimentComponent {
 
   textoDesplegable: String;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(private afs: AngularFirestore, public functions: FunctionsService) {
     this.dateHourArray = new Array<Date>();
     this.changingValueProgres = 0;
     this.collapse = true;
@@ -221,5 +223,9 @@ export class NewExperimentComponent {
     } else {
       this.textoDesplegable = 'Añadir un perfil de sujeto';
     }
+  }
+
+  goBackToExperiments() {
+    this.functions.selectExperimentos();
   }
 }
