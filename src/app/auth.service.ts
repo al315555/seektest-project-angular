@@ -215,10 +215,10 @@ export class AuthService {
     console.log(topUserPostsRef);
     */
   }
-  resetPassword(email){
-    console.log(email)
+  resetPassword(email) {
+    console.log(email);
     this.afAuth.auth.sendPasswordResetEmail(email)
-    .then(() => console.log("email sent"))
-    .catch((error) => console.log(error))
+    .then(() => console.log('email sent'))
+    .catch((error) => console.log(error));
 }
 }

@@ -60,11 +60,17 @@ export class FunctionsService {
   }
 
   changeToResetPassword() {
-    console.log("reset true")
+    console.log('reset true');
     this.reset = true;
+    this.perfilSelected = false;
+    this.newExperimentSelected = false;
+    this.experimentsSelected = false;
+    this.showMainPage = false;
+    this.isLogged = false;
   }
   changeToNotResetPassword() {
     this.reset = false;
+    this.showMainPage = true;
   }
 
   changeToNotLogged() {
