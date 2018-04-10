@@ -30,6 +30,7 @@ import { MessageToastComponent } from '../components/message-toast/message-toast
 import { AngularFireDatabase } from 'angularfire2/database';
 
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 // import { AngularFirestoreModule } from 'angularfire2/firestore';
 
@@ -46,7 +47,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
     LoggedComponent,
     NewExperimentComponent,
     ExperimentCardComponent,
-    MessageToastComponent
+    MessageToastComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

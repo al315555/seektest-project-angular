@@ -62,4 +62,8 @@ export class LoginComponent {
     this.errorMessage = '';
     this.functions.changeShowMainPageToTrue();
   }
+  resetPassword(){
+    this.functions.changeToNotLogged();
+    this.functions.changeToResetPassword();
+  }
 }
