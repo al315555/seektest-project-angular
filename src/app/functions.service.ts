@@ -60,6 +60,7 @@ export class FunctionsService {
   }
 
   changeToResetPassword() {
+    console.log("reset true")
     this.reset = true;
   }
   changeToNotResetPassword() {
