@@ -95,6 +95,9 @@ export class AuthService {
         .auth
         .signInWithEmailAndPassword(email, password)
         .then(value => {
+          this.generateUserDataJson();
+
+          /*
           console.log('Loggeado correctamente: ' + value.uid);
           console.log('Usuario: ' + value.email);
 
@@ -165,6 +168,7 @@ export class AuthService {
           this.functions.changeShowMainPageToFalse();
           this.functions.changeToLogged();
           this.functions.selectPerfil();
+          this.generateUserDataJson();
           window.location.reload();
         }
       );
@@ -178,6 +182,38 @@ export class AuthService {
 
   private handleError(error) {
     console.log(error);
+  }
+
+  generateUserDataJson() {
+    const myUserId = firebase.auth().currentUser.uid;
+
+    const nombreUsuario = this.db.list('users/', ref => ref.orderByChild('_uid').equalTo(myUserId))
+      .snapshotChanges().subscribe(value => {
+        value.map(cosas => {
+          this.userDataJson._name = cosas.payload.child('_name').exportVal();
+          this.userDataJson._fechaNacimiento = cosas.payload.child('_fechaNacimiento').exportVal();
+          this.userDataJson._alergias = cosas.payload.child('_alergias').exportVal();
+          this.userDataJson._infoAdicional = cosas.payload.child('_infoAdicional').exportVal();
+          this.userDataJson._photoURL = cosas.payload.child('_photoURL').exportVal();
+          this.userDataJson._sexo = cosas.payload.child('_sexo').exportVal();
+          this.userDataJson._observacionesMedicas = cosas.payload.child('_observacionesMedicas').exportVal();
+          this.userDataJson._surname = cosas.payload.child('_surname').exportVal();
+          this.userDataJson._email = cosas.payload.child('_email').exportVal();
+        });
+        // console.log(value);
+      });
+
+    // console.log(nombreUsuario);
+
+   /* this.db.list("users/" + myUserId).subs
+    const topUserPostsRef = firebase.database().ref('users/' + myUserId);
+    topUserPostsRef.on('value',function () {
+
+    }{
+
+    });
+    console.log(topUserPostsRef);
+    */
   }
   resetPassword(email){
     console.log(email)
