@@ -7,9 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import {FunctionsService} from './functions.service';
 import {User} from './core/User';
 import { AngularFirestore, AngularFirestoreDocument,  } from 'angularfire2/firestore';
-import { AngularFireDatabase  } from 'angularfire2/database';
-
-
+import { AngularFireDatabase, AngularFireObject, AngularFireList  } from 'angularfire2/database';
 
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -21,22 +19,36 @@ import 'rxjs/add/operator/catch';
 import { switchMap } from 'rxjs/operators';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 
-
 @Injectable()
 export class AuthService {
   user: Observable<firebase.User>;
   error: boolean;
   errorMessage: string;
-  private userDoc: AngularFirestoreDocument<User>;
 
+  items: AngularFireList<User[]> = null; //  list of objects
+  userData: AngularFireObject<User> = null; //   single object
+  userDataObject: AngularFireObject<Object>;
 
+  userDataJson = new User({
+    _uid: ' ',
+    _email: '',
+    _name: '',
+    _surname: '',
+    _photoURL: '',
+    _sexo: '',
+    _infoAdicional: '',
+    _observacionesMedicas: '',
+    _fechaNacimiento: '',
+    _alergias: ''
+  });
 
   users: any;
 
 
-  constructor(private afAuth: AngularFireAuth, public firebaseAuth: AngularFireAuth, private afs: AngularFirestore,
-              public functions: FunctionsService, private notify: NotifyService, public db: AngularFireDatabase) {
+  constructor(private afAuth: AngularFireAuth, public firebaseAuth: AngularFireAuth, public functions: FunctionsService,
+              private notify: NotifyService, public db: AngularFireDatabase) {
     this.user = firebaseAuth.authState;
+    this.items = db.list('/users');
   }
 
   signup(email: string, password: string) {
@@ -45,63 +57,49 @@ export class AuthService {
 
   updateUser(user: User, data: any) {
     const data1: User = {
-      _uid: user._uid,
-      _name: user._name,
-      _surname: user._surname,
-      //_age: user._age,
+      _uid: data._uid,
+      _name: data._name,
+      _surname: data._surname,
+      _fechaNacimiento: data._fechaNacimiento,
       _email: user._email,
-      _alergias: user._alergias,
-      _infoAdicional: user._infoAdicional,
-      _observacionesMedicas: user._observacionesMedicas,
-      _sexo: user._sexo,
+      _alergias: data._alergias,
+      _infoAdicional: data._infoAdicional,
+      _observacionesMedicas: data._observacionesMedicas,
+      _sexo: data._sexo,
       _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz',
-  };
-  // return userRef.set(data1);
-
+    };
+    this.addUser(data1, data1._uid);
   }
-// Sets user data to firestore after succesful login
-setUserDoc(user) {
 
-  const data: User = {
-    _uid: user.uid,
-    _name: user.name,
-    _surname: user.surname,
-    //_age: user.age,
-    _email: user.email,
-    _alergias: user.alergias,
-    _infoAdicional: user.infoAdicional,
-    _observacionesMedicas: user.observacionesMedicas,
-    _sexo: user.sexo,
-    _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz',
-  };
-  console.log('Guardando usuario..');
-  this.functions.changeShowMainPageToFalse();
-  this.functions.changeToLogged();
-  this.addUser(data, data._uid);
-}
+// Sets user data to firestore after succesful login
+  setUserDoc(user) {
+
+    const data: User = {
+      _uid: user.uid,
+      _name: user.name,
+      _surname: user.surname,
+      _email: user.email,
+      _alergias: user.alergias,
+      _infoAdicional: user.infoAdicional,
+      _observacionesMedicas: user.observacionesMedicas,
+      _sexo: user.sexo,
+      _fechaNacimiento: user.fechaNacimiento,
+      _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz',
+    };
+    this.addUser(data, data._uid);
+  }
 
   login(email: string, password: string) {
-    const user = new User({
-      uid: ' ',
-      email: '',
-      name: '',
-      surname: '',
-      photoURL: '',
-      sexo: '',
-      infoAdicional: '',
-      observacionesMedicas: '',
-      age: '',
-      alergias: ''
-    });
-   // this.userItem = this.db.object('user').valueChanges();
-   return new Promise((resolve, reject) => {this.firebaseAuth
+    return new Promise((resolve, reject) => {
+      this.firebaseAuth
         .auth
         .signInWithEmailAndPassword(email, password)
         .then(value => {
           console.log('Loggeado correctamente: ' + value.uid);
-          console.log('Usuario: ');
-          this.getUser(value.uid).subscribe(val => console.log(val));
-          
+          console.log('Usuario: ' + value.email);
+
+          console.log(this.db.list('users/' + value.uid));
+
           /*
           const user2$ = this.db.list('users/'+value.uid);
           this.db.object('users/'+value.uid).valueChanges().subscribe(users => {this.users = users;
@@ -121,15 +119,18 @@ setUserDoc(user) {
           user._photoURL = value.photoURL;
           user._uid = value.uid;
 
+
           */
-         resolve('');
+          resolve('');
         })
         .catch(err => {
           console.log('Error: ', err.message);
           this.errorMessage = err.message;
           reject(err);
-        }); });
+        });
+    });
   }
+
   logout() {
     this.firebaseAuth
       .auth
@@ -139,16 +140,40 @@ setUserDoc(user) {
   }
 
   getUser(uid: string) {
+    return this.db.list('users/', ref => ref.orderByChild('_uid').equalTo(uid));
+  }
+
+  /*
+  getUser(uid: string) {
     return this.db.list('users/', ref => ref.orderByChild('_uid').equalTo(uid))
           .snapshotChanges()
           .map (Changes => {
+            console.log(Change);
             return Changes.map(p => ({
                key: p.payload.key, ...p.payload.val()}));
             });
   }
-  addUser(user, key) {
-    const userList = this.db.list('/users');
-    userList.set(key, user);
+  */
+
+  addUser(us, key) {
+    console.log(us);
+    this.items.push(us)
+      .then(value => {
+          this.userData = us;
+          this.userDataJson._name = us._name;
+          console.log('Guardado correctamente.');
+          this.functions.changeShowMainPageToFalse();
+          this.functions.changeToLogged();
+          this.functions.selectPerfil();
+          window.location.reload();
+        }
+      );
+    // this.items.set(key, us);
+
+    // var newKey  = key.replace('.', "");
+    // const userList = this.db.list('/users');
+    // const user3 = null;
+    // userList.set(key, user);
   }
 
   private handleError(error) {
