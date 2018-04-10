@@ -16,6 +16,7 @@ export class ResetPasswordComponent {
 
   resetPassword(){
       this.authService.resetPassword(this.email)
+      this.functions.changeToNotResetPassword();
   }
 }
 
