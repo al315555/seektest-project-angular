@@ -14,6 +14,7 @@ export class FunctionsService {
   perfilSelected: boolean;
   experimentsSelected: boolean;
   newExperimentSelected: boolean;
+  reset: boolean;
 
   constructor() {
     this.error = false;
@@ -22,6 +23,7 @@ export class FunctionsService {
     this.perfilSelected = false;
     this.experimentsSelected = true;
     this.newExperimentSelected = false;
+    this.reset = false;
   }
 
   selectPerfil() {
@@ -55,6 +57,14 @@ export class FunctionsService {
 
   changeToLogged() {
     this.isLogged = true;
+  }
+
+  changeToResetPassword() {
+    console.log("reset true")
+    this.reset = true;
+  }
+  changeToNotResetPassword() {
+    this.reset = false;
   }
 
   changeToNotLogged() {

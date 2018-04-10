@@ -21,3 +21,4 @@
 
 <app-user-form *ngIf="register && !functionsService.showMainPage && !login"></app-user-form>
 <app-login *ngIf="!register && ((functionsService.isLogged)||(login && !functionsService.showMainPage))"></app-login>
+<app-reset-password *ngIf="((functionsService.reset))"></app-reset-password>

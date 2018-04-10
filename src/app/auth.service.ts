@@ -45,14 +45,14 @@ export class AuthService {
   users: any;
 
 
-  constructor(public firebaseAuth: AngularFireAuth, public functions: FunctionsService,
+  constructor(private afAuth: AngularFireAuth, public firebaseAuth: AngularFireAuth, public functions: FunctionsService,
               private notify: NotifyService, public db: AngularFireDatabase) {
     this.user = firebaseAuth.authState;
     this.items = db.list('/users');
   }
 
   signup(email: string, password: string) {
-    return this.firebaseAuth.auth.createUserWithEmailAndPassword(email, password);
+    return this.afAuth.auth.createUserWithEmailAndPassword(email, password);
   }
 
   updateUser(user: User, data: any) {
@@ -103,6 +103,7 @@ export class AuthService {
 
           console.log(this.db.list('users/' + value.uid));
 
+          /*
           const user2$ = this.db.list('users/'+value.uid);
           this.db.object('users/'+value.uid).valueChanges().subscribe(users => {this.users = users;
           console.log(this.users)});
@@ -214,4 +215,10 @@ export class AuthService {
     console.log(topUserPostsRef);
     */
   }
+  resetPassword(email){
+    console.log(email)
+    this.afAuth.auth.sendPasswordResetEmail(email)
+    .then(() => console.log("email sent"))
+    .catch((error) => console.log(error))
+}
 }
