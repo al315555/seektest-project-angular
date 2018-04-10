@@ -221,4 +221,11 @@ export class AuthService {
     .then(() => console.log('email sent'))
     .catch((error) => console.log(error));
 }
+deleteUser() {
+  this.functions.changeShowMainPageToTrue();
+  this.functions.changeToNotLogged();
+  console.log("deleting user")
+  this.firebaseAuth.auth.currentUser.delete();
 }
+}
+
