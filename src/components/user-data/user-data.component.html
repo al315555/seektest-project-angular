@@ -9,13 +9,12 @@
   <br/><br/>
   <div class="ui raised very padded text container segment">
     <h2 class="ui header">Mis datos</h2>
-    <div *ngIf="functions.user as user">
-      <p class="text-truncate">Nombre: {{user.name }}</p>
-      <p class="text-truncate">Apellidos: {{user.surname }}</p>
-      <p class="text-truncate">Mail: {{(user.email | async)?.email }}</p>
-      <p class="text-truncate">Edad: {{user.age }}</p>
-      <p class="text-truncate">UID: {{user.uid }}</p>
-      <p class="text-truncate">Foto url: {{(authService.user | async).photoURL}}</p>
+    <div *ngIf="authService.userDataJson as user">
+      <p class="text-truncate">Nombre: {{user._name }}</p>
+      <p class="text-truncate">Apellidos: {{user._surname }}</p>
+      <p class="text-truncate">Mail: {{ user._email }}</p>
+      <p class="text-truncate">Fecha de nacimiento: {{user._fechaNacimiento }}</p>
+      <p class="text-truncate">Foto url: {{user._photoURL }}</p>
     </div>
   </div>
 </div>
