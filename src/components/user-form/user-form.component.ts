@@ -100,7 +100,12 @@ export class UserFormComponent implements OnInit {
     user.infoAdicional = this.infoAdicional.value;
     this.functions.changeShowMainPageToFalse();
     this.functions.changeToLogged();
-    return this.auth.setUserDoc(user);
+    const resultado = this.auth.setUserDoc(user);
+    if (resultado !== 'false') {
+      this.functions.changeShowMainPageToTrue();
+      this.functions.changeToLogged();
+      console.log(resultado);
+    }
   }
   setName(user) {
     return this.auth.updateUser(user, { name:  this.name.value} );

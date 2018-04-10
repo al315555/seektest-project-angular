@@ -49,13 +49,14 @@ export class AuthService {
               private notify: NotifyService, public db: AngularFireDatabase) {
     this.user = firebaseAuth.authState;
     this.items = db.list('/users');
+    this.generateUserDataJson();
   }
 
   signup(email: string, password: string) {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password);
   }
 
-  updateUser(user: User, data: any) {
+  updateUser(user: User, data: any): string {
     const data1: User = {
       _uid: data._uid,
       _name: data._name,
@@ -68,11 +69,11 @@ export class AuthService {
       _sexo: data._sexo,
       _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz',
     };
-    this.addUser(data1, data1._uid);
+    return this.addUser(data1, data1._uid);
   }
 
 // Sets user data to firestore after succesful login
-  setUserDoc(user) {
+  setUserDoc(user): string {
 
     const data: User = {
       _uid: user.uid,
@@ -86,7 +87,7 @@ export class AuthService {
       _fechaNacimiento: user.fechaNacimiento,
       _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz',
     };
-    this.addUser(data, data._uid);
+    return this.addUser(data, data._uid);
   }
 
   login(email: string, password: string) {
@@ -158,20 +159,44 @@ export class AuthService {
   }
   */
 
-  addUser(us, key) {
-    console.log(us);
-    this.items.push(us)
-      .then(value => {
-          this.userData = us;
-          this.userDataJson._name = us._name;
-          console.log('Guardado correctamente.');
-          this.functions.changeShowMainPageToFalse();
-          this.functions.changeToLogged();
-          this.functions.selectPerfil();
-          this.generateUserDataJson();
-          window.location.reload();
-        }
-      );
+  actualizarUsuario() {
+    const myUserId = firebase.auth().currentUser.uid;
+    firebase.database().ref('users/' + myUserId).set({
+      _name: this.userDataJson._name,
+      _uid: myUserId,
+      _surname: this.userDataJson._surname,
+      _email: this.userDataJson._email,
+      _alergias: this.userDataJson._alergias,
+      _infoAdicional: this.userDataJson._infoAdicional,
+      _observacionesMedicas: this.userDataJson._observacionesMedicas,
+      _sexo: this.userDataJson._sexo,
+      _fechaNacimiento: this.userDataJson._fechaNacimiento,
+      _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz',
+
+
+    });
+  }
+
+  addUser(us, key): string {
+    let correcto: boolean = false;
+    try {
+      this.items.push(us);
+      correcto = true;
+    } catch {
+      correcto = false;
+    }
+    if (correcto) {
+      this.functions.changeShowMainPageToFalse();
+      this.functions.changeToLogged();
+      this.functions.selectPerfil();
+      this.generateUserDataJson();
+      console.log('Actualizado en vista.');
+      return 'true';
+    } else {
+      console.log('Algo fue mal.');
+      return 'false';
+    }
+
     // this.items.set(key, us);
 
     // var newKey  = key.replace('.', "");
@@ -185,35 +210,24 @@ export class AuthService {
   }
 
   generateUserDataJson() {
-    const myUserId = firebase.auth().currentUser.uid;
-
-    const nombreUsuario = this.db.list('users/', ref => ref.orderByChild('_uid').equalTo(myUserId))
-      .snapshotChanges().subscribe(value => {
-        value.map(cosas => {
-          this.userDataJson._name = cosas.payload.child('_name').exportVal();
-          this.userDataJson._fechaNacimiento = cosas.payload.child('_fechaNacimiento').exportVal();
-          this.userDataJson._alergias = cosas.payload.child('_alergias').exportVal();
-          this.userDataJson._infoAdicional = cosas.payload.child('_infoAdicional').exportVal();
-          this.userDataJson._photoURL = cosas.payload.child('_photoURL').exportVal();
-          this.userDataJson._sexo = cosas.payload.child('_sexo').exportVal();
-          this.userDataJson._observacionesMedicas = cosas.payload.child('_observacionesMedicas').exportVal();
-          this.userDataJson._surname = cosas.payload.child('_surname').exportVal();
-          this.userDataJson._email = cosas.payload.child('_email').exportVal();
+    if (firebase.auth().currentUser != null) {
+      const myUserId = firebase.auth().currentUser.uid;
+      const nombreUsuario = this.db.list('users/', ref => ref.orderByChild('_uid').equalTo(myUserId))
+        .snapshotChanges().subscribe(value => {
+          value.map(cosas => {
+            this.userDataJson._name = cosas.payload.child('_name').exportVal();
+            this.userDataJson._fechaNacimiento = cosas.payload.child('_fechaNacimiento').exportVal();
+            this.userDataJson._alergias = cosas.payload.child('_alergias').exportVal();
+            this.userDataJson._infoAdicional = cosas.payload.child('_infoAdicional').exportVal();
+            this.userDataJson._photoURL = cosas.payload.child('_photoURL').exportVal();
+            this.userDataJson._sexo = cosas.payload.child('_sexo').exportVal();
+            this.userDataJson._observacionesMedicas = cosas.payload.child('_observacionesMedicas').exportVal();
+            this.userDataJson._surname = cosas.payload.child('_surname').exportVal();
+            this.userDataJson._email = cosas.payload.child('_email').exportVal();
+          });
+          // console.log(value);
         });
-        // console.log(value);
-      });
-
-    // console.log(nombreUsuario);
-
-   /* this.db.list("users/" + myUserId).subs
-    const topUserPostsRef = firebase.database().ref('users/' + myUserId);
-    topUserPostsRef.on('value',function () {
-
-    }{
-
-    });
-    console.log(topUserPostsRef);
-    */
+    }
   }
   resetPassword(email) {
     console.log(email);
@@ -224,7 +238,7 @@ export class AuthService {
 deleteUser() {
   this.functions.changeShowMainPageToTrue();
   this.functions.changeToNotLogged();
-  console.log("deleting user")
+  console.log('deleting user');
   this.firebaseAuth.auth.currentUser.delete();
 }
 }

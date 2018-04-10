@@ -15,4 +15,8 @@ export class UserDataComponent {
   goBackToExperiments() {
     this.functions.selectExperimentos();
   }
+
+  guardarDatos() {
+    this.authService.actualizarUsuario();
+  }
 }

@@ -9,12 +9,44 @@
   <br/><br/>
   <div class="ui raised very padded text container segment">
     <h2 class="ui header">Mis datos</h2>
-    <div *ngIf="authService.userDataJson as user">
-      <p class="text-truncate">Nombre: {{user._name }}</p>
-      <p class="text-truncate">Apellidos: {{user._surname }}</p>
-      <p class="text-truncate">Mail: {{ user._email }}</p>
-      <p class="text-truncate">Fecha de nacimiento: {{user._fechaNacimiento }}</p>
-      <p class="text-truncate">Foto url: {{user._photoURL }}</p>
-    </div>
+      <div class="ui large form" *ngIf="authService.userDataJson as user">
+        <div class="field">
+          <label>Correo electrónico</label>
+          <label>{{ user._email }}</label>
+        </div>
+        <div class="field">
+          <label>Foto de perfil</label>
+          <label><img src="{{ user._photoURL }}" style="height: 128px; width: 128px;"></label>
+        </div>
+        <div class="field">
+          <label>Nombre</label>
+          <input type="text" [(ngModel)]="user._name">
+        </div>
+        <div class="field">
+          <label>Apellido</label>
+          <input type="text" [(ngModel)]="user._surname">
+        </div>
+        <div class="field">
+          <label>Fecha de nacimiento</label>
+          <input type="text" [(ngModel)]="user._fechaNacimiento">
+        </div>
+        <div class="field">
+          <label>Información adicional</label>
+          <input type="text" [(ngModel)]="user._infoAdicional">
+        </div>
+        <div class="field">
+          <label>Alérgias</label>
+          <input type="text" [(ngModel)]="user._alergias">
+        </div>
+        <div class="field">
+          <label>Observaciones médicas</label>
+          <input type="text" [(ngModel)]="user._observacionesMedicas">
+        </div>
+        <div style="margin-left: 20%; margin-right: 20%">
+          <button class="ui blue fluid button" (click)="guardarDatos()">
+            <span class="ui text">Guardar</span>
+          </button>
+        </div>
+      </div>
   </div>
 </div>

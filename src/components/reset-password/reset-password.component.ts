@@ -11,12 +11,14 @@ export class ResetPasswordComponent {
   email: string;
   constructor(public authService: AuthService, public functions: FunctionsService) {}
 
-  ngOnInit() {
+  resetPassword() {
+      this.authService.resetPassword(this.email);
+      this.functions.changeToNotResetPassword();
   }
 
-  resetPassword(){
-      this.authService.resetPassword(this.email)
-      this.functions.changeToNotResetPassword();
+  cancelar() {
+    this.functions.changeToNotResetPassword();
+    this.functions.changeShowMainPageToTrue();
   }
 }
 
