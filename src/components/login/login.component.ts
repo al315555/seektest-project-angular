@@ -65,5 +65,7 @@ export class LoginComponent {
   resetPassword(){
     this.functions.changeToNotLogged();
     this.functions.changeToResetPassword();
+    this.functions.changeShowMainPageToFalse();
+    console.log("Reset");
   }
 }

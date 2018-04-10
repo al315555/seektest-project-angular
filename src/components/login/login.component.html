@@ -33,7 +33,7 @@
           <label>Contraseña</label>
           <input type="password" [(ngModel)]="password" placeholder="contraseña">
         </div>
-        <a (click)="resetPassword()" href="#">Recuperar contraseña?</a>
+        <p (click)="resetPassword()">Recuperar contraseña?</p>
         <div style="margin-left: 20%; margin-right: 20%">
           <button class="ui fluid inverted blue submit button" (click)="login()" [disabled]="!email || !password" >
             Autentificarse

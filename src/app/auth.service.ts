@@ -179,4 +179,10 @@ export class AuthService {
   private handleError(error) {
     console.log(error);
   }
+  resetPassword(email){
+    console.log(email)
+    this.afAuth.auth.sendPasswordResetEmail(email)
+    .then(() => console.log("email sent"))
+    .catch((error) => console.log(error))
+}
 }
