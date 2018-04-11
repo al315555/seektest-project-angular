@@ -51,4 +51,5 @@ export class AppComponent {
   changeShowMainPage() {
     this.showMainPage = false;
   }
+  
 }
