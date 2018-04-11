@@ -190,7 +190,7 @@ export class AuthService {
   }
 
   generateUserDataJson() { 
-
+    
     if(localStorage.getItem("uid_usuario")!=null){
       const myUserId = localStorage.getItem("uid_usuario");
       if(localStorage.getItem("usuario")==null){
@@ -209,33 +209,12 @@ export class AuthService {
               this.userDataJson._email = cosas.payload.child('_email').exportVal();
               localStorage.setItem("usuario", JSON.stringify(this.userDataJson));
             });
-          // console.log(value);
         });
     }else{
-      console.log("Cargando usuario de storage");
+      //Cargando usuario de storage"
       this.userDataJson = JSON.parse(localStorage.getItem("usuario"));
     }
   }
-    /*if (firebase.auth().currentUser != null) {
-      const myUserId = firebase.auth().currentUser.uid;
-      const nombreUsuario = this.db.list('users/', ref => ref.orderByChild('_uid').equalTo(myUserId))
-        .snapshotChanges().subscribe(value => {
-          value.map(cosas => {
-            this.userDataJson._name = cosas.payload.child('_name').exportVal();
-            this.userDataJson._fechaNacimiento = cosas.payload.child('_fechaNacimiento').exportVal();
-            this.userDataJson._alergias = cosas.payload.child('_alergias').exportVal();
-            this.userDataJson._infoAdicional = cosas.payload.child('_infoAdicional').exportVal();
-            this.userDataJson._photoURL = cosas.payload.child('_photoURL').exportVal();
-            this.userDataJson._sexo = cosas.payload.child('_sexo').exportVal();
-            this.userDataJson._observacionesMedicas = cosas.payload.child('_observacionesMedicas').exportVal();
-            this.userDataJson._surname = cosas.payload.child('_surname').exportVal();
-            this.userDataJson._email = cosas.payload.child('_email').exportVal();
-            this.datosUsuario = true;
-          });
-          
-          // console.log(value);
-        });
-    }*/
   }
   resetPassword(email) {
     console.log(email);
@@ -259,6 +238,5 @@ verificarCorreo(){
     console.log(error)
   });
 }
-
 }
 

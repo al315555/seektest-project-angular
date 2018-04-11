@@ -18,12 +18,24 @@ export class FunctionsService {
 
   constructor() {
     this.error = false;
-    this.showMainPage = true;
-    this.isLogged = false;
+    if(localStorage.getItem("status_showMainPage")==null){
+      this.showMainPage = true
+    }else{
+      this.showMainPage = (localStorage.getItem("status_showMainPage")=="true") 
+    }
+
+    if(localStorage.getItem("status_isLogged")==null){
+      this.isLogged = false
+    }else{
+      this.isLogged = (localStorage.getItem("status_isLogged")=="true") 
+    }
+   
     this.perfilSelected = false;
     this.experimentsSelected = true;
     this.newExperimentSelected = false;
     this.reset = false;
+
+    
   }
 
   selectPerfil() {
@@ -49,14 +61,22 @@ export class FunctionsService {
     this.experimentsSelected = false;
     this.showMainPage = true;
     this.isLogged = false;
+    localStorage.setItem("status_showMainPage", "true")
+    localStorage.setItem("status_isLogged", "false");
   }
 
   changeShowMainPageToFalse() {
     this.showMainPage = false;
+    localStorage.setItem("status_showMainPage", "false")
   }
 
   changeToLogged() {
     this.isLogged = true;
+    localStorage.setItem("status_isLogged", "true");
+  }
+  changeToNotLogged() {
+    this.isLogged = false;
+    localStorage.setItem("status_isLogged", "false");
   }
 
   changeToResetPassword() {
@@ -73,9 +93,7 @@ export class FunctionsService {
     this.showMainPage = true;
   }
 
-  changeToNotLogged() {
-    this.isLogged = false;
-  }
+  
 
   changeUserLogged(user: Observable<firebase.User>): void {
     this.user = user;
