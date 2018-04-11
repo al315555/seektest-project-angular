@@ -9,6 +9,7 @@
   <br/><br/>
   <div class="ui raised very padded text container segment">
     <h2 class="ui header">Mis datos</h2>
+    <app-message-toast></app-message-toast>
       <div class="ui large form" *ngIf="authService.userDataJson as user">
         <div class="field">
           <label>Correo electrónico</label>
@@ -17,6 +18,9 @@
         <div class="field">
           <label>Foto de perfil</label>
           <label><img src="{{ user._photoURL }}" style="height: 128px; width: 128px;"></label>
+          <div class="field">
+            <input type="file" (change)="fileChange($event)" placeholder="Cambiar avatar" accept=".jpg,.png,.svg,.jpeg,.gif">
+          </div>
         </div>
         <div class="field">
           <label>Nombre</label>
@@ -28,7 +32,7 @@
         </div>
         <div class="field">
           <label>Fecha de nacimiento</label>
-          <input type="text" [(ngModel)]="user._fechaNacimiento">
+          <input type="date" [(ngModel)]="user._fechaNacimiento">
         </div>
         <div class="field">
           <label>Información adicional</label>
@@ -46,9 +50,33 @@
           <button class="ui blue fluid button" (click)="guardarDatos()">
             <span class="ui text">Guardar</span>
           </button>
-          <p class="ui text"><a (click)="borrarUsuario()" style="cursor: pointer; color: red">Borrar cuenta</a></p>
+          <br/><br/>
+
+
+          <p class="ui text"><a onclick="$('.ui.basic.modal').modal('show');" style="cursor: pointer; color: red">Borrar cuenta</a></p>
         </div>
 
       </div>
+  </div>
+</div>
+
+
+<div class="ui basic modal">
+  <div class="ui icon header">
+    <i class="exclamation icon"></i>
+    {{ messageHeader }}
+  </div>
+  <div class="content">
+    <p>{{ messageBody }}</p>
+  </div>
+  <div class="actions">
+    <div class="ui red basic cancel inverted button">
+      <i class="remove icon"></i>
+      No
+    </div>
+    <div class="ui green ok inverted button" (click)="borrarUsuario()">
+      <i class="checkmark icon"></i>
+      Yes
+    </div>
   </div>
 </div>

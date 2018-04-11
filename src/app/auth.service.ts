@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import {FunctionsService} from './functions.service';
 import {User} from './core/User';
 import { AngularFirestore, AngularFirestoreDocument,  } from 'angularfire2/firestore';
-import { AngularFireDatabase, AngularFireObject, AngularFireList  } from 'angularfire2/database';
+import {AngularFireDatabase, AngularFireObject, AngularFireList, snapshotChanges} from 'angularfire2/database';
 
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -70,8 +70,7 @@ export class AuthService {
       _infoAdicional: data._infoAdicional,
       _observacionesMedicas: data._observacionesMedicas,
       _sexo: data._sexo,
-      _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz',
-    };
+      _photoURL: data._photoURL};
     return this.addUser(data1, data1._uid);
   }
 
@@ -88,9 +87,8 @@ export class AuthService {
       _observacionesMedicas: user.observacionesMedicas,
       _sexo: user.sexo,
       _fechaNacimiento: user.fechaNacimiento,
-      _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz',
+      _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz'
     };
-    
     return this.addUser(data, data._uid);
   }
 
@@ -100,7 +98,7 @@ export class AuthService {
         .auth
         .signInWithEmailAndPassword(email, password)
         .then(value => {
-          localStorage.setItem("uid_usuario", firebase.auth().currentUser.uid);
+          localStorage.setItem('uid_usuario', firebase.auth().currentUser.uid);
           this.generateUserDataJson();
           resolve('');
         })
@@ -116,8 +114,8 @@ export class AuthService {
     this.firebaseAuth
       .auth
       .signOut();
-    localStorage.removeItem("usuario");
-    localStorage.removeItem("uid_usuario");
+    localStorage.removeItem('usuario');
+    localStorage.removeItem('uid_usuario');
     this.functions.changeShowMainPageToTrue();
     this.functions.changeToNotLogged();
   }
@@ -138,22 +136,44 @@ export class AuthService {
   }
   */
 
-  actualizarUsuario() {
-    const myUserId = firebase.auth().currentUser.uid;
-    firebase.database().ref('users/' + myUserId).set({
-      _name: this.userDataJson._name,
-      _uid: myUserId,
-      _surname: this.userDataJson._surname,
-      _email: this.userDataJson._email,
-      _alergias: this.userDataJson._alergias,
-      _infoAdicional: this.userDataJson._infoAdicional,
-      _observacionesMedicas: this.userDataJson._observacionesMedicas,
-      _sexo: this.userDataJson._sexo,
-      _fechaNacimiento: this.userDataJson._fechaNacimiento,
-      _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz',
+  putNewImg(file): boolean {
+    try {
+      const myUserId = firebase.auth().currentUser.uid;
+      const storageRef = firebase.storage().ref();
+      const url = 'perfil/' + myUserId + '/' + file.name;
+      const uploadtask = storageRef.child(url).put(file);
+      this.userDataJson._photoURL = uploadtask.snapshot.downloadURL;
+      /*referencia.put(file).then(value => {
+        console.log('Añadido file');
+        this.userDataJson._photoURL = value.downloadURL;
+        console.log('Nueva url para la imagen: ' +  value.downloadURL);
+      });*/
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
 
-
-    });
+  actualizarUsuario(): boolean {
+    try {
+      const myUserId = firebase.auth().currentUser.uid;
+      firebase.database().ref('users/' + myUserId).set({
+        _name: this.userDataJson._name,
+        _uid: myUserId,
+        _surname: this.userDataJson._surname,
+        _email: this.userDataJson._email,
+        _alergias: this.userDataJson._alergias,
+        _infoAdicional: this.userDataJson._infoAdicional,
+        _observacionesMedicas: this.userDataJson._observacionesMedicas,
+        _sexo: this.userDataJson._sexo,
+        _fechaNacimiento: this.userDataJson._fechaNacimiento,
+        _photoURL: this.userDataJson._photoURL
+      });
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   addUser(us, key): string {
@@ -170,7 +190,7 @@ export class AuthService {
       this.functions.selectPerfil();
       this.generateUserDataJson();
       console.log('Actualizado en vista.');
-      this.verificarCorreo()
+      this.verificarCorreo();
       return 'true';
     } else {
       console.log('Algo fue mal.');
@@ -189,12 +209,11 @@ export class AuthService {
     console.log(error);
   }
 
-  generateUserDataJson() { 
-    
-    if(localStorage.getItem("uid_usuario")!=null){
-      const myUserId = localStorage.getItem("uid_usuario");
-      if(localStorage.getItem("usuario")==null){
-        console.log("usuario guardado ",myUserId);
+  generateUserDataJson() {
+    if (localStorage.getItem('uid_usuario') != null) {
+      const myUserId = localStorage.getItem('uid_usuario');
+      if (localStorage.getItem('usuario') === null) {
+        console.log('usuario guardado ', myUserId);
         const nombreUsuario = this.db.list('users/', ref => ref.orderByChild('_uid').equalTo(myUserId))
           .snapshotChanges().subscribe(value => {
             value.map(cosas => {
@@ -207,12 +226,12 @@ export class AuthService {
               this.userDataJson._observacionesMedicas = cosas.payload.child('_observacionesMedicas').exportVal();
               this.userDataJson._surname = cosas.payload.child('_surname').exportVal();
               this.userDataJson._email = cosas.payload.child('_email').exportVal();
-              localStorage.setItem("usuario", JSON.stringify(this.userDataJson));
+              localStorage.setItem('usuario', JSON.stringify(this.userDataJson));
             });
         });
-    }else{
-      //Cargando usuario de storage"
-      this.userDataJson = JSON.parse(localStorage.getItem("usuario"));
+    } else {
+      // Cargando usuario de storage"
+      this.userDataJson = JSON.parse(localStorage.getItem('usuario'));
     }
   }
   }
@@ -225,17 +244,17 @@ export class AuthService {
 deleteUser() {
   this.functions.changeShowMainPageToTrue();
   this.functions.changeToNotLogged();
-  localStorage.removeItem("usuario");
-  localStorage.removeItem("uid_usuario");
+  localStorage.removeItem('usuario');
+  localStorage.removeItem('uid_usuario');
   console.log('deleting user');
   this.firebaseAuth.auth.currentUser.delete();
 }
-verificarCorreo(){
-  var user = firebase.auth().currentUser;
+verificarCorreo() {
+  const user = firebase.auth().currentUser;
   user.sendEmailVerification().then(function() {
-    console.log("Verification mail correcto")
+    console.log('Verification mail correcto');
   }).catch(function(error) {
-    console.log(error)
+    console.log(error);
   });
 }
 }

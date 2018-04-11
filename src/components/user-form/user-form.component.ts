@@ -18,6 +18,9 @@ export class UserFormComponent implements OnInit {
   signupForm: FormGroup;
   detailForm: FormGroup;
 
+  errorMessage: string;
+  errorHappened: boolean;
+
   userState;
 
   constructor(public fb: FormBuilder, private afs: AngularFirestore,
@@ -66,8 +69,6 @@ export class UserFormComponent implements OnInit {
     });
 
   }
-
-
   get email() { return this.signupForm.get('email'); }
   get password() { return this.signupForm.get('password'); }
   get password2() { return this.signupForm.get('password2'); }
@@ -81,16 +82,15 @@ export class UserFormComponent implements OnInit {
   get infoAdicional() { return this.detailForm.get('infoAdicional'); }
 
   signup() {
-    return this.auth.signup(this.email.value, this.password.value);
+    return this.auth.signup(this.email.value, this.password.value)
+      .catch(errr => {
+        this.errorMessage = this.showSpanishMsg(errr.message);
+        this.errorHappened = true;
+        }
+    );
   }
 
-
   setUserInfo(user) {
-   /*this.auth.updateUser(user, { name:  this.name.value, apellido:  this.surname.value,
-      age:  this.age.value, alergias:  this.alergias.value, sexo: this.sexo.value,
-      observacionesMedicas:  this.observacionesMedicas.value, infoAdicional:  this.infoAdicional.value } );
-    */
-
     user.name = this.name.value;
     user.surname = this.surname.value;
     user.fechaNacimiento = this.fechaNacimiento.value;
@@ -129,5 +129,16 @@ export class UserFormComponent implements OnInit {
 
   goBackRegister() {
     this.functions.changeShowMainPageToTrue();
+  }
+
+  private showSpanishMsg(errorMess: string): string {
+    switch (errorMess) {
+      case 'The email address is badly formatted.':
+        return 'El formato del e-mail no es correcto.';
+      case 'The email address is already in use by another account.':
+        return 'El correo electrónico ya existe.';
+      default:
+        return 'Error genérico. Contacte con el administrador';
+    }
   }
 }

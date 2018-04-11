@@ -34,7 +34,6 @@ import { ResetPasswordComponent } from '../components/reset-password/reset-passw
 
 import { RouterModule, Routes } from '@angular/router';
 
-
 // import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 
@@ -73,5 +72,5 @@ export class AppModule { }
 
 const appRoutes: Routes = [
   { path: 'reset', component: ResetPasswordComponent }
- 
+
 ];
