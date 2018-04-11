@@ -18,5 +18,9 @@ export class UserDataComponent {
 
   guardarDatos() {
     this.authService.actualizarUsuario();
+    this.functions.selectExperimentos();
+  }
+  borrarUsuario(){
+    this.authService.deleteUser();
   }
 }

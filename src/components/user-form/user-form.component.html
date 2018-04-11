@@ -67,19 +67,19 @@
 
 
           <div class="field">
-              <label>Nombre</label>
+              <label>Nombre*</label>
               <input type="text" class="input" formControlName="name" required autocomplete="off">
           </div>
           <div class="field">
-              <label>Apellidos</label>
+              <label>Apellidos*</label>
               <input type="text" class="input" formControlName="surname" required autocomplete="off">
           </div>
           <div class="field">
-              <label>Fecha Nacimiento</label>
-              <input type="text" class="input" formControlName="fechaNacimiento" required autocomplete="off">
+              <label>Fecha Nacimiento*</label>
+              <input type="date" class="input" formControlName="fechaNacimiento" required autocomplete="off">
           </div>
           <div class="field">
-              <label>Sexo</label>
+              <label>Sexo*</label>
               <div class="ui radio">
                 <input ng-model="sexo" type="radio" name="sexo" value="hombre"  ng-value="hombre" formControlName="sexo"> Hombre
                 <input ng-model="sexo" type="radio" name="sexo" value="mujer" ng-value="mujer" formControlName="sexo"> Mujer

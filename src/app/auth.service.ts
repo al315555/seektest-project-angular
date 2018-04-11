@@ -87,6 +87,7 @@ export class AuthService {
       _fechaNacimiento: user.fechaNacimiento,
       _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz',
     };
+    
     return this.addUser(data, data._uid);
   }
 
@@ -97,34 +98,6 @@ export class AuthService {
         .signInWithEmailAndPassword(email, password)
         .then(value => {
           this.generateUserDataJson();
-
-          /*
-          console.log('Loggeado correctamente: ' + value.uid);
-          console.log('Usuario: ' + value.email);
-
-          console.log(this.db.list('users/' + value.uid));
-
-          /*
-          const user2$ = this.db.list('users/'+value.uid);
-          this.db.object('users/'+value.uid).valueChanges().subscribe(users => {this.users = users;
-          console.log(this.users)});
-
-          console.log('Usuario prueba: '+this.users);
-
-
-
-          user._name = value.name;
-          user._surname = value.surname;
-          user._sexo = value.sexo;
-          user._infoAdicional = value.infoAdicional;
-          user._alergias = value._alergias;
-          user._observacionesMedicas = value.observacionesMedicas;
-          user._email = email;
-          user._photoURL = value.photoURL;
-          user._uid = value.uid;
-
-
-          */
           resolve('');
         })
         .catch(err => {
@@ -191,6 +164,7 @@ export class AuthService {
       this.functions.selectPerfil();
       this.generateUserDataJson();
       console.log('Actualizado en vista.');
+      this.verificarCorreo()
       return 'true';
     } else {
       console.log('Algo fue mal.');
@@ -241,5 +215,14 @@ deleteUser() {
   console.log('deleting user');
   this.firebaseAuth.auth.currentUser.delete();
 }
+verificarCorreo(){
+  var user = firebase.auth().currentUser;
+  user.sendEmailVerification().then(function() {
+    console.log("Verification mail correcto")
+  }).catch(function(error) {
+    console.log(error)
+  });
+}
+
 }
 
