@@ -70,3 +70,8 @@ import { RouterModule, Routes } from '@angular/router';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+const appRoutes: Routes = [
+  { path: 'reset', component: ResetPasswordComponent }
+ 
+];

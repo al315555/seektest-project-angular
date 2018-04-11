@@ -24,6 +24,7 @@ export class AuthService {
   user: Observable<firebase.User>;
   error: boolean;
   errorMessage: string;
+  datosUsuario: boolean;
 
   items: AngularFireList<User[]> = null; //  list of objects
   userData: AngularFireObject<User> = null; //   single object
@@ -47,9 +48,11 @@ export class AuthService {
 
   constructor(private afAuth: AngularFireAuth, public firebaseAuth: AngularFireAuth, public functions: FunctionsService,
               private notify: NotifyService, public db: AngularFireDatabase) {
+    this.datosUsuario = false;
     this.user = firebaseAuth.authState;
     this.items = db.list('/users');
     this.generateUserDataJson();
+    console.log('Datos usuario 2', this.datosUsuario);
   }
 
   signup(email: string, password: string) {
@@ -97,6 +100,7 @@ export class AuthService {
         .auth
         .signInWithEmailAndPassword(email, password)
         .then(value => {
+          localStorage.setItem("uid_usuario", firebase.auth().currentUser.uid);
           this.generateUserDataJson();
           resolve('');
         })
@@ -112,6 +116,8 @@ export class AuthService {
     this.firebaseAuth
       .auth
       .signOut();
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("uid_usuario");
     this.functions.changeShowMainPageToTrue();
     this.functions.changeToNotLogged();
   }
@@ -183,8 +189,34 @@ export class AuthService {
     console.log(error);
   }
 
-  generateUserDataJson() {
-    if (firebase.auth().currentUser != null) {
+  generateUserDataJson() { 
+
+    if(localStorage.getItem("uid_usuario")!=null){
+      const myUserId = localStorage.getItem("uid_usuario");
+      if(localStorage.getItem("usuario")==null){
+        console.log("usuario guardado ",myUserId);
+        const nombreUsuario = this.db.list('users/', ref => ref.orderByChild('_uid').equalTo(myUserId))
+          .snapshotChanges().subscribe(value => {
+            value.map(cosas => {
+              this.userDataJson._name = cosas.payload.child('_name').exportVal();
+              this.userDataJson._fechaNacimiento = cosas.payload.child('_fechaNacimiento').exportVal();
+              this.userDataJson._alergias = cosas.payload.child('_alergias').exportVal();
+              this.userDataJson._infoAdicional = cosas.payload.child('_infoAdicional').exportVal();
+              this.userDataJson._photoURL = cosas.payload.child('_photoURL').exportVal();
+              this.userDataJson._sexo = cosas.payload.child('_sexo').exportVal();
+              this.userDataJson._observacionesMedicas = cosas.payload.child('_observacionesMedicas').exportVal();
+              this.userDataJson._surname = cosas.payload.child('_surname').exportVal();
+              this.userDataJson._email = cosas.payload.child('_email').exportVal();
+              localStorage.setItem("usuario", JSON.stringify(this.userDataJson));
+            });
+          // console.log(value);
+        });
+    }else{
+      console.log("Cargando usuario de storage");
+      this.userDataJson = JSON.parse(localStorage.getItem("usuario"));
+    }
+  }
+    /*if (firebase.auth().currentUser != null) {
       const myUserId = firebase.auth().currentUser.uid;
       const nombreUsuario = this.db.list('users/', ref => ref.orderByChild('_uid').equalTo(myUserId))
         .snapshotChanges().subscribe(value => {
@@ -198,10 +230,12 @@ export class AuthService {
             this.userDataJson._observacionesMedicas = cosas.payload.child('_observacionesMedicas').exportVal();
             this.userDataJson._surname = cosas.payload.child('_surname').exportVal();
             this.userDataJson._email = cosas.payload.child('_email').exportVal();
+            this.datosUsuario = true;
           });
+          
           // console.log(value);
         });
-    }
+    }*/
   }
   resetPassword(email) {
     console.log(email);
@@ -212,6 +246,8 @@ export class AuthService {
 deleteUser() {
   this.functions.changeShowMainPageToTrue();
   this.functions.changeToNotLogged();
+  localStorage.removeItem("usuario");
+  localStorage.removeItem("uid_usuario");
   console.log('deleting user');
   this.firebaseAuth.auth.currentUser.delete();
 }
