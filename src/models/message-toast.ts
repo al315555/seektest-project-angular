@@ -1,4 +1,4 @@
-export class MessageToast{
+export class MessageToast {
     title: String;
     description: String;
     type: String;

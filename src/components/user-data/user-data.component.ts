@@ -60,7 +60,7 @@ export class UserDataComponent {
       this.messageToast.pushMessage({
         title: '¡Ups! Algo no ha ido bien.',
         description: 'Los datos no se han podido actualizar.',
-        type: 'fail'
+        type: 'error'
       });
     }
     // this.functions.selectExperimentos();

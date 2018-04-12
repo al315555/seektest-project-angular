@@ -33,6 +33,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { ResetPasswordComponent } from '../components/reset-password/reset-password.component';
 
 import { RouterModule, Routes } from '@angular/router';
+import {ExperimentsService} from './experiments.service';
 
 // import { AngularFirestoreModule } from 'angularfire2/firestore';
 
@@ -65,7 +66,7 @@ import { RouterModule, Routes } from '@angular/router';
     ReactiveFormsModule,
     SuiModule,
   ],
-  providers: [AuthService, FunctionsService, AngularFireDatabase],
+  providers: [AuthService, FunctionsService, AngularFireDatabase, ExperimentsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

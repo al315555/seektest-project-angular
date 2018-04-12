@@ -1,5 +1,4 @@
-<div class="ui aligned centered grid" *ngIf="functionsService.showMainPage">
-  <div class="ui column">
+<div class="ui aligned centered" *ngIf="functionsService.showMainPage">
     <div class="ui raised segment">
       <img class="ui centered image" src="../../assets/images/Logofinal.png">
       <br/><br/><br/><br/>
@@ -16,7 +15,6 @@
       </div>
       <br/><br/><br/><br/>
     </div>
-  </div>
 </div>
 
 <app-user-form *ngIf="register && !functionsService.showMainPage && !login"></app-user-form>

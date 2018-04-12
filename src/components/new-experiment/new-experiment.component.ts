@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import { MessageToast } from '../../models/message-toast';
 import { MessageToastComponent } from '../message-toast/message-toast.component';
 import {FunctionsService} from '../../app/functions.service';
+import {AngularFireDatabase, AngularFireObject, AngularFireList, snapshotChanges} from 'angularfire2/database';
 
 @Component({
   selector: 'app-new-experiment',
@@ -51,7 +52,7 @@ export class NewExperimentComponent {
 
   textoDesplegable: String;
 
-  constructor(private afs: AngularFirestore, public functions: FunctionsService) {
+  constructor(private afs: AngularFireDatabase, public functions: FunctionsService) {
     this.dateHourArray = new Array<Date>();
     this.changingValueProgres = 0;
     this.collapse = true;
@@ -201,19 +202,23 @@ export class NewExperimentComponent {
       this.spinnerLoading = true;
       const userProfile = {sexo: this.perfilSexo, rangoEdad: {inicio: this.edadInicio, final: this.edadFinal},
         alergias: this.alergias, medicalObs: this.medicalObs};
-      this.afs.collection('experiments').add(
-        {title: this.title, place: this.place, numberParticipants: this.numberParticipants,
-          description: this.description, dates: this.dateHourArray, gift: this.gift, duration: this.duration, userProfile: userProfile})
-      .then(value => {
+      try {
+        this.afs.list('experiments/').push(
+          {
+            title: this.title, place: this.place, numberParticipants: this.numberParticipants,
+            description: this.description, dates: this.dateHourArray, gift: this.gift, duration: this.duration,
+            userProfile: userProfile
+          }
+        );
         this.spinnerLoading = false;
         this.clearFields();
         this.messageToast.pushMessage({title: 'Experimento añadido!', description: 'El experimento ha sido añadido correctamente',
           type: 'success'});
-      }).catch(value => {
+      } catch {
         this.spinnerLoading = false;
         this.messages.push({title: 'Ha habido un error!',
           description: 'No se ha podido subir el experimento, intentelo mas tarde.', type: 'error'});
-      });
+      }
     }
   }
 
