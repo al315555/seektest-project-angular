@@ -199,23 +199,23 @@ export class NewExperimentComponent {
     if (this.edadInicio != null && this.edadFinal != null && this.edadInicio > this.edadFinal) {
       this.messageToast.pushMessage({title: 'Error!', description: 'La edad de inicio no puede ser mayor que la de fin.', type: 'error'});
     } else {
-      this.spinnerLoading = true;
       const userProfile = {sexo: this.perfilSexo, rangoEdad: {inicio: this.edadInicio, final: this.edadFinal},
         alergias: this.alergias, medicalObs: this.medicalObs};
       try {
+        this.spinnerLoading = true;
         this.afs.list('experiments/').push(
           {
             title: this.title, place: this.place, numberParticipants: this.numberParticipants,
             description: this.description, dates: this.dateHourArray, gift: this.gift, duration: this.duration,
             userProfile: userProfile
           }
-        );
-        this.spinnerLoading = false;
-        this.clearFields();
-        this.messageToast.pushMessage({title: 'Experimento añadido!', description: 'El experimento ha sido añadido correctamente',
+        ).then((value) => {
+          this.clearFields();
+          this.messageToast.pushMessage({title: 'Experimento añadido!', description: 'El experimento ha sido añadido correctamente',
           type: 'success'});
+          }
+        );
       } catch {
-        this.spinnerLoading = false;
         this.messages.push({title: 'Ha habido un error!',
           description: 'No se ha podido subir el experimento, intentelo mas tarde.', type: 'error'});
       }
