@@ -36,5 +36,6 @@ export class ExperimentCardComponent implements OnInit {
       this.clicked = true;
       this.item = item;
       // $('.ui.modal').modal('show');
+      // estooy intentado que esta zona despliegue el modal con los datos del experimento
     }
 }
