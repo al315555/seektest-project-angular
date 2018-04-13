@@ -1,6 +1,76 @@
-<ul *ngFor="let item of items">
-  <li> {{ item.title}} : {{ item.description}} </li>
-</ul>
+<div class="ui two column grid">
+  <div class="column" *ngFor="let expe of items">
+    <div class="ui card">
+      <div class="content">
+        <!--<i class="file outline icon"></i>-->
+        <div class="header">
+          {{ expe.title }}
+        </div>
+        <div class="meta">
+          {{ expe.duration }} minutos
+        </div>
+        <div class="description">
+          {{ expe.description }}
+        </div>
+      </div>
+      <div class="extra content">
+        <button class="ui fluid inverted blue button" (click)="info(expe)" >
+          <i class="info icon"></i>
+           <!-- Ver detalles... -->
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<br/><br/>
+<div class="ui bottom attached button">Más resultados...</div>
+
+<app-experiment-data item="{{item}}" ></app-experiment-data>
+
+<!--<table class="ui celled table">
+  <thead>
+    <tr><th>Titulo</th>
+      <th>Duración</th>
+      <th>Plazas</th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr >
+    <td></td>
+    <td>{{ item.duration}} minutos</td>
+    <td>{{ item.numberParticipants}}</td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr><th colspan="3">
+    <div class="ui right floated pagination menu">
+      <a class="icon item">
+        <i class="left chevron icon"></i>
+      </a>
+      <a class="item">1</a>
+      <a class="item">2</a>
+      <a class="item">3</a>
+      <a class="item">4</a>
+      <a class="icon item">
+        <i class="right chevron icon"></i>
+      </a>
+    </div>
+  </th>
+  </tr></tfoot>
+</table>
+-->
+
+<!--<div  class="ui four column doubling stackable grid container" >
+<div *ngFor="let item of items">
+  <div class="column">
+    <h3>{{ item.title}} </h3>
+  </div>
+  <div class="column">
+    <p>{{ item.description}} </p>
+  </div>
+</div>
+</div>
+-->
 
 <!-- Horizontales principales -->
 <!--

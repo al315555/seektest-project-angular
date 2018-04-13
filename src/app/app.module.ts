@@ -34,6 +34,7 @@ import { ResetPasswordComponent } from '../components/reset-password/reset-passw
 
 import { RouterModule, Routes } from '@angular/router';
 import {ExperimentsService} from './experiments.service';
+import {ExperimentDataComponent} from '../components/experiment-data/experiment-data.component';
 
 // import { AngularFirestoreModule } from 'angularfire2/firestore';
 
@@ -51,7 +52,8 @@ import {ExperimentsService} from './experiments.service';
     NewExperimentComponent,
     ExperimentCardComponent,
     MessageToastComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    ExperimentDataComponent
   ],
   imports: [
     BrowserModule,

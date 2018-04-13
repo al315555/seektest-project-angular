@@ -35,7 +35,7 @@
         </div>
 
         <div style="margin-left: 20%; margin-right: 20%">
-          <button class="ui fluid inverted blue submit button" (click)="login()" [disabled]="!email || !password" >
+          <button class="ui fluid inverted blue submit button" (click)="login()" [disabled]="!email || !password" (submit)="login()">
             Autentificarse
           </button>
           <br/>

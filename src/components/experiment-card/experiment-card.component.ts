@@ -16,6 +16,8 @@ import {getQueryValue} from '@angular/core/src/view/query';
 export class ExperimentCardComponent implements OnInit {
 
   items: any[] = null;
+  clicked: boolean;
+  item: any;
 
   constructor(public experimentService: ExperimentsService , public functions: FunctionsService) {}
 
@@ -24,9 +26,15 @@ export class ExperimentCardComponent implements OnInit {
       .snapshotChanges().map(actions => {
       return actions.map(action => ({key: action.key, ...action.payload.val()}));
     }).subscribe((value) => {
-        console.log(value.map(item => item.key));
+        // console.log(value.map(item => item.key));
         this.items = value;
         return value.map(item => item.key);
       });
+    }
+    info(item: any) {
+      console.log(item.key);
+      this.clicked = true;
+      this.item = item;
+      // $('.ui.modal').modal('show');
     }
 }
