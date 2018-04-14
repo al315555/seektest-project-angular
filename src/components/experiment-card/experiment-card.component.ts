@@ -19,6 +19,7 @@ export class ExperimentCardComponent implements OnInit {
   items: any[] = null;
   clicked: boolean;
   item: any;
+  object: any;
 
   constructor(public experimentService: ExperimentsService , public functions: FunctionsService) {this.item = new Experiment(); }
 

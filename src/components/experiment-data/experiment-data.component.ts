@@ -7,6 +7,7 @@ import {User} from '../../app/core/User';
 import {Experiment} from '../../models/experiment';
 import {ExperimentsService} from '../../app/experiments.service';
 import {getQueryValue} from '@angular/core/src/view/query';
+import {UserProfile} from '../../models/user-profile';
 
 @Component({
   selector: 'app-experiment-data',
@@ -16,6 +17,8 @@ import {getQueryValue} from '@angular/core/src/view/query';
 export class ExperimentDataComponent implements OnInit {
 
   @Input() item: any;
+
+  noDataString = 'No hay datos definidos';
 
   constructor(public experimentService: ExperimentsService , public functions: FunctionsService) {}
 

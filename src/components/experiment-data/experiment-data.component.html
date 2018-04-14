@@ -34,8 +34,29 @@
 
     <div class="text">
         <h3>Perfil de usuario</h3>
+        <div *ngIf="item.userProfile">
           <i class="gender icon"></i>
-          <p class="text">{{item.userProfile.sexo}}</p>
+          <div class="text" >
+            <i class="mars icon" *ngIf="item.userProfile.sexo === 'hombre'"></i>
+            <i class="venus icon" *ngIf="item.userProfile.sexo === 'mujer'"></i>
+            <i class="genderless icon" *ngIf="item.userProfile.sexo === 'null'"></i>
+          </div>
+          <h4>Alergias</h4>
+          <div class="text" >
+            <i class="exclamation icon" ></i>
+            {{item.userProfile.alergias}}
+          </div>
+          <h4>Rango de edad</h4>
+          <div *ngIf="item.userProfile.rangoEdad">
+            <i class="exclamation icon" ></i>
+            Desde {{item.userProfile.rangoEdad.inicio}} años hasta
+            {{item.userProfile.rangoEdad.final}} años
+          </div>
+          <div *ngIf="item.userProfile.rangoEdad == null">
+            {{noDataString}}
+          </div>
+        </div>
+        <div *ngIf="item.userProfile == null">{{noDataString}}</div>
     </div>
 
   </div>
