@@ -1,65 +1,66 @@
 <div>
-  <br/><br/>
+  <!--<br/><br/>
   <div style="margin-left: 40%; margin-right: 40%;">
     <button class="ui inverted blue labeled icon button" (click)="goBackToExperiments()">
       <i class="left arrow icon"></i>
       <span class="ui text">Volver</span>
     </button>
   </div>
-  <br/><br/>
-  <div class="ui raised very padded text container segment">
-    <h2 class="ui header">Mis datos</h2>
-    <app-message-toast></app-message-toast>
-      <div class="ui large form" *ngIf="authService.userDataJson as user">
-        <div class="field">
-          <label>Correo electrónico</label>
-          <label>{{ user._email }}</label>
-        </div>
-        <div class="field">
-          <label>Foto de perfil</label>
-          <label><img src="{{ user._photoURL }}" style="height: 128px; width: 128px;"></label>
+  <br/><br/>-->
+  <div class="ui padded segment form-size">
+    <div class="ui raised very padded text container segment">
+      <h2 class="ui header">Mis datos</h2>
+      <app-message-toast></app-message-toast>
+        <div class="ui large form" *ngIf="authService.userDataJson as user">
           <div class="field">
-            <input type="file" (change)="fileChange($event)" placeholder="Cambiar avatar" accept=".jpg,.png,.svg,.jpeg,.gif">
+            <label>Correo electrónico</label>
+            <label>{{ user._email }}</label>
           </div>
-        </div>
-        <div class="field">
-          <label>Nombre</label>
-          <input type="text" [(ngModel)]="user._name">
-        </div>
-        <div class="field">
-          <label>Apellido</label>
-          <input type="text" [(ngModel)]="user._surname">
-        </div>
-        <div class="field">
-          <label>Fecha de nacimiento</label>
-          <input type="date" [(ngModel)]="user._fechaNacimiento">
-        </div>
-        <div class="field">
-          <label>Información adicional</label>
-          <input type="text" [(ngModel)]="user._infoAdicional">
-        </div>
-        <div class="field">
-          <label>Alérgias</label>
-          <input type="text" [(ngModel)]="user._alergias">
-        </div>
-        <div class="field">
-          <label>Observaciones médicas</label>
-          <input type="text" [(ngModel)]="user._observacionesMedicas">
-        </div>
-        <div style="margin-left: 20%; margin-right: 20%">
-          <button class="ui blue fluid button" (click)="guardarDatos()">
-            <span class="ui text">Guardar</span>
-          </button>
-          <br/><br/>
+          <div class="field">
+            <label>Foto de perfil</label>
+            <label><img src="{{ user._photoURL }}" style="height: 128px; width: 128px;"></label>
+            <div class="field">
+              <input type="file" (change)="fileChange($event)" placeholder="Cambiar avatar" accept=".jpg,.png,.svg,.jpeg,.gif">
+            </div>
+          </div>
+          <div class="field">
+            <label>Nombre</label>
+            <input type="text" [(ngModel)]="user._name">
+          </div>
+          <div class="field">
+            <label>Apellido</label>
+            <input type="text" [(ngModel)]="user._surname">
+          </div>
+          <div class="field">
+            <label>Fecha de nacimiento</label>
+            <input type="date" [(ngModel)]="user._fechaNacimiento">
+          </div>
+          <div class="field">
+            <label>Información adicional</label>
+            <input type="text" [(ngModel)]="user._infoAdicional">
+          </div>
+          <div class="field">
+            <label>Alérgias</label>
+            <input type="text" [(ngModel)]="user._alergias">
+          </div>
+          <div class="field">
+            <label>Observaciones médicas</label>
+            <input type="text" [(ngModel)]="user._observacionesMedicas">
+          </div>
+          <div style="margin-left: 20%; margin-right: 20%">
+            <button class="ui blue fluid button" (click)="guardarDatos()">
+              <span class="ui text">Guardar</span>
+            </button>
+            <br/><br/>
 
 
-          <p class="ui text"><a onclick="$('.ui.basic.modal').modal('show');" style="cursor: pointer; color: red">Borrar cuenta</a></p>
-        </div>
+            <p class="ui text"><a onclick="$('.ui.basic.modal').modal('show');" style="cursor: pointer; color: red">Borrar cuenta</a></p>
+          </div>
 
-      </div>
+        </div>
+    </div>
   </div>
 </div>
-
 
 <div class="ui basic modal">
   <div class="ui icon header">

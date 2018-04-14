@@ -15,11 +15,12 @@ import {getQueryValue} from '@angular/core/src/view/query';
 })
 export class ExperimentCardComponent implements OnInit {
 
+
   items: any[] = null;
   clicked: boolean;
   item: any;
 
-  constructor(public experimentService: ExperimentsService , public functions: FunctionsService) {}
+  constructor(public experimentService: ExperimentsService , public functions: FunctionsService) {this.item = new Experiment(); }
 
   ngOnInit() {
     this.experimentService.getAllExperiments()
@@ -35,7 +36,5 @@ export class ExperimentCardComponent implements OnInit {
       console.log(item.key);
       this.clicked = true;
       this.item = item;
-      // $('.ui.modal').modal('show');
-      // estooy intentado que esta zona despliegue el modal con los datos del experimento
     }
 }

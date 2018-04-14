@@ -1,4 +1,4 @@
-<div class="ui stackable attached menu">
+<!--<div class="ui stackable attached menu">
   <div class="left item" style="cursor: pointer" (click)="goBackToExperiments()">
     <img src="../../assets/images/logo_seekTest.png" class="image">
     <h2>{{titleHeader}}</h2>
@@ -15,33 +15,33 @@
     </button>
   </div>
 </div>
-<!--
-<div class="ui secondary pointing menu">
-  <a class="item">
-    <img src="../../assets/images/logo_seekTest.png" class="image" height="15%" width="15%">
-  </a>
-  <a class="item active">
-    <button class="ui label" (click)="selectPerfil()">
-      <i class="user icon"></i>
-      Mi perfil
-    </button>
-  </a>
-  <a class="item">
-    <button class="ui label" (click)="selectPerfil()">
-      <i class="columns icon"></i>
-      Experimentos
-    </button>
-  </a>
-  <div class="right menu">
-    <a class="ui item">
-      <p class="ui label" >Autenticado como {{ authService.userDataJson._name }}</p>
-      <button class="ui label" (click)="logout()" *ngIf="authService.user | async">
-        <i class="sign out icon"></i>
-      </button>
-    </a>
-  </div>
-</div>
-<div class="ui segment">
-  <p></p>
-</div>
 -->
+
+<div class="ui secondary pointing menu">
+
+  <a class="item" href="https://seektest.wordpress.com/">
+    <img src="../../assets/images/logo_seekTest.png" class="image" height="40px" width="25px" >
+  </a>
+
+  <a class="{{miPerfilItem}}" (click)="selectPerfil()" data-tooltip="Mostrar datos de perfil" data-position="bottom center">
+     <i class="user icon"></i>{{ authService.userDataJson._name }}
+  </a>
+
+  <a class="{{experimentosItem}}" (click)="goBackToExperiments()" data-tooltip="Mostrar experimentos" data-position="bottom center">
+     <i class="columns icon"></i>
+  </a>
+
+  <a class="{{nuevoExperimentoItem}}" (click)="goToNewExperiment()" data-tooltip="Nuevo experimento" data-position="bottom center">
+     <i class="left plus icon"></i>
+  </a>
+
+  <a class="item" (click)="logout()" data-tooltip="Cerrar sesión" data-position="bottom center" style="margin-: 80px; ">
+    <i class="sign out icon"></i>
+  </a>
+
+  <!--<div class="right menu">
+    <p class="ui text mini" >Autenticado como {{ authService.userDataJson._name }}</p>
+  </div>-->
+
+</div>
+

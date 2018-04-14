@@ -1,4 +1,4 @@
-<div class="ui two column grid">
+<div class="ui two column grid items stackable">
   <div class="column" *ngFor="let expe of items">
     <div class="ui card">
       <div class="content">
@@ -14,7 +14,8 @@
         </div>
       </div>
       <div class="extra content">
-        <button class="ui fluid inverted blue button" (click)="info(expe)" >
+        <button id="info_{{expe.key}}" class="ui fluid inverted blue button" (click)="info(expe)"
+                onclick="$('.ui.modal').modal('show');" >
           <i class="info icon"></i>
            <!-- Ver detalles... -->
         </button>
@@ -23,9 +24,9 @@
   </div>
 </div>
 <br/><br/>
-<div class="ui bottom attached button">Más resultados...</div>
+<div class="ui inverted pink bottom attached button">Más resultados...</div>
 
-<app-experiment-data item="{{item}}" ></app-experiment-data>
+<app-experiment-data [item]="item" ></app-experiment-data>
 
 <!--<table class="ui celled table">
   <thead>
