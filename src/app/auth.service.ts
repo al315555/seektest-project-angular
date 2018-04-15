@@ -238,8 +238,10 @@ export class AuthService {
   resetPassword(email) {
     console.log(email);
     this.afAuth.auth.sendPasswordResetEmail(email)
-    .then(() => console.log('email sent'))
-    .catch((error) => console.log(error));
+    .then(value => {
+      alert('¡Correo de recuperación enviado! Revise su bandeja de entrada y siga los pasos.');
+      console.log('email sent'); })
+    .catch(error => console.log(error));
 }
 deleteUser() {
   this.functions.changeShowMainPageToTrue();

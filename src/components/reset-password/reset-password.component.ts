@@ -12,6 +12,7 @@ export class ResetPasswordComponent {
   constructor(public authService: AuthService, public functions: FunctionsService) {}
 
   resetPassword() {
+      this.email.trim();
       this.authService.resetPassword(this.email);
       this.functions.changeToNotResetPassword();
   }
