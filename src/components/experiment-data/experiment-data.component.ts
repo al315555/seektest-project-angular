@@ -18,7 +18,9 @@ export class ExperimentDataComponent implements OnInit {
 
   @Input() item: any;
 
-  noDataString = 'No hay datos definidos';
+  @Input() itemDates: Date[];
+
+  noDataString = 'sin datos definidos';
 
   constructor(public experimentService: ExperimentsService , public functions: FunctionsService) {}
 

@@ -21,6 +21,7 @@ export class NewExperimentComponent {
   changingValueProgres: number;
   progresIncrement: number = 16.7;
 
+  datesHoursString: string[];
   dateHourArray: Date[];
   dateHourSelected: Date;
   dateHourEntered: boolean;
@@ -203,10 +204,16 @@ export class NewExperimentComponent {
         alergias: this.alergias, medicalObs: this.medicalObs};
       try {
         this.spinnerLoading = true;
+        // guardamos las fechas como numero time para poder formatearlo al recibirlo
+        const dateNumberArray = new Array();
+        this.dateHourArray.forEach(value => {
+          dateNumberArray.push(value.getTime());
+        });
+
         this.afs.list('experiments/').push(
           {
-            title: this.title, place: this.place, numberParticipants: this.numberParticipants,
-            description: this.description, dates: this.dateHourArray, gift: this.gift, duration: this.duration,
+            datePublished: new Date().getTime(), title: this.title, place: this.place, numberParticipants: this.numberParticipants,
+            description: this.description, dates: dateNumberArray, gift: this.gift, duration: this.duration,
             userProfile: userProfile
           }
         ).then((value) => {

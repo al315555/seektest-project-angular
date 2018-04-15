@@ -27,8 +27,20 @@ export class ExperimentsService {
 
   constructor(public db: AngularFireDatabase) {}
 
-  getAllExperiments() {
+  getAllExperimentsOrderedByTitle() {
     return this.db.list('experiments/', ref => ref.orderByChild('title'));
+  }
+
+  getAllExperiments(limit: number) {
+    return this.db.list('experiments/', ref => ref.orderByChild('datePublished').limitToLast(limit));
+  }
+
+  getExperimentsByTitle(byTitle: string, limit: number) {
+    if (byTitle != null && byTitle !== '') {
+      return this.db.list('experiments/', ref => ref.orderByChild('title').startAt(byTitle));
+    } else {
+      return this.getAllExperiments(limit);
+    }
   }
 
 }

@@ -1,3 +1,11 @@
+<div class="ui icon input fluid">
+    <input type="text" style="border-radius: 25px;"
+           placeholder="Search..."
+           (submit)="buscarExperimentos()"
+           (change)="buscarExperimentos()"
+           [(ngModel)]="textoTitulo">
+    <i class="search icon"></i>
+</div>
 <div class="ui two column grid items stackable">
   <div class="column" *ngFor="let expe of items">
     <div class="ui card">
@@ -7,10 +15,16 @@
           {{ expe.title }}
         </div>
         <div class="meta">
-          {{ expe.duration }} minutos
+          Publicado&nbsp;el&nbsp;{{ expe.datePublished | date:'dd/MM/yyyy'}}&nbsp;a&nbsp;las&nbsp;
+          {{ expe.datePublished | date:'HH:mm'}}.
         </div>
-        <div class="description">
-          {{ expe.description }}
+        <div class="text">
+          <i class="hourglass icon"></i>
+          &nbsp;{{ expe.duration }}&nbsp;minutos
+        </div>
+        <div class="text">
+          <i class="map marker alternate icon"></i>
+          {{ expe.place }}
         </div>
       </div>
       <div class="extra content">
@@ -24,9 +38,9 @@
   </div>
 </div>
 <br/><br/>
-<div class="ui inverted pink bottom attached button">Más resultados...</div>
+<div class="ui inverted pink bottom attached button" (click)="masResultados()">Más resultados...</div>
 
-<app-experiment-data [item]="item" ></app-experiment-data>
+<app-experiment-data [item]="item" [itemDates]="itemDates" ></app-experiment-data>
 
 <!--<table class="ui celled table">
   <thead>
