@@ -24,7 +24,7 @@ import {UserDataComponent} from '../components/user-data/user-data.component';
 import {LoggedComponent} from '../components/logged/logged.component';
 import {NewExperimentComponent } from '../components/new-experiment/new-experiment.component';
 import {SuiModule} from 'ng2-semantic-ui';
-import { ExperimentCardComponent } from '../components/experiment-card/experiment-card.component';
+import { ListExperimentComponent } from '../components/list-experiment/list-experiment.component';
 import { MessageToastComponent } from '../components/message-toast/message-toast.component';
 
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -35,6 +35,7 @@ import { ResetPasswordComponent } from '../components/reset-password/reset-passw
 import { RouterModule, Routes } from '@angular/router';
 import {ExperimentsService} from './experiments.service';
 import {ExperimentDataComponent} from '../components/experiment-data/experiment-data.component';
+import { ExperimentCardComponent } from '../components/experiment-card/experiment-card.component';
 
 // import { AngularFirestoreModule } from 'angularfire2/firestore';
 
@@ -50,10 +51,11 @@ import {ExperimentDataComponent} from '../components/experiment-data/experiment-
     UserDataComponent,
     LoggedComponent,
     NewExperimentComponent,
-    ExperimentCardComponent,
+    ListExperimentComponent,
     MessageToastComponent,
     ResetPasswordComponent,
-    ExperimentDataComponent
+    ExperimentDataComponent,
+    ExperimentCardComponent,
   ],
   imports: [
     BrowserModule,

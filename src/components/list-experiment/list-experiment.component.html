@@ -1,0 +1,16 @@
+<div class="ui icon input fluid">
+    <input type="text" style="border-radius: 25px;"
+           placeholder="Search..."
+           (submit)="buscarExperimentos()"
+           (change)="buscarExperimentos()"
+           [(ngModel)]="textoTitulo">
+    <i class="search icon"></i>
+</div>
+<div class="ui two column grid items stackable">
+  <div class="column" *ngFor="let expe of items">
+    <app-experiment-card [expe]="expe" (clickEvEm)="infoExpe($event)"></app-experiment-card>
+  </div>
+</div>
+<br/><br/>
+<div class="ui inverted pink bottom attached button" (click)="masResultados()">Más resultados...</div>
+<app-experiment-data [item]="item" [itemDates]="itemDates" ></app-experiment-data>
