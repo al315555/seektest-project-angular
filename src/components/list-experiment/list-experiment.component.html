@@ -1,3 +1,4 @@
+<div class="contenedor">
 <div class="ui icon input fluid">
   <input type="text" style="border-radius: 25px;" placeholder="Search..." (input)="buscarExperimentos()" (change)="buscarExperimentos()"
     [(ngModel)]="textoTitulo">
@@ -30,3 +31,4 @@
 <br/>
 <div class="ui inverted pink bottom attached button" (click)="masResultados()">Más resultados...</div>
 <app-experiment-data [item]="item" [itemDates]="itemDates"></app-experiment-data>
+</div>

@@ -18,6 +18,7 @@ import 'rxjs/add/operator/catch';
 
 import { switchMap } from 'rxjs/operators';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import {AngularFireStorage} from 'angularfire2/storage';
 
 @Injectable()
 export class AuthService {
@@ -47,7 +48,7 @@ export class AuthService {
 
 
   constructor(private afAuth: AngularFireAuth, public firebaseAuth: AngularFireAuth, public functions: FunctionsService,
-              private notify: NotifyService, public db: AngularFireDatabase) {
+              private notify: NotifyService, public db: AngularFireDatabase, public st: AngularFireStorage) {
     this.datosUsuario = false;
     this.user = firebaseAuth.authState;
     this.items = db.list('/users');
@@ -87,7 +88,7 @@ export class AuthService {
       _observacionesMedicas: user.observacionesMedicas,
       _sexo: user.sexo,
       _fechaNacimiento: user.fechaNacimiento,
-      _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz'
+      _photoURL: user.photoURL
     };
     localStorage.setItem('uid_usuario', firebase.auth().currentUser.uid);
     return this.addUser(data, data._uid);
@@ -140,15 +141,17 @@ export class AuthService {
   putNewImg(file): boolean {
     try {
       const myUserId = firebase.auth().currentUser.uid;
-      const storageRef = firebase.storage().ref();
-      const url = 'perfil/' + myUserId + '/' + file.name;
-      const uploadtask = storageRef.child(url).put(file);
-      this.userDataJson._photoURL = uploadtask.snapshot.downloadURL;
-      /*referencia.put(file).then(value => {
-        console.log('Añadido file');
-        this.userDataJson._photoURL = value.downloadURL;
-        console.log('Nueva url para la imagen: ' +  value.downloadURL);
-      });*/
+      const url = 'Perfil/' + myUserId + '/' + file.name;
+      const storageRef = this.st.upload(url, file)
+        .then(value => {
+          this.userDataJson._photoURL = value.downloadURL;
+          console.log(value.downloadURL);
+          return true;
+        })
+        .catch(value => {
+          console.log(value);
+          return false;
+        });
       return true;
     } catch (error) {
       console.log(error);

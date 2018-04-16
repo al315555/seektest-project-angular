@@ -18,10 +18,11 @@
           </div>
           <div class="field">
             <label>Foto de perfil</label>
-            <label><img src="{{ user._photoURL }}" style="height: 128px; width: 128px;"></label>
-            <div class="field">
-              <input type="file" (change)="fileChange($event)" placeholder="Cambiar avatar" accept=".jpg,.png,.svg,.jpeg,.gif">
-            </div>
+            <label><img src="{{ user._photoURL }}" style="height: 128px; width: 128px; border-radius: 25px;">
+              <div class="field">
+                <input type="file" (change)="fileChange($event)" placeholder="Cambiar avatar" accept=".jpg,.png,.svg,.jpeg,.gif">
+              </div>
+            </label>
           </div>
           <div class="field">
             <label>Nombre</label>
