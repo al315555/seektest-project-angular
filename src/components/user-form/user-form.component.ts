@@ -21,10 +21,14 @@ export class UserFormComponent implements OnInit {
   errorMessage: string;
   errorHappened: boolean;
 
+  mode:any;
+
   userState;
 
   constructor(public fb: FormBuilder, private afs: AngularFirestore,
-              public auth: AuthService, public functions: FunctionsService) { }
+              public auth: AuthService, public functions: FunctionsService) { 
+                this.mode = "date";
+              }
 
   areEqual(): boolean {
     return this.password.value === this.password2.value;

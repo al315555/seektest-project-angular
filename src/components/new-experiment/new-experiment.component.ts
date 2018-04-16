@@ -222,7 +222,7 @@ export class NewExperimentComponent {
 
         this.afs.list('experiments/').push(
           {
-            uidPublisher: this.afAuth.auth.currentUser.uid, datePublished: new Date().getTime(),
+            uidPublisher: localStorage.getItem('uid_usuario'), datePublished: new Date().getTime(),
             title: this.title, place: this.place, placeLatLon: {lat: this.lat, lon: this.lon},
             numberParticipants: this.numberParticipants,
             description: this.description, dates: dateNumberArray, gift: this.gift, duration: this.duration,

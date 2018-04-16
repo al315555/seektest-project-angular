@@ -90,6 +90,7 @@ export class AuthService {
       _fechaNacimiento: user.fechaNacimiento,
       _photoURL: user.photoURL
     };
+    localStorage.setItem('uid_usuario', firebase.auth().currentUser.uid);
     return this.addUser(data, data._uid);
   }
 
@@ -188,10 +189,10 @@ export class AuthService {
       correcto = false;
     }
     if (correcto) {
+      this.generateUserDataJson();
       this.functions.changeShowMainPageToFalse();
       this.functions.changeToLogged();
-      this.functions.selectPerfil();
-      this.generateUserDataJson();
+      //this.functions.selectPerfil();
       console.log('Actualizado en vista.');
       this.verificarCorreo();
       return 'true';
@@ -214,6 +215,7 @@ export class AuthService {
 
   generateUserDataJson() {
     if (localStorage.getItem('uid_usuario') != null) {
+      console.log("uid ya guardado a preiori");
       const myUserId = localStorage.getItem('uid_usuario');
       if (localStorage.getItem('usuario') === null) {
         console.log('usuario guardado ', myUserId);
