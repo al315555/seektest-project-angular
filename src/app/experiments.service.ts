@@ -45,8 +45,9 @@ export class ExperimentsService {
 
   getMyExperiments(){
     let user = localStorage.getItem('uid_usuario');
+    console.log(user);
     if(user != null){
-      return this.db.list('experiments/'), ref => ref.orderByChild('uidPublisher').equalTo(user);
+      return this.db.list('experiments/', ref => ref.orderByChild('uidPublisher').equalTo(user));
     }
     return null;
   }

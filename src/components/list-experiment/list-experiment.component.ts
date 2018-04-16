@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AngularFireDatabase, AngularFireList, snapshotChanges } from 'angularfire2/database';
 import { FunctionsService } from '../../app/functions.service';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -15,6 +15,8 @@ import { Experiment } from '../../models/experiment';
   styleUrls: ['./list-experiment.component.css']
 })
 export class ListExperimentComponent implements OnInit {
+
+  @Input() type:number;
 
   items: any[] = null;
   itemsAll: any[] = null;
@@ -40,7 +42,8 @@ export class ListExperimentComponent implements OnInit {
   }
 
   getExperiments(){
-    this.experimentService.getAllExperiments(this.numberLimit)
+    if(this.type == 0 || this.type == null){
+      this.experimentService.getAllExperiments(this.numberLimit)
       .snapshotChanges().map(actions => {
         return actions.map(action => ({ key: action.key, ...action.payload.val() }));
       }).subscribe((value) => {
@@ -49,6 +52,17 @@ export class ListExperimentComponent implements OnInit {
         this.itemsAll = this.items; 
         return value.map(item => item.key);
       });
+    }else if(this.type==1){
+      this.experimentService.getMyExperiments()
+      .snapshotChanges().map(actions => {
+        return actions.map(action => ({ key: action.key, ...action.payload.val() }));
+      }).subscribe((value) => {
+        this.items = value;
+        this.items.reverse();
+        this.itemsAll = this.items; 
+        return value.map(item => item.key);
+      });
+    }
   }
 
   buscarExperimentos() {
