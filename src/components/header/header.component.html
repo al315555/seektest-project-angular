@@ -23,13 +23,16 @@
     <img src="../../assets/images/logo_seekTest.png" class="image" height="40px" width="25px" >
   </a>
 
-<<<<<<< HEAD
   
 
   <div class="right menu">
     <a class="{{miPerfilItem}}" (click)="selectPerfil()" data-tooltip="Mostrar datos de perfil" data-position="bottom center">
     <i class="user icon"></i>{{ authService.userDataJson._name }}&nbsp;{{ authService.userDataJson._surname }} 
    </a>
+
+   <a class="{{misExperimentosItem}}" (click)="goToMyExperiments()" data-tooltip="Mostrar mis experimentos" data-position="bottom center">
+    <i class="thumbtack icon"></i>
+  </a>
  
    <a class="{{experimentosItem}}" (click)="goBackToExperiments()" data-tooltip="Mostrar experimentos" data-position="bottom center">
       <i class="columns icon"></i>
@@ -38,31 +41,11 @@
    <a class="{{nuevoExperimentoItem}}" (click)="goToNewExperiment()" data-tooltip="Nuevo experimento" data-position="bottom center">
       <i class="left plus icon"></i>
    </a>
+
  
    <a class="item" (click)="logout()" data-tooltip="Cerrar sesión" data-position="bottom center" style="margin-: 80px; ">
      <i class="sign out icon"></i>
    </a>
-=======
-  <a class="{{miPerfilItem}}" (click)="selectPerfil()" data-tooltip="Mostrar datos de perfil" data-position="bottom center">
-  <i class="user icon"></i>{{ authService.userDataJson._name }}
-  </a>
-
-  <a class="{{misExperimentosItem}}" (click)="goToMyExperiments()" data-tooltip="Mostrar mis experimentos" data-position="bottom center">
-    <i class="thumbtack icon"></i>
-  </a>
-
-  <a class="{{experimentosItem}}" (click)="goBackToExperiments()" data-tooltip="Mostrar experimentos" data-position="bottom center">
-     <i class="columns icon"></i>
-  </a>
-
-  <a class="{{nuevoExperimentoItem}}" (click)="goToNewExperiment()" data-tooltip="Nuevo experimento" data-position="bottom center">
-     <i class="left plus icon"></i>
-  </a>
-
-  <a class="item" (click)="logout()" data-tooltip="Cerrar sesión" data-position="bottom center" style="margin-: 80px; ">
-    <i class="sign out icon"></i>
-  </a>
->>>>>>> 429f64b22e179feb1566014a4881418934007928
 
   </div>
 
