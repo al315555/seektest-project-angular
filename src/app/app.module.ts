@@ -38,6 +38,7 @@ import {ExperimentDataComponent} from '../components/experiment-data/experiment-
 import { ExperimentCardComponent } from '../components/experiment-card/experiment-card.component';
 import { AgmCoreModule } from '@agm/core';
 import {AngularFireStorageModule} from 'angularfire2/storage';
+import {MyExperimentsComponent} from '../components/my-experiments/my-experiments.component';
 
 // import { AngularFirestoreModule } from 'angularfire2/firestore';
 
