@@ -24,7 +24,6 @@ export class ExperimentDataComponent implements OnInit {
 
   noDataString = 'sin datos definidos';
 
-
   constructor(public experimentService: ExperimentsService , public functions: FunctionsService) {}
 
   ngOnInit() {}

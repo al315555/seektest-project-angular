@@ -81,22 +81,6 @@ export class ListExperimentComponent implements OnInit {
     return elemClean.includes(titleClean.toString());
   }
 
-  /*
-
-  compareTitle(a: Experiment, b: Experiment): number {
-    var textLowCas: string = this.getCleanedString(this.textoTitulo).toString();
-    if (this.getCleanedString(a.title).includes(textLowCas) && !this.getCleanedString(b.title).includes(textLowCas)) {
-      return -1;
-    } else {
-      if (!this.getCleanedString(a.title).includes(textLowCas) && this.getCleanedString(b.title).includes(textLowCas)) {
-        return 1;
-      }
-    }
-    return 0;
-  }
-
-  */
-
   comparePubliDate(a: Experiment, b: Experiment): number {
     if(a.datePublished >= b.datePublished){
       return -1;
