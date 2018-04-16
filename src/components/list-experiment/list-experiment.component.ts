@@ -17,6 +17,7 @@ import { Experiment } from '../../models/experiment';
 export class ListExperimentComponent implements OnInit {
 
   items: any[] = null;
+  itemsAll: any[] = null;
 
   item: any;
   itemDates: Date[];
@@ -45,32 +46,39 @@ export class ListExperimentComponent implements OnInit {
       }).subscribe((value) => {
         this.items = value;
         this.items.reverse();
+        this.itemsAll = this.items; 
         return value.map(item => item.key);
       });
   }
 
   buscarExperimentos() {
+
     if(this.op == 0){
       this.items.sort((a,b) => this.comparePubliDate(a,b));
     }else if(this.op == 1){
       this.items.sort((a,b) => this.compareDuration(a,b));
     }
+
     if(this.textoTitulo != ""){
-      this.items.sort((a, b) => this.compareTitle(a, b));
+      this.items = this.itemsAll;
+      let it:any[]=new Array();
+      this.items.forEach(element => {
+        console.log(this.compareTitle(element));
+        if(this.compareTitle(element)){
+          it.push(element);
+        }
+        this.items = it;
+      });
+    }else{
+      this.items = this.itemsAll;
     }
     
   }
 
-  compareTitle(a: Experiment, b: Experiment): number {
-    var textLowCas: string = this.getCleanedString(this.textoTitulo).toString();
-    if (this.getCleanedString(a.title).includes(textLowCas) && !this.getCleanedString(b.title).includes(textLowCas)) {
-      return -1;
-    } else {
-      if (!this.getCleanedString(a.title).includes(textLowCas) && this.getCleanedString(b.title).includes(textLowCas)) {
-        return 1;
-      }
-    }
-    return 0;
+  compareTitle(elem: Experiment){
+    let elemClean = this.getCleanedString(elem.title);
+    let titleClean = this.getCleanedString(this.textoTitulo);
+    return elemClean.includes(titleClean.toString());
   }
 
   comparePubliDate(a: Experiment, b: Experiment): number {
@@ -94,9 +102,8 @@ export class ListExperimentComponent implements OnInit {
   }
 
   getCleanedString(cadena: String) {
-
     var specialChars = "!@#$^&%*()+=-[]\/{}|:<>?,.";
-
+    console.log(cadena);
     for (var i = 0; i < specialChars.length; i++) {
       cadena = cadena.replace(new RegExp("\\" + specialChars[i], 'gi'), '');
     }
