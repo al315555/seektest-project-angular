@@ -1,8 +1,8 @@
 .maxsize{
   width: 100%
 }
-.form-size{
-  width: 400px;
+.principal{
+  min-width: 150%;
 }
 .button {
   -webkit-transition-duration: 0.4s; /* Safari */
