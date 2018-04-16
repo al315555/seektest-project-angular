@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Experiment } from '../../models/experiment';
 import { ExperimentsService } from '../../app/experiments.service';
-import {SuiModalService, TemplateModalConfig, ModalTemplate} from 'ng2-semantic-ui';
+import {SuiModalService, TemplateModalConfig, ModalTemplate, ModalConfig, ModalSize} from 'ng2-semantic-ui';
 
 export interface IContext {
   data:string;
@@ -48,12 +48,13 @@ export class ExperimentCardComponent implements OnInit {
     this.clickEvEm.emit(this.expe); 
   }
 
-  deleteExperiment(dynamicContent:string = "Desea eliminar el experimento?") {
+  deleteExperiment(dynamicContent:string = "Desea eliminar el experimento " + this.expe.title + "?") {
     const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplate);
 
     config.closeResult = "Eliminado!";
     config.context = { data: dynamicContent };
-
+    config.mustScroll=true;
+    config.size = ModalSize.Tiny;
     this.modalService
         .open(config)
         .onApprove(result => { this.deleteExperDb() })
