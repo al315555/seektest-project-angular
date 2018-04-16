@@ -192,7 +192,7 @@ export class AuthService {
       this.generateUserDataJson();
       this.functions.changeShowMainPageToFalse();
       this.functions.changeToLogged();
-      //this.functions.selectPerfil();
+      // this.functions.selectPerfil();
       console.log('Actualizado en vista.');
       this.verificarCorreo();
       return 'true';
@@ -215,7 +215,7 @@ export class AuthService {
 
   generateUserDataJson() {
     if (localStorage.getItem('uid_usuario') != null) {
-      console.log("uid ya guardado a preiori");
+      console.log('uid ya guardado a preiori');
       const myUserId = localStorage.getItem('uid_usuario');
       if (localStorage.getItem('usuario') === null) {
         console.log('usuario guardado ', myUserId);
@@ -246,7 +246,10 @@ export class AuthService {
     .then(value => {
       alert('¡Correo de recuperación enviado! Revise su bandeja de entrada y siga los pasos.');
       console.log('email sent'); })
-    .catch(error => console.log(error));
+    .catch(error => {
+      alert('Error en el envio del correo de recuperación. Puede que el usuario no esté registrado.');
+      console.log(error);
+    });
 }
 deleteUser() {
   this.functions.changeShowMainPageToTrue();

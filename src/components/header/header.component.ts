@@ -9,8 +9,8 @@ import {AuthService} from '../../app/auth.service';
 })
 export class HeaderComponent {
 
-  itemString = 'item';
-  itemActiveString = 'item active';
+  itemString = 'ui item';
+  itemActiveString = 'ui item pink active';
   titleHeader = 'SeekTest';
 
   miPerfilItem = this.itemString;
@@ -34,7 +34,7 @@ export class HeaderComponent {
 
   goToMyExperiments() {
     this.functionsService.selectMyExperiments();
-    this.misExperimentosItem = this.itemActiveString
+    this.misExperimentosItem = this.itemActiveString;
     this.experimentosItem = this.itemString;
     this.miPerfilItem = this.itemString;
     this.nuevoExperimentoItem = this.itemString;
