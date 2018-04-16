@@ -25,6 +25,8 @@ export class ListExperimentComponent implements OnInit {
   textoTitulo: string;
   numberLimit: number;
 
+  op:number;
+
   constructor(public experimentService: ExperimentsService, public functions: FunctionsService) {
     this.textoTitulo = ''; this.numberLimit = 2;
     this.clicked = false;
@@ -47,9 +49,12 @@ export class ListExperimentComponent implements OnInit {
   }
 
   buscarExperimentos() {
-    if(this.textoTitulo == ""){
+    if(this.op == 0){
       this.items.sort((a,b) => this.comparePubliDate(a,b));
-    }else{
+    }else if(this.op == 1){
+      this.items.sort((a,b) => this.compareDuration(a,b));
+    }
+    if(this.textoTitulo != ""){
       this.items.sort((a, b) => this.compareTitle(a, b));
     }
     
@@ -73,6 +78,16 @@ export class ListExperimentComponent implements OnInit {
     }else{
       if(a.datePublished < b.datePublished)
         return 1;
+    }
+    return 0;
+  }
+
+  compareDuration(a: Experiment, b: Experiment): number {
+    if(a.duration >= b.duration){
+      return 1;
+    }else{
+      if(a.duration < b.duration)
+        return -1;
     }
     return 0;
   }

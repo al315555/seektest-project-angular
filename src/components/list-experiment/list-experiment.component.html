@@ -1,16 +1,32 @@
 <div class="ui icon input fluid">
-    <input type="text" style="border-radius: 25px;"
-           placeholder="Search..."
-           (input)="buscarExperimentos()"
-           (change)="buscarExperimentos()"
-           [(ngModel)]="textoTitulo">
-    <i class="search icon"></i>
+  <input type="text" style="border-radius: 25px;" placeholder="Search..." (input)="buscarExperimentos()" (change)="buscarExperimentos()"
+    [(ngModel)]="textoTitulo">
+  <i class="search icon"></i>
+</div>
+<br>
+<div class="ui form">
+  <div class="grouped fields">
+    <label>Ordenar por:</label>
+    <div class="field">
+      <div class="ui radio checkbox">
+        <input type="radio" name="radio" [value]="0" [(ngModel)]="op" (change)="buscarExperimentos()" checked="checked">
+        <label>Fecha de publicacion</label>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui radio checkbox">
+        <input type="radio" name="radio"  [value]="1" [(ngModel)]="op" (change)="buscarExperimentos()">
+        <label>Duracion</label>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="ui two column grid items stackable">
   <div class="column" *ngFor="let expe of items">
     <app-experiment-card [expe]="expe" (clickEvEm)="infoExpe($event)"></app-experiment-card>
   </div>
 </div>
-<br/><br/>
+<br/>
+<br/>
 <div class="ui inverted pink bottom attached button" (click)="masResultados()">Más resultados...</div>
-<app-experiment-data [item]="item" [itemDates]="itemDates" ></app-experiment-data>
+<app-experiment-data [item]="item" [itemDates]="itemDates"></app-experiment-data>
