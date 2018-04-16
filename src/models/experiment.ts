@@ -1,6 +1,7 @@
 import {UserProfile} from './user-profile';
 
 export class Experiment {
+  uidPublisher: string;
   datePublished: number;
   title: String;
   numberParticipants: String;

@@ -38,6 +38,7 @@ import {ExperimentDataComponent} from '../components/experiment-data/experiment-
 import { ExperimentCardComponent } from '../components/experiment-card/experiment-card.component';
 
 import { AgmCoreModule } from '@agm/core';
+import {AngularFireStorageModule} from 'angularfire2/storage';
 
 // import { AngularFirestoreModule } from 'angularfire2/firestore';
 
@@ -64,6 +65,7 @@ import { AgmCoreModule } from '@agm/core';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule ,
     AngularFireDatabaseModule,
+    AngularFireStorageModule,
     FormsModule,
     HttpModule,
     FormsModule,
