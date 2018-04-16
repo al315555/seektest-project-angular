@@ -17,14 +17,18 @@
 </div>
 -->
 
-<div class="ui secondary pointing menu">
+<div class="ui stackable secondary pointing menu">
 
   <a class="item" href="https://seektest.wordpress.com/">
     <img src="../../assets/images/logo_seekTest.png" class="image" height="40px" width="25px" >
   </a>
 
   <a class="{{miPerfilItem}}" (click)="selectPerfil()" data-tooltip="Mostrar datos de perfil" data-position="bottom center">
-     <i class="user icon"></i>{{ authService.userDataJson._name }}
+  <i class="user icon"></i>{{ authService.userDataJson._name }}
+  </a>
+
+  <a class="{{misExperimentosItem}}" (click)="goToMyExperiments()" data-tooltip="Mostrar mis experimentos" data-position="bottom center">
+    <i class="thumbtack icon"></i>
   </a>
 
   <a class="{{experimentosItem}}" (click)="goBackToExperiments()" data-tooltip="Mostrar experimentos" data-position="bottom center">
