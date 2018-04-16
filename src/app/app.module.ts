@@ -37,6 +37,8 @@ import {ExperimentsService} from './experiments.service';
 import {ExperimentDataComponent} from '../components/experiment-data/experiment-data.component';
 import { ExperimentCardComponent } from '../components/experiment-card/experiment-card.component';
 
+import { AgmCoreModule } from '@agm/core';
+
 // import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 
@@ -69,6 +71,9 @@ import { ExperimentCardComponent } from '../components/experiment-card/experimen
     CoreModule,
     ReactiveFormsModule,
     SuiModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAtfuI-iI5ecEch8sbJpJcJMLy1Jq0tRcM'
+    })
   ],
   providers: [AuthService, FunctionsService, AngularFireDatabase, ExperimentsService],
   bootstrap: [AppComponent]

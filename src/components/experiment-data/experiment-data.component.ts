@@ -8,7 +8,6 @@ import {Experiment} from '../../models/experiment';
 import {ExperimentsService} from '../../app/experiments.service';
 import {getQueryValue} from '@angular/core/src/view/query';
 import {UserProfile} from '../../models/user-profile';
-import {SuiModalService, TemplateModalConfig, ModalTemplate} from "ng2-semantic-ui";
 
 
 @Component({
@@ -25,8 +24,6 @@ export class ExperimentDataComponent implements OnInit {
 
   noDataString = 'sin datos definidos';
 
-  @ViewChild('modalTemplate')
-    public modalTemplate:ModalTemplate<null, string, string>
 
   constructor(public experimentService: ExperimentsService , public functions: FunctionsService) {}
 

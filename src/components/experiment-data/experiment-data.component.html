@@ -18,16 +18,25 @@
       {{ item.duration }} minutos
     </div>
     <div class="text">
-      <i class="map marker alternate icon"></i>
-      {{ item.place }}
-    </div>
-    <div class="text">
       <i class="users icon"></i>
       {{ item.numberParticipants }} participantes
     </div>
     <div class="text">
       <i class="gift icon"></i>
       {{ item.gift }}
+    </div>
+    <div class="text">
+        <i class="map marker alternate icon"></i>
+        {{ item.place }}
+    </div>
+  
+    <div *ngIf="item.placeLatLon">
+      <br>
+      <h3>Ubicacion</h3>
+      <br>
+      <agm-map [clickableIcons]="false"[latitude]="item.placeLatLon.lat" [longitude]="item.placeLatLon.lon" [zoom]="19">
+          <agm-marker [latitude]="item.placeLatLon.lat" [longitude]="item.placeLatLon.lon"></agm-marker>
+      </agm-map>
     </div>
 
     <br/><br/>

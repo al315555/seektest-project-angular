@@ -22,3 +22,7 @@
   background: green;
   color: whitesmoke;
 }
+
+agm-map {
+  height: 300px;
+}

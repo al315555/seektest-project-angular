@@ -49,15 +49,23 @@
       <div class="field">
         <label>Lugar*</label>
         <input type="text" [(ngModel)]="place" placeholder="lugar" (input)="changePlace()" required>
+        <br><br>
+        Marca el lugar aproximado:
+        <br><br>
+        <agm-map [clickableIcons]="false"[latitude]="39.993913" [longitude]="-0.067066" [zoom]="15" (mapClick)="placeMarker($event)">
+          <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
+        </agm-map>
       </div>
       <div class="two fields">
         <div class="field">
           <label>Duración*</label>
-          <input type="number" [(ngModel)]="duration" placeholder="duracion en horas" (input)="changeDuration()" min="0" max="99999999" required>
+          <input type="number" [(ngModel)]="duration" placeholder="duracion en horas" (input)="changeDuration()" min="0" max="99999999"
+            required>
         </div>
         <div class="field">
           <label>Numero de plazas*</label>
-          <input type="number" [(ngModel)]="numberParticipants" placeholder="numero de plazas" (input)="changeNumberParticipants()" min="0" max="99999999" required>
+          <input type="number" [(ngModel)]="numberParticipants" placeholder="numero de plazas" (input)="changeNumberParticipants()"
+            min="0" max="99999999" required>
         </div>
       </div>
       <div class="field">
@@ -113,6 +121,6 @@
   </div>
   <sui-progress class="bottom attached indicating active" [value]="changingValueProgres">Progreso</sui-progress>
   <div *ngIf="spinnerLoading" class="ui active inverted dimmer">
-    <div  class="ui text loader">Subiendo experimento...</div>
+    <div class="ui text loader">Subiendo experimento...</div>
   </div>
 </div>

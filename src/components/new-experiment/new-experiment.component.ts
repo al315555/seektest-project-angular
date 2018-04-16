@@ -30,6 +30,8 @@ export class NewExperimentComponent {
   titleEntered: boolean;
 
   place: String;
+  lat: number;
+  lon: number;
   placeEntered: boolean;
 
   duration: number;
@@ -64,6 +66,8 @@ export class NewExperimentComponent {
     this.medicalObs = null;
     this.perfilSexo = null;
     this.gift = null;
+    this.lat = null;
+    this.lat = null;
 
     this.durationEntered = false;
     this.titleEntered = false;
@@ -74,6 +78,11 @@ export class NewExperimentComponent {
     this.buttonEnabled = false;
     this.spinnerLoading = false;
     this.textoDesplegable = 'Añadir perfil de sujeto';
+  }
+
+  placeMarker(event){
+    this.lat = event.coords.lat;
+    this.lon = event.coords.lng;
   }
 
   addDate() {
@@ -212,7 +221,7 @@ export class NewExperimentComponent {
 
         this.afs.list('experiments/').push(
           {
-            datePublished: new Date().getTime(), title: this.title, place: this.place, numberParticipants: this.numberParticipants,
+            datePublished: new Date().getTime(), title: this.title, place: this.place,placeLatLon: {lat:this.lat,lon:this.lon}, numberParticipants: this.numberParticipants,
             description: this.description, dates: dateNumberArray, gift: this.gift, duration: this.duration,
             userProfile: userProfile
           }
