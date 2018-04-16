@@ -59,18 +59,18 @@
       <div class="two fields">
         <div class="field">
           <label>Duración*</label>
-          <input type="number" [(ngModel)]="duration" placeholder="duracion en horas" (input)="changeDuration()" min="0" max="99999999"
+          <input type="number" [(ngModel)]="duration" placeholder="duración en minutos" (input)="changeDuration()" min="0" max="99999999"
             required>
         </div>
         <div class="field">
           <label>Numero de plazas*</label>
-          <input type="number" [(ngModel)]="numberParticipants" placeholder="numero de plazas" (input)="changeNumberParticipants()"
+          <input type="number" [(ngModel)]="numberParticipants" placeholder="número de plazas" (input)="changeNumberParticipants()"
             min="0" max="99999999" required>
         </div>
       </div>
       <div class="field">
         <label>Descripcion*</label>
-        <textarea placeholder="descripcion" [(ngModel)]="description" rows="4" (input)="changeDescription()" required></textarea>
+        <textarea placeholder="descripción" [(ngModel)]="description" rows="4" (input)="changeDescription()" required></textarea>
       </div>
       <div class="field">
         <label>Premio</label>
