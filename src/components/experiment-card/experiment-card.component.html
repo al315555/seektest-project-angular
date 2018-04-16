@@ -3,6 +3,12 @@
     <!--<i class="file outline icon"></i>-->
     <div class="header">
       {{ expe.title }}
+      <div *ngIf="isOwn">
+        <button class="circular ui icon button" (click)="deleteExperiment()">
+          <i class="icon times"></i>
+        </button>
+      </div>
+      
     </div>
     <div class="meta">
       Publicado&nbsp;el&nbsp;{{ expe.datePublished | date:'dd/MM/yyyy'}}&nbsp;a&nbsp;las&nbsp;
@@ -24,3 +30,14 @@
     </div>
   </div>
 </div>
+
+<ng-template let-context let-modal="modal" #modalTemplate>
+  <div class="header">Borrar experimento</div>
+  <div class="content">
+      <p>{{ context.data }}</p>
+  </div>
+  <div class="actions">
+      <button class="ui red button" (click)="modal.deny('denied')">Cancel</button>
+      <button class="ui green button" (click)="modal.approve('approved')" autofocus>OK</button>
+  </div>
+</ng-template>

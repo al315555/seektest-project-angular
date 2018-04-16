@@ -52,5 +52,9 @@ export class ExperimentsService {
     return null;
   }
 
+  deleteExperiment(expKey: string){
+    this.db.list('experiments/'+expKey).remove();
+  }
+
 }
 
