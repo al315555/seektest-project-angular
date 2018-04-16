@@ -6,6 +6,7 @@ import { MessageToast } from '../../models/message-toast';
 import { MessageToastComponent } from '../message-toast/message-toast.component';
 import {FunctionsService} from '../../app/functions.service';
 import {AngularFireDatabase, AngularFireObject, AngularFireList, snapshotChanges} from 'angularfire2/database';
+import {AngularFireAuth} from 'angularfire2/auth';
 
 @Component({
   selector: 'app-new-experiment',
@@ -55,7 +56,7 @@ export class NewExperimentComponent {
 
   textoDesplegable: String;
 
-  constructor(private afs: AngularFireDatabase, public functions: FunctionsService) {
+  constructor(private afAuth: AngularFireAuth, private afs: AngularFireDatabase, public functions: FunctionsService) {
     this.dateHourArray = new Array<Date>();
     this.changingValueProgres = 0;
     this.collapse = true;
@@ -80,7 +81,7 @@ export class NewExperimentComponent {
     this.textoDesplegable = 'Añadir perfil de sujeto';
   }
 
-  placeMarker(event){
+  placeMarker(event) {
     this.lat = event.coords.lat;
     this.lon = event.coords.lng;
   }
@@ -221,7 +222,9 @@ export class NewExperimentComponent {
 
         this.afs.list('experiments/').push(
           {
-            datePublished: new Date().getTime(), title: this.title, place: this.place,placeLatLon: {lat:this.lat,lon:this.lon}, numberParticipants: this.numberParticipants,
+            uidPublisher: this.afAuth.auth.currentUser.uid, datePublished: new Date().getTime(),
+            title: this.title, place: this.place, placeLatLon: {lat: this.lat, lon: this.lon},
+            numberParticipants: this.numberParticipants,
             description: this.description, dates: dateNumberArray, gift: this.gift, duration: this.duration,
             userProfile: userProfile
           }
