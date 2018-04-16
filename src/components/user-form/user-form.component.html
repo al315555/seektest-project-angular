@@ -82,7 +82,7 @@
           </div>
           <div class="field">
               <label>Fecha Nacimiento*</label>
-              <input type="date" class="input" formControlName="fechaNacimiento" required autocomplete="off">
+              <input suiDatepicker formControlName="fechaNacimiento" required autocomplete="off" [pickerMode]="mode" [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
           </div>
           <div class="field">
               <label>Sexo*</label>

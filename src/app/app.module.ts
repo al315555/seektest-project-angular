@@ -36,8 +36,8 @@ import { RouterModule, Routes } from '@angular/router';
 import {ExperimentsService} from './experiments.service';
 import {ExperimentDataComponent} from '../components/experiment-data/experiment-data.component';
 import { ExperimentCardComponent } from '../components/experiment-card/experiment-card.component';
-
 import { AgmCoreModule } from '@agm/core';
+import { MyExperimentsComponent } from '../components/my-experiments/my-experiments.component';
 
 // import { AngularFirestoreModule } from 'angularfire2/firestore';
 
@@ -58,6 +58,7 @@ import { AgmCoreModule } from '@agm/core';
     ResetPasswordComponent,
     ExperimentDataComponent,
     ExperimentCardComponent,
+    MyExperimentsComponent,
   ],
   imports: [
     BrowserModule,
