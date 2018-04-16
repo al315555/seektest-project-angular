@@ -15,6 +15,7 @@ export class FunctionsService {
   showMainPage: boolean;
   isLogged: boolean;
   perfilSelected: boolean;
+  myexperimentsSelected: boolean;
   experimentsSelected: boolean;
   newExperimentSelected: boolean;
   reset: boolean;
@@ -35,31 +36,41 @@ export class FunctionsService {
 
     this.perfilSelected = false;
     this.experimentsSelected = true;
+    this.myexperimentsSelected = false;
     this.newExperimentSelected = false;
     this.reset = false;
-
-
   }
 
   selectPerfil() {
     this.perfilSelected = true;
+    this.myexperimentsSelected = false;
     this.newExperimentSelected = false;
     this.experimentsSelected = false;
   }
 
   selectExperimentos() {
     this.perfilSelected = false;
+    this.myexperimentsSelected = false;
     this.newExperimentSelected = false;
     this.experimentsSelected = true;
   }
 
+  selectMyExperiments(){
+    this.perfilSelected = false;
+    this.myexperimentsSelected = true;
+    this.newExperimentSelected = false;
+    this.experimentsSelected = false;
+  }
+
   selectNewExperiment() {
     this.perfilSelected = false;
+    this.myexperimentsSelected = false;
     this.newExperimentSelected = true;
     this.experimentsSelected = false;
   }
   changeShowMainPageToTrue() {
     this.perfilSelected = false;
+    this.myexperimentsSelected = false;
     this.newExperimentSelected = false;
     this.experimentsSelected = false;
     this.showMainPage = true;
@@ -86,6 +97,7 @@ export class FunctionsService {
     console.log('reset true');
     this.reset = true;
     this.perfilSelected = false;
+    this.myexperimentsSelected = false;
     this.newExperimentSelected = false;
     this.experimentsSelected = false;
     this.showMainPage = false;
