@@ -10,7 +10,6 @@ export class Experiment {
   duration: number;
   gift: string;
   userProfile: UserProfile;
-  uidPublisher: string;
   placeLatLon: object;
   dates: number[];
 }

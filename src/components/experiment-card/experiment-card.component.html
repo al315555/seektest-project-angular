@@ -9,6 +9,9 @@
         <button class="circular ui icon button" (click)="deleteExperiment()">
           <i class="icon times"></i>
         </button>
+        <button class="circular ui icon button" (click)="editExperiment()">
+          <i class="edit icon"></i>
+        </button>
       </div>
       
     </div>
@@ -40,6 +43,16 @@
   <div class="actions">
       <button class="ui red button" (click)="modal.deny('denied')">Cancel</button>
       <button class="ui green button" (click)="modal.approve('approved')" autofocus>OK</button>
+  </div>
+</ng-template>
+
+<ng-template let-context let-modal="modal" #modalTemplateEdit>
+  <div class="header">Editar experimento</div>
+  <div class="content">
+      <app-edit-experiment [experiment]="expe" ></app-edit-experiment>
+  </div>
+  <div class="actions">
+      <button class="ui red button" (click)="modal.deny('denied')">Cerrar</button>
   </div>
 </ng-template>
 

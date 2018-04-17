@@ -20,6 +20,9 @@ export class ExperimentCardComponent implements OnInit {
   @ViewChild('modalTemplate')
   public modalTemplate:ModalTemplate<IContext, string, string>
 
+  @ViewChild('modalTemplateEdit')
+  public modalTemplateEdit:ModalTemplate<IContext, string, string>
+
   isOwn:boolean;
 
   private clicked: boolean;
@@ -48,16 +51,28 @@ export class ExperimentCardComponent implements OnInit {
     this.clickEvEm.emit(this.expe); 
   }
 
-  deleteExperiment(dynamicContent:string = "Desea eliminar el experimento " + this.expe.title + "?") {
+  deleteExperiment(dynamicContent:string = 'Desea eliminar el experimento ' + this.expe.title + '?') {
     const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplate);
-
-    config.closeResult = "Eliminado!";
+    
+    config.closeResult = 'Eliminado!';
     config.context = { data: dynamicContent };
+    config.mustScroll = true;
+    config.size = ModalSize.Tiny;
+    this.modalService
+        .open(config)
+        .onApprove(result => { this.deleteExperDb(); })
+          .onDeny(result => {});
+  }
+
+  editExperiment(){
+    const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplateEdit);
+    config.isFullScreen = true;
+    config.closeResult = 'Editado!';
     config.mustScroll=true;
     config.size = ModalSize.Tiny;
     this.modalService
         .open(config)
-        .onApprove(result => { this.deleteExperDb() })
+        .onApprove(result => {})
           .onDeny(result => {});
   }
 
