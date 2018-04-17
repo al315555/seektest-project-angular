@@ -82,7 +82,8 @@
           </div>
           <div class="field">
               <label>Fecha Nacimiento*</label>
-              <input suiDatepicker formControlName="fechaNacimiento" required autocomplete="off" [pickerMode]="mode" [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
+              <input suiDatepicker [(ngModel)]="fechaNacimientoDate" formControlName="fechaNacimiento" required autocomplete="off"
+                     [pickerMode]="mode" [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
           </div>
           <div class="field">
               <label>Sexo*</label>

@@ -22,6 +22,9 @@ export class UserFormComponent implements OnInit {
   errorHappened: boolean;
 
   mode: any;
+  firstDayOfWeek: any;
+
+  fechaNacimientoDate: Date;
 
   userState;
 
@@ -65,7 +68,7 @@ export class UserFormComponent implements OnInit {
     this.detailForm = this.fb.group({
       'name': ['', [ ]],
       'surname': ['', [ ] ],
-      'fechaNacimiento': ['', [ ] ],
+      'fechaNacimiento': [0, [ ] ],
       'sexo': ['', [ ] ],
       'alergias': ['', [ ] ],
       'observacionesMedicas': ['', [ ] ],
@@ -79,7 +82,7 @@ export class UserFormComponent implements OnInit {
 
   get name() { return this.detailForm.get('name'); }
   get surname() { return this.detailForm.get('surname'); }
-  get fechaNacimiento() { return this.detailForm.get('fechaNacimiento'); }
+  get fechaNacimiento() { return this.fechaNacimientoDate.getTime(); /* this.detailForm.get('fechaNacimiento'); */ }
   get sexo() { return this.detailForm.get('sexo'); }
   get alergias() { return this.detailForm.get('alergias'); }
   get observacionesMedicas() { return this.detailForm.get('observacionesMedicas'); }
@@ -97,7 +100,7 @@ export class UserFormComponent implements OnInit {
   setUserInfo(user) {
     user.name = this.name.value;
     user.surname = this.surname.value;
-    user.fechaNacimiento = this.fechaNacimiento.value;
+    user.fechaNacimiento = this.fechaNacimiento;
     user.alergias = this.alergias.value;
     user.sexo = this.sexo.value;
     user.observacionesMedicas = this.observacionesMedicas.value;
@@ -118,7 +121,7 @@ export class UserFormComponent implements OnInit {
     return this.auth.updateUser(user, { surname:  this.surname.value } );
   }
   setFechaNacimiento(user) {
-    return this.auth.updateUser(user, { age:  this.fechaNacimiento.value });
+    return this.auth.updateUser(user, { fechaNacimiento:  this.fechaNacimiento });
   }
 
   setAlergias(user) {

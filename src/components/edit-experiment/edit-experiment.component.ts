@@ -54,7 +54,14 @@ export class EditExperimentComponent implements OnInit {
 
   textoDesplegable: String;
 
-  constructor() { }
+  mode: string;
+  firstDayOfWeek: string;
+
+  changeTitle() {
+
+  }
+
+  constructor() { this.mode = 'mode'; }
 
   ngOnInit() {
     this.dateHourArray = new Array<Date>();

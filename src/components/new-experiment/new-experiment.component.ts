@@ -56,6 +56,9 @@ export class NewExperimentComponent {
 
   textoDesplegable: String;
 
+  mode: string;
+  firstDayOfWeek: string;
+
   constructor(private afAuth: AngularFireAuth, private afs: AngularFireDatabase, public functions: FunctionsService) {
     this.dateHourArray = new Array<Date>();
     this.changingValueProgres = 0;
@@ -79,6 +82,7 @@ export class NewExperimentComponent {
     this.buttonEnabled = false;
     this.spinnerLoading = false;
     this.textoDesplegable = 'Añadir perfil de sujeto';
+    this.mode = 'mode';
   }
 
   placeMarker(event) {
