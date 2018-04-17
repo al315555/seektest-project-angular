@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FunctionsService} from '../../app/functions.service';
 import {AuthService} from '../../app/auth.service';
 
@@ -18,7 +18,8 @@ export class HeaderComponent {
   experimentosItem = this.itemActiveString;
   nuevoExperimentoItem = this.itemString;
 
-  constructor(public authService: AuthService, public functionsService: FunctionsService) {  }
+  constructor(public authService: AuthService, public functionsService: FunctionsService) {
+  }
 
   logout() {
     this.authService.logout();

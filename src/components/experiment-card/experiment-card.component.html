@@ -5,12 +5,12 @@
     <!--<i class="file outline icon"></i>-->
     <div class="header">
       {{ expe.title }}
-      <div *ngIf="isOwn">
-        <button class="circular ui icon button" (click)="deleteExperiment()">
-          <i class="icon times"></i>
+      <div *ngIf="isOwn" style="position: absolute; top: 2px; right: 1px">
+        <button class="circular ui mini icon button" (click)="deleteExperiment()">
+          <i class="times icon"></i>
         </button>
       </div>
-      
+
     </div>
     <div class="meta">
       Publicado&nbsp;el&nbsp;{{ expe.datePublished | date:'dd/MM/yyyy'}}&nbsp;a&nbsp;las&nbsp;
