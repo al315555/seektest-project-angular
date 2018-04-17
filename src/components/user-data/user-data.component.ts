@@ -16,10 +16,12 @@ export class UserDataComponent {
   spinnerLoading: boolean;
   messageBody: string;
   messageHeader: string;
+  mode: any;
 
   constructor(public authService: AuthService, public functions: FunctionsService) {
     this.messageBody = '¿Estás seguro de que quieres borrar tu cuenta? No podrás recuperarla.';
     this.messageHeader = 'Darme de baja y anular cuenta';
+    this.mode = 'date';
   }
 
   fileChange(event) {

@@ -88,7 +88,7 @@ export class AuthService {
       _observacionesMedicas: user.observacionesMedicas,
       _sexo: user.sexo,
       _fechaNacimiento: user.fechaNacimiento,
-      _photoURL: user.photoURL
+      _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz'
     };
     localStorage.setItem('uid_usuario', firebase.auth().currentUser.uid);
     return this.addUser(data, data._uid);
