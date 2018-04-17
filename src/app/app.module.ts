@@ -42,7 +42,6 @@ import {MyExperimentsComponent} from '../components/my-experiments/my-experiment
 
 // import { AngularFirestoreModule } from 'angularfire2/firestore';
 
-
 @NgModule({
   declarations: [
     AppComponent,
