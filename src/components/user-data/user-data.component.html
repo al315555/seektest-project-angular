@@ -34,7 +34,9 @@
           </div>
           <div class="field">
             <label>Fecha de nacimiento</label>
-            <input type="date" [(ngModel)]="user._fechaNacimiento">
+            <input suiDatepicker [(ngModel)]="user._fechaNacimiento"
+                   required autocomplete="off" [pickerMode]="mode"
+                   [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
           </div>
           <div class="field">
             <label>Información adicional</label>

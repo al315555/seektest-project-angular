@@ -11,20 +11,23 @@
     <div class="field">
       <div class="ui radio checkbox">
         <input type="radio" name="radio" [value]="0" [(ngModel)]="op" (change)="buscarExperimentos()" checked="checked">
-        <label>Fecha de publicacion</label>
+        <label>Fecha de publicación</label>
       </div>
     </div>
     <div class="field">
       <div class="ui radio checkbox">
         <input type="radio" name="radio"  [value]="1" [(ngModel)]="op" (change)="buscarExperimentos()">
-        <label>Duracion</label>
+        <label>Duración</label>
       </div>
     </div>
   </div>
 </div>
 <div class="ui four column grid items stackable">
-  <div class="column" *ngFor="let expe of items">
+  <div class="column" *ngFor="let expe of items" >
     <app-experiment-card [expe]="expe" (clickEvEm)="infoExpe($event)"></app-experiment-card>
+  </div>
+  <div class="column" *ngIf="(items == null) || (items.length <= 0)">
+    <p class="text">No&nbsp;hay&nbsp;registros.</p>
   </div>
 </div>
 <br/>

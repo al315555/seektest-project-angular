@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FunctionsService} from '../../app/functions.service';
 import {AuthService} from '../../app/auth.service';
 
@@ -9,8 +9,8 @@ import {AuthService} from '../../app/auth.service';
 })
 export class HeaderComponent {
 
-  itemString = 'item';
-  itemActiveString = 'item active';
+  itemString = 'ui item';
+  itemActiveString = 'ui item pink active';
   titleHeader = 'SeekTest';
 
   miPerfilItem = this.itemString;
@@ -18,7 +18,8 @@ export class HeaderComponent {
   experimentosItem = this.itemActiveString;
   nuevoExperimentoItem = this.itemString;
 
-  constructor(public authService: AuthService, public functionsService: FunctionsService) {  }
+  constructor(public authService: AuthService, public functionsService: FunctionsService) {
+  }
 
   logout() {
     this.authService.logout();
@@ -34,7 +35,7 @@ export class HeaderComponent {
 
   goToMyExperiments() {
     this.functionsService.selectMyExperiments();
-    this.misExperimentosItem = this.itemActiveString
+    this.misExperimentosItem = this.itemActiveString;
     this.experimentosItem = this.itemString;
     this.miPerfilItem = this.itemString;
     this.nuevoExperimentoItem = this.itemString;

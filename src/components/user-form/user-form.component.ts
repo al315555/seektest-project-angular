@@ -21,13 +21,13 @@ export class UserFormComponent implements OnInit {
   errorMessage: string;
   errorHappened: boolean;
 
-  mode:any;
+  mode: any;
 
   userState;
 
   constructor(public fb: FormBuilder, private afs: AngularFirestore,
-              public auth: AuthService, public functions: FunctionsService) { 
-                this.mode = "date";
+              public auth: AuthService, public functions: FunctionsService) {
+                this.mode = 'date';
               }
 
   areEqual(): boolean {
@@ -102,8 +102,6 @@ export class UserFormComponent implements OnInit {
     user.sexo = this.sexo.value;
     user.observacionesMedicas = this.observacionesMedicas.value;
     user.infoAdicional = this.infoAdicional.value;
-    user.photoURL =
-      'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz';
     this.functions.changeShowMainPageToFalse();
     this.functions.changeToLogged();
     const resultado = this.auth.setUserDoc(user);

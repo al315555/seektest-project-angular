@@ -88,7 +88,7 @@ export class AuthService {
       _observacionesMedicas: user.observacionesMedicas,
       _sexo: user.sexo,
       _fechaNacimiento: user.fechaNacimiento,
-      _photoURL: user.photoURL
+      _photoURL: 'http://static.wixstatic.com/media/1dd1d6_3f96863fc9384f60944fd5559cab0239.png_srz_300_300_85_22_0.50_1.20_0.00_png_srz'
     };
     localStorage.setItem('uid_usuario', firebase.auth().currentUser.uid);
     return this.addUser(data, data._uid);
@@ -192,7 +192,7 @@ export class AuthService {
       this.generateUserDataJson();
       this.functions.changeShowMainPageToFalse();
       this.functions.changeToLogged();
-      //this.functions.selectPerfil();
+      // this.functions.selectPerfil();
       console.log('Actualizado en vista.');
       this.verificarCorreo();
       return 'true';
@@ -215,7 +215,7 @@ export class AuthService {
 
   generateUserDataJson() {
     if (localStorage.getItem('uid_usuario') != null) {
-      console.log("uid ya guardado a preiori");
+      console.log('uid ya guardado a preiori');
       const myUserId = localStorage.getItem('uid_usuario');
       if (localStorage.getItem('usuario') === null) {
         console.log('usuario guardado ', myUserId);
@@ -246,7 +246,10 @@ export class AuthService {
     .then(value => {
       alert('¡Correo de recuperación enviado! Revise su bandeja de entrada y siga los pasos.');
       console.log('email sent'); })
-    .catch(error => console.log(error));
+    .catch(error => {
+      alert('Error en el envio del correo de recuperación. Puede que el usuario no esté registrado.');
+      console.log(error);
+    });
 }
 deleteUser() {
   this.functions.changeShowMainPageToTrue();
