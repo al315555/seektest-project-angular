@@ -83,11 +83,12 @@ export class UserFormComponent implements OnInit {
     return this.signupForm.get('email');
   }
 
-  get password(){
-    return this.detailForm.get('password');
+  get password() {
+    return this.signupForm.get('password');
   }
-  get password2(){
-    return this.detailForm.get('password2');
+
+  get password2() {
+    return this.signupForm.get('password2');
   }
 
   get name() {
@@ -100,7 +101,7 @@ export class UserFormComponent implements OnInit {
 
   get fechaNacimiento() {
     //return this.detailForm.get('fechaNacimiento');
-    return this.fechaNacimientoDate.getTime();
+    return !this.isResearcher ? this.fechaNacimientoDate.getTime() : null;
   }
 
   get sexo() {
