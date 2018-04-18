@@ -41,7 +41,8 @@ export class AuthService {
     _infoAdicional: '',
     _observacionesMedicas: '',
     _fechaNacimiento: 0,
-    _alergias: ''
+    _alergias: '',
+    _researcher: false
   });
 
   users: any;
@@ -233,6 +234,7 @@ export class AuthService {
               this.userDataJson._observacionesMedicas = cosas.payload.child('_observacionesMedicas').exportVal();
               this.userDataJson._surname = cosas.payload.child('_surname').exportVal();
               this.userDataJson._email = cosas.payload.child('_email').exportVal();
+              this.userDataJson._researcher = cosas.payload.child('_researcher').exportVal();
               localStorage.setItem('usuario', JSON.stringify(this.userDataJson));
             });
         });

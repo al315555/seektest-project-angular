@@ -33,7 +33,7 @@
           <label>Apellido</label>
           <input type="text" [(ngModel)]="user._surname">
         </div>
-        <div *ngIf="!authService.userDataJson._researcher">
+        <div *ngIf="!user._researcher">
           <div class="field">
             <label>Fecha de nacimiento</label>
             <input suiDatepicker [(ngModel)]="fechaNacimiento"
@@ -54,6 +54,7 @@
           </div>
         </div>
         <div style="margin-left: 20%; margin-right: 20%">
+          <br />
           <button class="ui blue fluid button" (click)="guardarDatos()">
             <span class="ui text">Guardar</span>
           </button>

@@ -28,21 +28,23 @@
        data-position="bottom center">
       <i class="user icon"></i>{{ authService.userDataJson._name }}&nbsp;{{ authService.userDataJson._surname }}
     </a>
-    <a class="{{misExperimentosItem}}" (click)="goToMyExperiments()" data-tooltip="Mostrar mis experimentos"
-       data-position="bottom center">
-      <i class="thumbtack icon"></i> Publicados
-    </a>
+    <div *ngIf="authService.userDataJson._researcher">
+      <a class="{{misExperimentosItem}}" (click)="goToMyExperiments()" data-tooltip="Mostrar mis experimentos"
+         data-position="bottom center">
+        <i class="thumbtack icon"></i> Publicados
+      </a>
+    </div>
 
     <a class="{{experimentosItem}}" (click)="goBackToExperiments()" data-tooltip="Mostrar experimentos"
        data-position="bottom center">
       <i class="columns icon"></i> Buscar
     </a>
-
-    <a class="{{nuevoExperimentoItem}}" (click)="goToNewExperiment()" data-tooltip="Nuevo experimento"
-       data-position="bottom center">
-      <i class="left plus icon"></i> Nuevo
-    </a>
-
+    <div *ngIf="authService.userDataJson._researcher">
+      <a class="{{nuevoExperimentoItem}}" (click)="goToNewExperiment()" data-tooltip="Nuevo experimento"
+         data-position="bottom center">
+        <i class="left plus icon"></i> Nuevo
+      </a>
+    </div>
     <a class="ui item" (click)="logout()" data-tooltip="Cerrar sesión" data-position="bottom center"
        style="margin-: 80px; ">
       <i class="sign out icon"></i> Cerrar sesión
