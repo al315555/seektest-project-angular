@@ -1,24 +1,22 @@
-
-
 <div class="ui card">
   <div class="content">
     <!--<i class="file outline icon"></i>-->
     <div class="header">
       {{ expe.title }}
       <div *ngIf="isOwn" style="position: absolute; top: 2px; right: 1px">
+        <button class="circular ui mini basic icon button" (click)="editExperiment()">
+          <i class="edit icon"></i>
+        </button>
         <button class="circular ui mini basic icon button" (click)="deleteExperiment()">
           <i class="times icon"></i>
         </button>
-        <button class="circular ui icon button" (click)="editExperiment()">
-          <i class="edit icon"></i>
-        </button>
+
       </div>
 
     </div>
     <div class="meta">
-      Publicado&nbsp;el&nbsp;{{ expe.datePublished | date:'dd/MM/yyyy'}}&nbsp;a&nbsp;las&nbsp;
-      {{ expe.datePublished | date:'HH:mm'}}.
-    </div> 
+      Publicado&nbsp;el&nbsp;{{ expe.datePublished | date:'dd/MM/yyyy'}}&nbsp;a&nbsp;las&nbsp; {{ expe.datePublished | date:'HH:mm'}}.
+    </div>
     <div class="text">
       <i class="hourglass icon"></i>
       &nbsp;{{ expe.duration }}&nbsp;minutos
@@ -29,31 +27,28 @@
     </div>
   </div>
   <div class="extra content">
-    <div id="info_{{expe.key}}" (click)="openModal()" onclick="$('.ui.modal').modal('show');"  class="ui fluid inverted blue button" >
+    <div id="info_{{expe.key}}" (click)="openModal()" onclick="$('.ui.modal').modal('show');" class="ui fluid inverted blue button">
       <i class="info icon"></i>
-       <!-- Ver detalles... -->
+      <!-- Ver detalles... -->
     </div>
   </div>
 </div>
 <ng-template let-context let-modal="modal" #modalTemplate>
   <div class="header">Borrar experimento</div>
   <div class="content">
-      <h2>{{ context.data }}</h2>
+    <h2>{{ context.data }}</h2>
   </div>
   <div class="actions">
-      <button class="ui red button" (click)="modal.deny('denied')">Cancel</button>
-      <button class="ui green button" (click)="modal.approve('approved')" autofocus>OK</button>
+    <button class="ui red button" (click)="modal.deny('denied')">Cancel</button>
+    <button class="ui green button" (click)="modal.approve('approved')" autofocus>OK</button>
   </div>
 </ng-template>
-
 <ng-template let-context let-modal="modal" #modalTemplateEdit>
   <div class="header">Editar experimento</div>
   <div class="content">
-      <app-edit-experiment [experiment]="expe" ></app-edit-experiment>
+    <app-edit-experiment [experiment]="expe"></app-edit-experiment>
   </div>
   <div class="actions">
-      <button class="ui red button" (click)="modal.deny('denied')">Cerrar</button>
+    <button class="ui red button" (click)="modal.deny('denied')">Cerrar</button>
   </div>
 </ng-template>
-
-

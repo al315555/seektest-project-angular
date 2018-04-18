@@ -67,8 +67,8 @@ export class NewExperimentComponent {
     this.medicalObs = null;
     this.perfilSexo = null;
     this.gift = null;
-    this.lat = null;
-    this.lat = null;
+    this.lat = 39.993913;
+    this.lat = -0.067066;
 
     this.durationEntered = false;
     this.titleEntered = false;
@@ -79,6 +79,7 @@ export class NewExperimentComponent {
     this.buttonEnabled = false;
     this.spinnerLoading = false;
     this.textoDesplegable = 'Añadir perfil de sujeto';
+
   }
 
   placeMarker(event) {
@@ -215,7 +216,7 @@ export class NewExperimentComponent {
       try {
         this.spinnerLoading = true;
         // guardamos las fechas como numero time para poder formatearlo al recibirlo
-        const dateNumberArray = new Array();
+        const dateNumberArray = [];
         this.dateHourArray.forEach(value => {
           dateNumberArray.push(value.getTime());
         });
@@ -237,6 +238,8 @@ export class NewExperimentComponent {
       } catch {
         this.messages.push({title: 'Ha habido un error!',
           description: 'No se ha podido subir el experimento, intentelo mas tarde.', type: 'error'});
+      } finally {
+        window.scrollTo(0, 0);
       }
     }
   }
@@ -247,6 +250,7 @@ export class NewExperimentComponent {
     } else {
       this.textoDesplegable = 'Añadir un perfil de sujeto';
     }
+    window.scrollTo(0, 0);
   }
 
   goBackToExperiments() {
