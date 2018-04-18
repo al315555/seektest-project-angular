@@ -62,7 +62,6 @@ export class EditExperimentComponent implements OnInit {
 
   textoDesplegable: String;
 
-<<<<<<< HEAD
   constructor(private afAuth: AngularFireAuth, private afs: AngularFireDatabase, public functions: FunctionsService) {
     this.changingValueProgres = 100;
     this.collapse = true;
@@ -88,16 +87,6 @@ export class EditExperimentComponent implements OnInit {
     this.spinnerLoading = false;
     this.textoDesplegable = 'Añadir perfil de sujeto';
   }
-=======
-  mode: string;
-  firstDayOfWeek: string;
-
-  changeTitle() {
-
-  }
-
-  constructor() { this.mode = 'mode'; }
->>>>>>> d6c100f225a2f1573fd5ebe91f77f205e973ffe7
 
   ngOnInit() {
     this.dateHourArray = new Array<Date>();
