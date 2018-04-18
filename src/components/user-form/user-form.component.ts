@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../app/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../../app/auth.service';
 import {ReactiveFormsModule, FormGroup, FormBuilder, Validators, NgControlStatusGroup, AbstractControl} from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
 import {FunctionsService} from '../../app/functions.service';
 import {User} from '../../app/core/User';
 import * as firebase from 'firebase/app';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {AngularFirestore, AngularFirestoreDocument} from 'angularfire2/firestore';
 
 @Component({
   selector: 'app-user-form',
@@ -68,13 +68,13 @@ export class UserFormComponent implements OnInit {
 
     // Second Step
     this.detailForm = this.fb.group({
-      'name': ['', [ ]],
-      'surname': ['', [ ] ],
-      'fechaNacimiento': ['', [ ] ],
-      'sexo': ['', [ ] ],
-      'alergias': ['', [ ] ],
-      'observacionesMedicas': ['', [ ] ],
-      'infoAdicional': ['', [ ] ],
+      'name': ['', []],
+      'surname': ['', []],
+      'fechaNacimiento': [0, []],
+      'sexo': ['', []],
+      'alergias': ['', []],
+      'observacionesMedicas': ['', []],
+      'infoAdicional': ['', []],
     });
 
   }
@@ -83,22 +83,50 @@ export class UserFormComponent implements OnInit {
     return this.signupForm.get('email');
   }
 
-  get name() { return this.detailForm.get('name'); }
-  get surname() { return this.detailForm.get('surname'); }
-  get fechaNacimiento() { return this.detailForm.get('fechaNacimiento'); }
-  get sexo() { return this.detailForm.get('sexo'); }
-  get alergias() { return this.detailForm.get('alergias'); }
-  get observacionesMedicas() { return this.detailForm.get('observacionesMedicas'); }
-  get infoAdicional() { return this.detailForm.get('infoAdicional'); }
+  get password(){
+    return this.detailForm.get('password');
+  }
+  get password2(){
+    return this.detailForm.get('password2');
+  }
+
+  get name() {
+    return this.detailForm.get('name');
+  }
+
+  get surname() {
+    return this.detailForm.get('surname');
+  }
+
+  get fechaNacimiento() {
+    //return this.detailForm.get('fechaNacimiento');
+    return this.fechaNacimientoDate.getTime();
+  }
+
+  get sexo() {
+    return this.detailForm.get('sexo');
+  }
+
+  get alergias() {
+    return this.detailForm.get('alergias');
+  }
+
+  get observacionesMedicas() {
+    return this.detailForm.get('observacionesMedicas');
+  }
+
+  get infoAdicional() {
+    return this.detailForm.get('infoAdicional');
+  }
 
   signup() {
     console.log(this.isResearcher);
     return this.auth.signup(this.email.value, this.password.value)
       .catch(errr => {
-        this.errorMessage = this.showSpanishMsg(errr.message);
-        this.errorHappened = true;
+          this.errorMessage = this.showSpanishMsg(errr.message);
+          this.errorHappened = true;
         }
-    );
+      );
   }
 
   setUserInfo(user) {
@@ -109,6 +137,7 @@ export class UserFormComponent implements OnInit {
     user.sexo = this.sexo.value;
     user.observacionesMedicas = this.observacionesMedicas.value;
     user.infoAdicional = this.infoAdicional.value;
+    user.researcher = this.isResearcher;
     this.functions.changeShowMainPageToFalse();
     this.functions.changeToLogged();
     const resultado = this.auth.setUserDoc(user);
@@ -118,14 +147,17 @@ export class UserFormComponent implements OnInit {
       console.log(resultado);
     }
   }
+
   setName(user) {
-    return this.auth.updateUser(user, { name:  this.name.value} );
+    return this.auth.updateUser(user, {name: this.name.value});
   }
+
   setSurname(user) {
-    return this.auth.updateUser(user, { surname:  this.surname.value } );
+    return this.auth.updateUser(user, {surname: this.surname.value});
   }
+
   setFechaNacimiento(user) {
-    return this.auth.updateUser(user, { fechaNacimiento:  this.fechaNacimiento });
+    return this.auth.updateUser(user, {fechaNacimiento: this.fechaNacimiento});
   }
 
   setAlergias(user) {

@@ -86,72 +86,72 @@
             <div class="field">
               <label>Apellidos*</label>
               <input type="text" class="input" formControlName="surname" required autocomplete="off">
-          </div>
-          <div class="field">
+            </div>
+            <div class="field">
               <label>Fecha Nacimiento*</label>
-              <input suiDatepicker [(ngModel)]="fechaNacimientoDate" formControlName="fechaNacimiento" required autocomplete="off"
+              <input suiDatepicker [(ngModel)]="fechaNacimientoDate" formControlName="fechaNacimiento" required
+                     autocomplete="off"
                      [pickerMode]="mode" [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
-          </div>
-          <div class="field">
+            </div>
+            <div class="field">
               <label>Sexo*</label>
               <div class="ui radio">
-                <input ng-model="sexo" type="radio" name="sexo" value="hombre"  ng-value="hombre" formControlName="sexo"> Hombre
-                <input ng-model="sexo" type="radio" name="sexo" value="mujer" ng-value="mujer" formControlName="sexo"> Mujer
+                <input ng-model="sexo" type="radio" name="sexo" value="hombre" ng-value="hombre" formControlName="sexo">
+                Hombre
+                <input ng-model="sexo" type="radio" name="sexo" value="mujer" ng-value="mujer" formControlName="sexo">
+                Mujer
               </div>
             </div>
-          <div class="field">
-              <label >Alergias</label>
+            <div class="field">
+              <label>Alergias</label>
               <input type="text" class="input" formControlName="alergias">
-          </div>
-          <div class="field">
+            </div>
+            <div class="field">
               <label>Observaciones Médicas</label>
               <input type="text" class="input" formControlName="observacionesMedicas">
-          </div>
-          <div class="field">
+            </div>
+            <div class="field">
               <label>Información Adicional</label>
-              <input type="text" class="input" formControlName="infoAdicional" >
-          </div>
-          <button type="submit" class="ui fluid inverted blue submit button" [disabled]="!detailForm.valid">Enviar</button>
-    </div>
-    </div>
-    </div>
+              <input type="text" class="input" formControlName="infoAdicional">
             </div>
-            <div *ngIf="!isResearcher">
-              <div class="field">
-                <label>Fecha Nacimiento*</label>
-                <input suiDatepicker formControlName="fechaNacimiento" required autocomplete="off" [pickerMode]="mode"
-                       [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
-              </div>
-              <div class="field">
-                <label>Sexo*</label>
-                <div class="ui radio">
-                  <input ng-model="sexo" type="radio" name="sexo" value="hombre" ng-value="hombre"
-                         formControlName="sexo">
-                  Hombre
-                  <input ng-model="sexo" type="radio" name="sexo" value="mujer" ng-value="mujer" formControlName="sexo">
-                  Mujer
-                </div>
-              </div>
-              <div class="field">
-                <label>Alergias</label>
-                <input type="text" class="input" formControlName="alergias">
-              </div>
-              <div class="field">
-                <label>Observaciones Médicas</label>
-                <input type="text" class="input" formControlName="observacionesMedicas">
-              </div>
-              <div class="field">
-                <label>Información Adicional</label>
-                <input type="text" class="input" formControlName="infoAdicional">
-              </div>
-            </div>
-            <br/>
             <button type="submit" class="ui fluid inverted blue submit button" [disabled]="!detailForm.valid">Enviar
             </button>
           </div>
         </div>
       </div>
     </div>
+    <div *ngIf="!isResearcher">
+      <div class="field">
+        <label>Fecha Nacimiento*</label>
+        <input suiDatepicker formControlName="fechaNacimiento" required autocomplete="off" [pickerMode]="mode"
+               [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
+      </div>
+      <div class="field">
+        <label>Sexo*</label>
+        <div class="ui radio">
+          <input ng-model="sexo" type="radio" name="sexo" value="hombre" ng-value="hombre"
+                 formControlName="sexo">
+          Hombre
+          <input ng-model="sexo" type="radio" name="sexo" value="mujer" ng-value="mujer" formControlName="sexo">
+          Mujer
+        </div>
+      </div>
+      <div class="field">
+        <label>Alergias</label>
+        <input type="text" class="input" formControlName="alergias">
+      </div>
+      <div class="field">
+        <label>Observaciones Médicas</label>
+        <input type="text" class="input" formControlName="observacionesMedicas">
+      </div>
+      <div class="field">
+        <label>Información Adicional</label>
+        <input type="text" class="input" formControlName="infoAdicional">
+      </div>
+    </div>
+    <br/>
+    <button type="submit" class="ui fluid inverted blue submit button" [disabled]="!detailForm.valid">Enviar
+    </button>
   </form>
 </ng-container>
 
