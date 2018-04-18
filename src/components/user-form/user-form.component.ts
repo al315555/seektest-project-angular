@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../app/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../../app/auth.service';
 import {ReactiveFormsModule, FormGroup, FormBuilder, Validators, NgControlStatusGroup, AbstractControl} from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
 import {FunctionsService} from '../../app/functions.service';
 import {User} from '../../app/core/User';
 import * as firebase from 'firebase/app';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+import {AngularFireAuth} from 'angularfire2/auth';
+import {AngularFirestore, AngularFirestoreDocument} from 'angularfire2/firestore';
 
 @Component({
   selector: 'app-user-form',
@@ -20,6 +20,7 @@ export class UserFormComponent implements OnInit {
 
   errorMessage: string;
   errorHappened: boolean;
+  isResearcher: boolean;
 
   mode: any;
 
@@ -27,8 +28,9 @@ export class UserFormComponent implements OnInit {
 
   constructor(public fb: FormBuilder, private afs: AngularFirestore,
               public auth: AuthService, public functions: FunctionsService) {
-                this.mode = 'date';
-              }
+    this.mode = 'date';
+    this.isResearcher = false;
+  }
 
   areEqual(): boolean {
     return this.password.value === this.password2.value;
@@ -47,14 +49,14 @@ export class UserFormComponent implements OnInit {
       'email': ['', [
         Validators.required,
         Validators.email
-        ]
+      ]
       ],
       'password': ['', [
         Validators.required,
         Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
         Validators.minLength(6),
         Validators.maxLength(25)
-        ]
+      ]
       ],
       'password2': ['', [
         Validators.required
@@ -63,35 +65,65 @@ export class UserFormComponent implements OnInit {
 
     // Second Step
     this.detailForm = this.fb.group({
-      'name': ['', [ ]],
-      'surname': ['', [ ] ],
-      'fechaNacimiento': ['', [ ] ],
-      'sexo': ['', [ ] ],
-      'alergias': ['', [ ] ],
-      'observacionesMedicas': ['', [ ] ],
-      'infoAdicional': ['', [ ] ],
+      'name': ['', []],
+      'surname': ['', []],
+      'fechaNacimiento': ['', []],
+      'sexo': ['', []],
+      'alergias': ['', []],
+      'observacionesMedicas': ['', []],
+      'infoAdicional': ['', []],
     });
 
   }
-  get email() { return this.signupForm.get('email'); }
-  get password() { return this.signupForm.get('password'); }
-  get password2() { return this.signupForm.get('password2'); }
 
-  get name() { return this.detailForm.get('name'); }
-  get surname() { return this.detailForm.get('surname'); }
-  get fechaNacimiento() { return this.detailForm.get('fechaNacimiento'); }
-  get sexo() { return this.detailForm.get('sexo'); }
-  get alergias() { return this.detailForm.get('alergias'); }
-  get observacionesMedicas() { return this.detailForm.get('observacionesMedicas'); }
-  get infoAdicional() { return this.detailForm.get('infoAdicional'); }
+  get email() {
+    return this.signupForm.get('email');
+  }
+
+  get password() {
+    return this.signupForm.get('password');
+  }
+
+  get password2() {
+    return this.signupForm.get('password2');
+  }
+
+  get name() {
+    return this.detailForm.get('name');
+  }
+
+  get surname() {
+    return this.detailForm.get('surname');
+  }
+
+  get fechaNacimiento() {
+    return this.detailForm.get('fechaNacimiento');
+  }
+
+  get sexo() {
+    return this.detailForm.get('sexo');
+  }
+
+  get alergias() {
+    return this.detailForm.get('alergias');
+  }
+
+  get observacionesMedicas() {
+    return this.detailForm.get('observacionesMedicas');
+  }
+
+  get infoAdicional() {
+    return this.detailForm.get('infoAdicional');
+  }
 
   signup() {
+    console.log(this.isResearcher);
     return this.auth.signup(this.email.value, this.password.value)
       .catch(errr => {
-        this.errorMessage = this.showSpanishMsg(errr.message);
-        this.errorHappened = true;
+          this.errorMessage = this.showSpanishMsg(errr.message);
+          this.errorHappened = true;
         }
-    );
+      );
   }
 
   setUserInfo(user) {
@@ -102,6 +134,7 @@ export class UserFormComponent implements OnInit {
     user.sexo = this.sexo.value;
     user.observacionesMedicas = this.observacionesMedicas.value;
     user.infoAdicional = this.infoAdicional.value;
+    user.researcher = this.isResearcher;
     this.functions.changeShowMainPageToFalse();
     this.functions.changeToLogged();
     const resultado = this.auth.setUserDoc(user);
@@ -111,24 +144,29 @@ export class UserFormComponent implements OnInit {
       console.log(resultado);
     }
   }
+
   setName(user) {
-    return this.auth.updateUser(user, { name:  this.name.value} );
+    return this.auth.updateUser(user, {name: this.name.value});
   }
+
   setSurname(user) {
-    return this.auth.updateUser(user, { surname:  this.surname.value } );
+    return this.auth.updateUser(user, {surname: this.surname.value});
   }
+
   setFechaNacimiento(user) {
-    return this.auth.updateUser(user, { age:  this.fechaNacimiento.value });
+    return this.auth.updateUser(user, {age: this.fechaNacimiento.value});
   }
 
   setAlergias(user) {
-    return this.auth.updateUser(user, { alergias:  this.alergias.value });
+    return this.auth.updateUser(user, {alergias: this.alergias.value});
   }
+
   setObservacionesMedicas(user) {
-    return this.auth.updateUser(user, { observacionesMedicas:  this.observacionesMedicas.value });
+    return this.auth.updateUser(user, {observacionesMedicas: this.observacionesMedicas.value});
   }
+
   setInfoAdicional(user) {
-    return this.auth.updateUser(user, { infoAdicional:  this.infoAdicional.value });
+    return this.auth.updateUser(user, {infoAdicional: this.infoAdicional.value});
   }
 
   goBackRegister() {
@@ -144,5 +182,9 @@ export class UserFormComponent implements OnInit {
       default:
         return 'Error genérico. Contacte con el administrador';
     }
+  }
+
+  changeResearcher() {
+    this.isResearcher = !this.isResearcher;
   }
 }

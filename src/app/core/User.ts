@@ -9,8 +9,9 @@ export class User {
     _alergias?: string;
     _observacionesMedicas?: string;
     _infoAdicional?: string;
+    _researcher?: boolean;
 
-    constructor(json) {
+  constructor(json) {
       if (json) {
         Object.assign(this, json);
       }
