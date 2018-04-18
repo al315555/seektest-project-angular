@@ -17,11 +17,15 @@ export class UserDataComponent {
   messageBody: string;
   messageHeader: string;
   mode: any;
+  firstDayOfWeek: string;
+  fechaNacimiento: Date;
 
   constructor(public authService: AuthService, public functions: FunctionsService) {
     this.messageBody = '¿Estás seguro de que quieres borrar tu cuenta? No podrás recuperarla.';
     this.messageHeader = 'Darme de baja y anular cuenta';
     this.mode = 'date';
+    this.fechaNacimiento = new Date();
+    this.fechaNacimiento.setTime(authService.userDataJson._fechaNacimiento);
   }
 
   fileChange(event) {
@@ -29,22 +33,6 @@ export class UserDataComponent {
     const file = filesList.item(0);
     console.log(file.name);
     console.log(this.authService.putNewImg(file));
-    /*if (fileList.length > 0) {
-      const file: File = fileList[0];
-      const formData:FormData = new FormData();
-      formData.append('uploadFile', file, file.name);
-      const headers = new Headers();
-      headers.append('Content-Type', 'multipart/form-data');
-      headers.append('Accept', 'application/json');
-      const options = new RequestOptions({ headers: headers });
-      this.http.post(`${this.apiEndPoint}`, formData, options)
-        .map(res => res.json())
-        .catch(error => Observable.throw(error))
-        .subscribe(
-          data => console.log('success'),
-          error => console.log(error)
-        )
-    } */
   }
 
   goBackToExperiments() {

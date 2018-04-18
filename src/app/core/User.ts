@@ -4,7 +4,7 @@ export class User {
     _photoURL: string;
     _name?: string;
     _surname?: string;
-    _fechaNacimiento?: string;
+    _fechaNacimiento?: number;
     _sexo?: string;
     _alergias?: string;
     _observacionesMedicas?: string;

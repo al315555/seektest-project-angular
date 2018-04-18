@@ -40,7 +40,7 @@ export class AuthService {
     _sexo: '',
     _infoAdicional: '',
     _observacionesMedicas: '',
-    _fechaNacimiento: '',
+    _fechaNacimiento: 0,
     _alergias: ''
   });
 
