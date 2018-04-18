@@ -12,4 +12,5 @@ export class Experiment {
   userProfile: UserProfile;
   placeLatLon: object;
   dates: number[];
+  key: string;
 }

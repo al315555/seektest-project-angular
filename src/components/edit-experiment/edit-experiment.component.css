@@ -1,0 +1,28 @@
+.maxsize{
+    width: 100%
+  }
+  .principal{
+    min-width: 150%;
+  }
+  .button {
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+  }
+  
+  .hoverred:hover {
+    background:red;
+    color: whitesmoke;
+  }
+  
+  .marginBottom{
+    margin-bottom: 300px;
+  }
+  
+  .hovergreen:hover{
+    background: green;
+    color: whitesmoke;
+  }
+  
+  agm-map {
+    height: 300px;
+  }
