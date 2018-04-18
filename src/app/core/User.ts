@@ -4,13 +4,14 @@ export class User {
     _photoURL: string;
     _name?: string;
     _surname?: string;
-    _fechaNacimiento?: string;
+    _fechaNacimiento?: number;
     _sexo?: string;
     _alergias?: string;
     _observacionesMedicas?: string;
     _infoAdicional?: string;
+    _researcher?: boolean;
 
-    constructor(json) {
+  constructor(json) {
       if (json) {
         Object.assign(this, json);
       }
