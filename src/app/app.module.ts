@@ -40,6 +40,8 @@ import { AgmCoreModule } from '@agm/core';
 import {AngularFireStorageModule} from 'angularfire2/storage';
 import {MyExperimentsComponent} from '../components/my-experiments/my-experiments.component';
 import { EditExperimentComponent } from '../components/edit-experiment/edit-experiment.component';
+import {ConfirmModalComponent} from '../components/modal/baseModal.component';
+import {ConfirmModal} from '../components/modal/modal.component';
 
 // import { AngularFirestoreModule } from 'angularfire2/firestore';
 
@@ -61,7 +63,9 @@ import { EditExperimentComponent } from '../components/edit-experiment/edit-expe
     ExperimentCardComponent,
     MyExperimentsComponent,
     EditExperimentComponent,
+    ConfirmModalComponent
   ],
+  entryComponents: [ConfirmModalComponent],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),

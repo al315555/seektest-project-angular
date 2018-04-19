@@ -1,0 +1,10 @@
+<ng-template let-context let-modal="" #modalTemplate>
+  <div class="header">{{headerText}}</div>
+  <div class="content">
+    {{ contentText }}
+  </div>
+  <div class="actions">
+    <button class="ui red button" (click)="modal.deny('denied')">Cancelar</button>
+    <button class="ui green button" (click)="modal.approve('approved')" autofocus>Realizar</button>
+  </div>
+</ng-template>

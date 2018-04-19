@@ -3,6 +3,8 @@ import { AuthService } from '../../app/auth.service';
 import {FunctionsService} from '../../app/functions.service';
 import {MessageToast} from '../../models/message-toast';
 import {MessageToastComponent} from '../message-toast/message-toast.component';
+import {ConfirmModal} from '../modal/modal.component';
+import {ModalSize, SuiModalService} from 'ng2-semantic-ui';
 
 
 @Component({
@@ -20,7 +22,7 @@ export class UserDataComponent {
   firstDayOfWeek: string;
   fechaNacimiento: Date;
 
-  constructor(public authService: AuthService, public functions: FunctionsService) {
+  constructor(public authService: AuthService, public functions: FunctionsService, public modalService: SuiModalService) {
     this.messageBody = '¿Estás seguro de que quieres borrar tu cuenta? No podrás recuperarla.';
     this.messageHeader = 'Darme de baja y anular cuenta';
     this.mode = 'date';
@@ -33,6 +35,13 @@ export class UserDataComponent {
     const file = filesList.item(0);
     console.log(file.name);
     console.log(this.authService.putNewImg(file));
+  }
+
+  openModalDeleteUser() {
+    this.modalService
+      .open(new ConfirmModal(this.messageHeader, this.messageBody, ModalSize.Normal))
+      .onApprove(() => {alert('User has accepted.'); })
+      .onDeny(() => {alert('User has denied.'); });
   }
 
   goBackToExperiments() {
