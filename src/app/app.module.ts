@@ -64,7 +64,7 @@ import {ConfirmModal} from '../components/modal/modal.component';
     ExperimentCardComponent,
     MyExperimentsComponent,
     EditExperimentComponent,
-    ConfirmModalComponent
+    ConfirmModalComponent,
     InscripcioExperimentComponent,
   ],
   entryComponents: [ConfirmModalComponent],
