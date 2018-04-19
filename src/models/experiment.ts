@@ -1,6 +1,7 @@
 import {UserProfile} from './user-profile';
 
 export class Experiment {
+  placeLatLon: {lat: number, lon: number};
   uidPublisher: string;
   datePublished: number;
   title: String;
@@ -10,7 +11,6 @@ export class Experiment {
   duration: number;
   gift: string;
   userProfile: UserProfile;
-  placeLatLon: object;
   dates: number[];
   key: string;
 }

@@ -3,8 +3,8 @@ import { AuthService } from '../../app/auth.service';
 import {FunctionsService} from '../../app/functions.service';
 import {MessageToast} from '../../models/message-toast';
 import {MessageToastComponent} from '../message-toast/message-toast.component';
-import {ConfirmModal} from '../modal/modal.component';
 import {ModalSize, SuiModalService} from 'ng2-semantic-ui';
+import {ModalConfirm} from '../modal/confirm-modal.component';
 
 
 @Component({
@@ -39,9 +39,9 @@ export class UserDataComponent {
 
   openModalDeleteUser() {
     this.modalService
-      .open(new ConfirmModal(this.messageHeader, this.messageBody, ModalSize.Normal))
-      .onApprove(() => {alert('User has accepted.'); })
-      .onDeny(() => {alert('User has denied.'); });
+      .open(new ModalConfirm(this.messageHeader, this.messageBody, ModalSize.Normal))
+      .onApprove(() => {this.authService.deleteUser(); console.log('User has accepted.'); })
+      .onDeny(() => {console.log('User said close.'); });
   }
 
   goBackToExperiments() {
