@@ -1,113 +1,128 @@
 <ng-container *ngIf="(auth.user | async) || {} as user" class="ui">
-<form [formGroup]="signupForm" *ngIf="!user.uid" (ngSubmit)="signup()">
-  <br/><br/><br/><br/><br/>
-  <div class="ui middle aligned centered grid">
-    <div class="ui column">
-      <h1 class="ui image header" style="margin-left: 10%; margin-right: 10%">
-        <img src="../../assets/images/logo_seekTest.png" class="image">
-        <div class="content"style="color: #2a5569">
-          Registro <br> SeekTest
-        </div>
-      </h1>
+  <form [formGroup]="signupForm" *ngIf="!user.uid" (ngSubmit)="signup()">
+    <br/><br/><br/>
+    <div class="ui middle aligned centered grid">
+      <div class="ui column">
+        <h1 class="ui image header" style="margin-left: 10%; margin-right: 10%">
+          <img src="../../assets/images/logo_seekTest.png" class="image">
+          <div class="content" style="color: #2a5569">
+            Registro <br> SeekTest
+          </div>
+        </h1>
 
-      <div class="ui raised segment " >
-        <div class="ui error message" *ngIf="(errorHappened)">
-          <div class="header">
-            ¡Upps! Algo no ha ido bien.
-          </div>
-          {{errorMessage}}
-        </div>
-        <div class="ui large form">
-          <div class="field">
-            <label>Correo electronico</label>
-            <input type="email" class="ui input" placeholder="Dirección de correo" [class.is-danger]="email.invalid && email.dirty"
-            formControlName="email" required autocomplete="off">
-            <div *ngIf="email.invalid && email.dirty" class="notification is-danger">
-              <p style="color: darkorange !important;">Correo no válido.</p>
-          </div>
-          </div>
-          <div class="field">
-            <label>Nueva contraseña</label>
-            <input type="password" placeholder="Contraseña" class="ui input" [class.is-danger]="password.invalid && password.touched"
-            formControlName="password" required>
-            <div *ngIf="password.invalid && password.dirty" class="notification is-danger">
-              <p style="color: darkorange !important;">La contraseña debe tener entre 6 - 24 caracteres y contener una letra y número.</p>
+        <div class="ui raised segment ">
+          <div class="ui error message" *ngIf="(errorHappened)">
+            <div class="header">
+              ¡Upps! Algo no ha ido bien.
             </div>
+            {{errorMessage}}
           </div>
-          <div class="field">
-            <label>Repetir contraseña</label>
-            <input type="password" placeholder="Repetir contraseña" class="ui input"
-                   formControlName="password2" required>
-            <div *ngIf="!areEqual()" class="notification is-danger">
-              <p style="color: darkorange !important;">Las contraseñas no coinciden.</p>
+          <div class="ui large form">
+            <div class="field">
+              <label>Correo electronico</label>
+              <input type="email" class="ui input" placeholder="Dirección de correo"
+                     [class.is-danger]="email.invalid && email.dirty"
+                     formControlName="email" required autocomplete="off">
+              <div *ngIf="email.invalid && email.dirty" class="notification is-danger">
+                <p style="color: darkorange !important;">Correo no válido.</p>
+              </div>
             </div>
-          </div>
-          <div style="margin-left: 20%; margin-right: 20%">
-            <button class="ui fluid inverted blue submit right labeled icon button" type="submit"
-                    [disabled]="(!signupForm.valid) || (!areEqual())" >
-              Siguiente
-              <i class="right arrow icon"></i>
-            </button>
-            <br/>
-            <button class="ui fluid inverted blue labeled icon button" (click)="goBackRegister()">
-              <i class="left arrow icon"></i>
-              Atrás
-            </button>
+            <div class="field">
+              <label>Nueva contraseña</label>
+              <input type="password" placeholder="Contraseña" class="ui input"
+                     [class.is-danger]="password.invalid && password.touched"
+                     formControlName="password" required>
+              <div *ngIf="password.invalid && password.dirty" class="notification is-danger">
+                <p style="color: darkorange !important;">La contraseña debe tener entre 6 - 24 caracteres y contener una
+                  letra y número.</p>
+              </div>
+            </div>
+            <div class="field">
+              <label>Repetir contraseña</label>
+              <input type="password" placeholder="Repetir contraseña" class="ui input"
+                     formControlName="password2" required>
+              <div *ngIf="!areEqual()" class="notification is-danger">
+                <p style="color: darkorange !important;">Las contraseñas no coinciden.</p>
+              </div>
+            </div>
+            <div class="ui toggle checkbox" style="margin-right: 20%; margin-left: 20%">
+              <input type="checkbox" name="investigador" [(ngModel)]="isResearcher" (change)="changeResearcher()">
+              <label>Soy investigador</label><br/>
+            </div>
+            <div style="margin-left: 20%; margin-right: 20%">
+              <button class="ui fluid inverted blue submit right labeled icon button" type="submit"
+                      [disabled]="(!signupForm.valid) || (!areEqual())">
+                Siguiente
+                <i class="right arrow icon"></i>
+              </button>
+              <br/>
+              <button class="ui fluid inverted blue labeled icon button" (click)="goBackRegister()">
+                <i class="left arrow icon"></i>
+                Atrás
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</form>
+  </form>
   <form [formGroup]="detailForm" *ngIf="user.uid && !user.age" (ngSubmit)="setUserInfo(user)">
-      <div class="ui middle aligned centered grid">
+    <div class="ui middle aligned centered grid">
       <div class="ui column">
-          <h1 class="ui image header" style="margin-left: 10%; margin-right: 10%">
-              <img src="../../assets/images/logo_seekTest.png" class="image">
-              <div class="content"style="color: #2a5569">
-                Datos Personales <br> SeekTest
-              </div>
-            </h1>
-      <div class="ui raised segment " >
+        <h1 class="ui image header" style="margin-left: 10%; margin-right: 10%">
+          <img src="../../assets/images/logo_seekTest.png" class="image">
+          <div class="content" style="color: #2a5569">
+            Datos Personales <br> SeekTest
+          </div>
+        </h1>
+        <div class="ui raised segment ">
           <div class="ui large form">
 
 
-          <div class="field">
+            <div class="field">
               <label>Nombre*</label>
               <input type="text" class="input" formControlName="name" required autocomplete="off">
-          </div>
-          <div class="field">
+            </div>
+            <div class="field">
               <label>Apellidos*</label>
               <input type="text" class="input" formControlName="surname" required autocomplete="off">
-          </div>
-          <div class="field">
-              <label>Fecha Nacimiento*</label>
-              <input suiDatepicker [(ngModel)]="fechaNacimientoDate" formControlName="fechaNacimiento" required autocomplete="off"
-                     [pickerMode]="mode" [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
-          </div>
-          <div class="field">
-              <label>Sexo*</label>
-              <div class="ui radio">
-                <input ng-model="sexo" type="radio" name="sexo" value="hombre"  ng-value="hombre" formControlName="sexo"> Hombre
-                <input ng-model="sexo" type="radio" name="sexo" value="mujer" ng-value="mujer" formControlName="sexo"> Mujer
+            </div>
+            <div *ngIf="!isResearcher">
+              <div class="field">
+                <label>Fecha Nacimiento*</label>
+                <input suiDatepicker [(ngModel)]="fechaNacimientoDate" formControlName="fechaNacimiento" required
+                       autocomplete="off"
+                       [pickerMode]="mode" [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
+              </div>
+              <div class="field">
+                <label>Sexo*</label>
+                <div class="ui radio">
+                  <input ng-model="sexo" type="radio" name="sexo" value="hombre" ng-value="hombre"
+                         formControlName="sexo">
+                  Hombre
+                  <input ng-model="sexo" type="radio" name="sexo" value="mujer" ng-value="mujer" formControlName="sexo">
+                  Mujer
+                </div>
+              </div>
+              <div class="field">
+                <label>Alergias</label>
+                <input type="text" class="input" formControlName="alergias">
+              </div>
+              <div class="field">
+                <label>Observaciones Médicas</label>
+                <input type="text" class="input" formControlName="observacionesMedicas">
+              </div>
+              <div class="field">
+                <label>Información Adicional</label>
+                <input type="text" class="input" formControlName="infoAdicional">
               </div>
             </div>
-          <div class="field">
-              <label >Alergias</label>
-              <input type="text" class="input" formControlName="alergias">
           </div>
-          <div class="field">
-              <label>Observaciones Médicas</label>
-              <input type="text" class="input" formControlName="observacionesMedicas">
-          </div>
-          <div class="field">
-              <label>Información Adicional</label>
-              <input type="text" class="input" formControlName="infoAdicional" >
-          </div>
-          <button type="submit" class="ui fluid inverted blue submit button" [disabled]="!detailForm.valid">Enviar</button>
-    </div>
-    </div>
-    </div>
+          <br/>
+          <button type="submit" class="ui fluid inverted blue submit button" [disabled]="!detailForm.valid">Enviar
+          </button>
+        </div>
+      </div>
     </div>
   </form>
 </ng-container>

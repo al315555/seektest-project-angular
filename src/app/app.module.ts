@@ -40,6 +40,7 @@ import { AgmCoreModule } from '@agm/core';
 import {AngularFireStorageModule} from 'angularfire2/storage';
 import {MyExperimentsComponent} from '../components/my-experiments/my-experiments.component';
 import { EditExperimentComponent } from '../components/edit-experiment/edit-experiment.component';
+import { InscripcioExperimentComponent } from './../components/inscripcio-experiment/inscripcio-experiment.component';
 import {ConfirmModalComponent} from '../components/modal/baseModal.component';
 import {ConfirmModal} from '../components/modal/modal.component';
 
@@ -64,6 +65,7 @@ import {ConfirmModal} from '../components/modal/modal.component';
     MyExperimentsComponent,
     EditExperimentComponent,
     ConfirmModalComponent
+    InscripcioExperimentComponent,
   ],
   entryComponents: [ConfirmModalComponent],
   imports: [

@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Experiment } from '../../models/experiment';
 import { ExperimentsService } from '../../app/experiments.service';
-import {SuiModalService, TemplateModalConfig, ModalTemplate, ModalConfig, ModalSize} from 'ng2-semantic-ui';
+import { SuiModalService, TemplateModalConfig, ModalTemplate, ModalConfig, ModalSize } from 'ng2-semantic-ui';
 
 export interface IContext {
-  data:string;
+  data: string;
 }
 
 
@@ -33,7 +33,7 @@ export class ExperimentCardComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.expe);
-    if (this.expe.uidPublisher == localStorage.getItem('uid_usuario')){
+    if (this.expe.uidPublisher === localStorage.getItem('uid_usuario')) {
       this.isOwn = true;
     } else {
       this.isOwn = false;
@@ -41,8 +41,8 @@ export class ExperimentCardComponent implements OnInit {
 
   }
 
-  deleteExperDb(){
-    if(this.isOwn){
+  deleteExperDb() {
+    if (this.isOwn) {
       this.experimentService.deleteExperiment(this.expe.key);
     }
   }
@@ -58,21 +58,21 @@ export class ExperimentCardComponent implements OnInit {
     config.mustScroll = true;
     config.size = ModalSize.Tiny;
     this.modalService
-        .open(config)
-        .onApprove(result => { this.deleteExperDb(); })
-          .onDeny(result => {});
+      .open(config)
+      .onApprove(result => { this.deleteExperDb(); })
+      .onDeny(result => { });
   }
 
-  editExperiment(){
+  editExperiment() {
     const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplateEdit);
-    config.isFullScreen = true;
+    config.isFullScreen = false;
     config.closeResult = 'Editado!';
-    config.mustScroll=true;
+    config.mustScroll = true;
     config.size = ModalSize.Tiny;
     this.modalService
-        .open(config)
-        .onApprove(result => {})
-          .onDeny(result => {});
+      .open(config)
+      .onApprove(result => { })
+      .onDeny(result => { });
   }
 
 }

@@ -11,27 +11,29 @@
     <div class="ui raised very padded text container segment">
       <h2 class="ui header">Mis datos</h2>
       <app-message-toast></app-message-toast>
-        <div class="ui large form" *ngIf="authService.userDataJson as user">
-          <div class="field">
-            <label>Correo electrónico</label>
-            <label>{{ user._email }}</label>
-          </div>
-          <div class="field">
-            <label>Foto de perfil</label>
-            <label><img src="{{ user._photoURL }}" style="height: 128px; width: 128px; border-radius: 25px;">
-              <div class="field">
-                <input type="file" (change)="fileChange($event)" placeholder="Cambiar avatar" accept=".jpg,.png,.svg,.jpeg,.gif">
-              </div>
-            </label>
-          </div>
-          <div class="field">
-            <label>Nombre</label>
-            <input type="text" [(ngModel)]="user._name">
-          </div>
-          <div class="field">
-            <label>Apellido</label>
-            <input type="text" [(ngModel)]="user._surname">
-          </div>
+      <div class="ui large form" *ngIf="authService.userDataJson as user">
+        <div class="field">
+          <label>Correo electrónico</label>
+          <label>{{ user._email }}</label>
+        </div>
+        <div class="field">
+          <label>Foto de perfil</label>
+          <label><img src="{{ user._photoURL }}" style="height: 128px; width: 128px; border-radius: 25px;">
+            <div class="field">
+              <input type="file" (change)="fileChange($event)" placeholder="Cambiar avatar"
+                     accept=".jpg,.png,.svg,.jpeg,.gif">
+            </div>
+          </label>
+        </div>
+        <div class="field">
+          <label>Nombre</label>
+          <input type="text" [(ngModel)]="user._name">
+        </div>
+        <div class="field">
+          <label>Apellido</label>
+          <input type="text" [(ngModel)]="user._surname">
+        </div>
+        <div *ngIf="!user._researcher">
           <div class="field">
             <label>Fecha de nacimiento</label>
             <input suiDatepicker [(ngModel)]="fechaNacimiento"
@@ -50,17 +52,40 @@
             <label>Observaciones médicas</label>
             <input type="text" [(ngModel)]="user._observacionesMedicas">
           </div>
-          <div style="margin-left: 20%; margin-right: 20%">
-            <button class="ui blue fluid button" (click)="guardarDatos()">
-              <span class="ui text">Guardar</span>
-            </button>
-            <br/><br/>
-
-
-            <p class="ui text"><a (click)="openModalDeleteUser()" style="cursor: pointer; color: red">Borrar cuenta</a></p>
-          </div>
-
         </div>
+        <div style="margin-left: 20%; margin-right: 20%">
+          <br />
+          <button class="ui blue fluid button" (click)="guardarDatos()">
+            <span class="ui text">Guardar</span>
+          </button>
+          <br/><br/>
+
+
+          <p class="ui text"><a onclick="$('.ui.basic.modal').modal('show');" style="cursor: pointer; color: red">Borrar
+            cuenta</a></p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ui basic modal">
+  <div class="ui icon header">
+    <i class="exclamation icon"></i>
+    {{ messageHeader }}
+  </div>
+  <div class="content">
+    <p>{{ messageBody }}</p>
+  </div>
+  <div class="actions">
+    <div class="ui red basic cancel inverted button">
+      <i class="remove icon"></i>
+      No
+    </div>
+    <div class="ui green ok inverted button" (click)="borrarUsuario()">
+      <i class="checkmark icon"></i>
+      Yes
     </div>
   </div>
 </div>

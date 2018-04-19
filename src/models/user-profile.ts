@@ -4,4 +4,5 @@ export class UserProfile {
   alergias: string;
   sexo: string;
   rangoEdad: RangoEdad;
+  medicalObs: string;
 }
