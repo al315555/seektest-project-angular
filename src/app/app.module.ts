@@ -40,6 +40,7 @@ import { AgmCoreModule } from '@agm/core';
 import {AngularFireStorageModule} from 'angularfire2/storage';
 import {MyExperimentsComponent} from '../components/my-experiments/my-experiments.component';
 import { EditExperimentComponent } from '../components/edit-experiment/edit-experiment.component';
+import { InscripcioExperimentComponent } from './../components/inscripcio-experiment/inscripcio-experiment.component';
 
 // import { AngularFirestoreModule } from 'angularfire2/firestore';
 
@@ -61,6 +62,7 @@ import { EditExperimentComponent } from '../components/edit-experiment/edit-expe
     ExperimentCardComponent,
     MyExperimentsComponent,
     EditExperimentComponent,
+    InscripcioExperimentComponent,
   ],
   imports: [
     BrowserModule,

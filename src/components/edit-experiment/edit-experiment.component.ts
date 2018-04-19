@@ -97,10 +97,10 @@ export class EditExperimentComponent implements OnInit {
     });
     this.title = this.experiment.title;
     this.place = this.experiment.place;
-    this.lat = this.experiment.placeLatLon.lat;
-    this.lon = this.experiment.placeLatLon.lon;
+    //this.lat = this.experiment.placeLatLon.lat;
+    //this.lon = this.experiment.placeLatLon.lon;
     this.duration = this.experiment.duration;
-    this.numberParticipants = parseInt(this.experiment.numberParticipants);
+    //this.numberParticipants = parseInt(this.experiment.numberParticipants);
     this.description = this.experiment.description;
     this.gift = this.experiment.gift;
     this.perfilSexo = this.experiment.userProfile.sexo;
