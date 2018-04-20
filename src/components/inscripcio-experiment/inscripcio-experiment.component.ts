@@ -15,15 +15,18 @@ import {UserProfile} from '../../models/user-profile';
   styleUrls: ['./inscripcio-experiment.component.css']
 })
 export class InscripcioExperimentComponent implements OnInit {
-  @Input() item: any;
+  @Input() experiment: Experiment;
 
-  constructor() { }
+  constructor() { 
+    
+  }
 
   ngOnInit() {
+    
   }
 
   acceptarInscripcion(){
-    console.log("item: ", this.item)
+    console.log("componente incripcion: ", this.experiment.key)
   }
 
 }
