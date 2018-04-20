@@ -22,6 +22,8 @@ export class EditExperimentComponent implements OnInit {
 
   @ViewChild(MessageToastComponent) messageToast: MessageToastComponent;
 
+  firstDayOfWeek: string;
+  mode: string;
   messages: MessageToast[];
   spinnerLoading: boolean;
   collapse: boolean;
