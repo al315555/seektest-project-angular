@@ -32,7 +32,7 @@ export class ModalConfirm extends ComponentModalConfig<IConfirmModalContext, voi
     // this.isFullScreen = true;
     // this.isBasic = true;
     this.isClosable = false;
-    this.transitionDuration = 100;
+    this.transitionDuration = 500;
     this.size = size;
   }
 }
