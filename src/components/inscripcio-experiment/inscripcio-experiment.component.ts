@@ -17,16 +17,12 @@ import {UserProfile} from '../../models/user-profile';
 export class InscripcioExperimentComponent implements OnInit {
   @Input() experiment: Experiment;
 
-  constructor() { 
-    
-  }
+  constructor() { }
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() {}
 
-  acceptarInscripcion(){
-    console.log("componente incripcion: ", this.experiment.key)
+  acceptarInscripcion() {
+    console.log('componente incripcion: ', this.experiment.key);
   }
 
 }

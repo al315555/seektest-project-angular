@@ -1,5 +1,8 @@
 export class Inscription {
+  static PENDIENTE = 0;
+  static ACEPTADO = 1;
+  static DENEGADO = 2;
   uid: string;
-  sessionPosition: number;
+  session: number;
   state: number;
 }

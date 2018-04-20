@@ -73,23 +73,23 @@
       <h3>Sesiones disponibles</h3>
       <div *ngFor='let date of itemDates; let i = index'>
         <div class="visible content">
-          Día&nbsp;{{date| date: 'dd'}}&nbsp;de&nbsp;{{date| date: 'MMMM'}}&nbsp;del&nbsp;
-          {{date| date: 'yyyy'}}
-          &nbsp;a&nbsp;las&nbsp;{{date| date: 'HH:mm'}}
-        </div>
+          <div>Día&nbsp;{{date| date: 'dd'}}&nbsp;de&nbsp;{{mesesAnyo[monthDates[i]]}}&nbsp;del&nbsp;
+            {{date| date: 'yyyy'}}
+            &nbsp;a&nbsp;las&nbsp;{{date| date: 'HH:mm'}}&nbsp;&nbsp;
+            <i *ngIf="!isOwn">
+              <button *ngIf="!sesionesInscrito[i]" class="ui button yellow" (click)="inscribirseA(date);">
+                Inscribirse
+              </button>
+              <p class="ui text bold" *ngIf="sesionesInscrito[i]" style="font-weight: bold;">
+                ¡Ya está inscrito en esta sesión! Estado actual:
+                  <a *ngIf="item.inscriptions[i].state === 0"> Sin respuesta </a>
+                  <a *ngIf="item.inscriptions[i].state === 1" style="color: green;"> Aceptado </a>
+                  <a *ngIf="item.inscriptions[i].state === 2" style="color: red;"> Denegado </a>
+              </p>
+            </i>
+          </div>
+        </div><br/>
       </div>
     </div>
-    <div class="content">
-      <app-inscripcio-experiment [experiment]="item"></app-inscripcio-experiment>
-    </div>  </div>
-  <div class="actions">
-    <!--<div class="ui black deny button">
-      Cerrar
-    </div>-->
-     <div class="ui positive right labeled icon button">
-        Entendido
-        <i class="checkmark icon"></i>
-      </div>
-
   </div>
 </div>

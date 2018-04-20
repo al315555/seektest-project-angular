@@ -234,30 +234,33 @@ export class EditExperimentComponent implements OnInit {
         dateNumberArray.push(value.getTime());
       });
       console.log(this.experiment.key);
-      this.afs.list('experiments/').update(this.experiment.key,
-        {
-          uidPublisher: localStorage.getItem('uid_usuario'), datePublished: this.experiment.datePublished,
-          title: this.title, place: this.place, placeLatLon: { lat: this.lat, lon: this.lon },
-          numberParticipants: this.numberParticipants,
-          description: this.description, dates: dateNumberArray, gift: this.gift, duration: this.duration,
-          userProfile: userProfile
-        }
-      ).then((value) => {
-        this.messageToast.pushMessage({
-          title: 'Experimento modificado!', description: 'El experimento ha sido modificado correctamente',
-          type: 'success'
-        });
-        this.spinnerLoading = false;
-        window.scrollTo(0, 0);
+      if (this.experiment.inscriptions == null) {
+        this.experiment.inscriptions = new Array();
       }
-      ).catch((value) => {
-        this.messages.push({
-          title: 'Ha habido un error!',
-          description: 'No se ha podido modificar el experimento, intentelo mas tarde.', type: 'error'
+        this.afs.list('experiments/').update(this.experiment.key,
+          {
+            uidPublisher: localStorage.getItem('uid_usuario'), datePublished: this.experiment.datePublished,
+            title: this.title, place: this.place, placeLatLon: {lat: this.lat, lon: this.lon},
+            numberParticipants: this.numberParticipants, inscriptions: this.experiment.inscriptions,
+            description: this.description, dates: dateNumberArray, gift: this.gift, duration: this.duration,
+            userProfile: userProfile
+          }
+        ).then((value) => {
+            this.messageToast.pushMessage({
+              title: 'Experimento modificado!', description: 'El experimento ha sido modificado correctamente',
+              type: 'success'
+            });
+            this.spinnerLoading = false;
+            window.scrollTo(0, 0);
+          }
+        ).catch((value) => {
+          this.messages.push({
+            title: 'Ha habido un error!',
+            description: 'No se ha podido modificar el experimento, intentelo mas tarde.', type: 'error'
+          });
+          this.spinnerLoading = false;
+          window.scrollTo(0, 0);
         });
-        this.spinnerLoading = false;
-        window.scrollTo(0, 0);
-      });
     }
   }
 

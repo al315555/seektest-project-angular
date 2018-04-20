@@ -45,8 +45,15 @@ export class ExperimentCardComponent implements OnInit {
   }
 
   openModal() {
+    const itemDates = new Array();
+    this.expe.dates.forEach(value => {
+      const date = new Date();
+      date.setTime(value);
+      itemDates.push(date);
+    });
+
     this.modalService
-      .open(new ModalExperiment(this.expe.title, this.expe, this.expe.dates, ModalSize.Normal))
+      .open(new ModalExperiment(this.expe.title, this.expe, itemDates, ModalSize.Normal))
       .onApprove(() => {console.log('Approved'); })
       .onDeny(() => { console.log('Cancelled');  });
   }
@@ -62,13 +69,8 @@ export class ExperimentCardComponent implements OnInit {
   editExperiment() {
     this.modalService
       .open(new ModalExperimentEdit(this.expe.title , this.expe, ModalSize.Normal))
-      .onApprove(() => {this.actualizarExperimento(); })
       .onDeny(() => { console.log('Cancelled'); });
 
-  }
-
-  actualizarExperimento() {
-    console.log('Actualizado en contrucción');
   }
 
 }

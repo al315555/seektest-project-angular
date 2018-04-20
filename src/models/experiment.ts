@@ -1,4 +1,5 @@
 import {UserProfile} from './user-profile';
+import {Inscription} from './inscription';
 
 export class Experiment {
   placeLatLon: {lat: number, lon: number};
@@ -13,4 +14,5 @@ export class Experiment {
   userProfile: UserProfile;
   dates: number[];
   key: string;
+  inscriptions: Inscription[];
 }

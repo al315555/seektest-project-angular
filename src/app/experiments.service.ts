@@ -19,6 +19,7 @@ import 'rxjs/add/operator/catch';
 import { switchMap } from 'rxjs/operators';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import {Experiment} from '../models/experiment';
+import {Inscription} from '../models/inscription';
 
 @Injectable()
 export class ExperimentsService {
@@ -43,10 +44,10 @@ export class ExperimentsService {
     }
   }
 
-  getMyExperiments(){
-    let user = localStorage.getItem('uid_usuario');
+  getMyExperiments() {
+    const user = localStorage.getItem('uid_usuario');
     console.log(user);
-    if(user != null){
+    if (user != null) {
       return this.db.list('experiments/', ref => ref.orderByChild('uidPublisher').equalTo(user));
     }
     return null;
@@ -56,5 +57,28 @@ export class ExperimentsService {
     this.db.list('experiments/' + expKey).remove();
   }
 
+  addInscriptionToExperiment(newInscription: Inscription, experiment: Experiment) {
+    const itemArray = new Array();
+    if (experiment.inscriptions) {
+      experiment.inscriptions.forEach(value => {
+        itemArray.push(value);
+      });
+    }
+    itemArray.push(newInscription);
+    experiment.inscriptions = itemArray;
+    firebase.database().ref('experiments/' + experiment.key)
+      .set({
+        datePublished: experiment.datePublished,
+        dates: experiment.dates,
+        description: experiment.description,
+        duration: experiment.duration,
+        numberParticipants: experiment.numberParticipants,
+        place: experiment.place,
+        placeLatLon: experiment.placeLatLon,
+        title: experiment.title,
+        uidPublisher: experiment.uidPublisher,
+        inscriptions: experiment.inscriptions
+      }).then(value => { console.log('Anyadida inscription'); });
+  }
 }
 

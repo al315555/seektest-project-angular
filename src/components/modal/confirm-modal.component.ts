@@ -17,7 +17,8 @@ interface IConfirmModalContext {
           <button class="ui red button" (click)="modal.deny(undefined)">Cancelar</button>
           <button class="ui green button" (click)="modal.approve(undefined)" autofocus>Lo entiendo, acepto</button>
       </div>
-`
+`,
+  styleUrls: ['./modal.component.css']
 })
 export class ConfirmModalComponent {
   constructor(public modal: SuiModal<IConfirmModalContext, void, void>) {}

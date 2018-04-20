@@ -20,7 +20,8 @@ interface IExperimentModalContext {
     <div class="actions">
       <button class="ui red button" (click)="modal.deny(undefined)">Cerrar</button>
     </div>
-    `
+    `,
+  styleUrls: ['./modal.component.css']
 })
 export class ExperimentModalComponent {
   constructor(public modal: SuiModal<IExperimentModalContext, void, void>) {}
