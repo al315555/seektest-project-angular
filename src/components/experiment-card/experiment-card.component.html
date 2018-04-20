@@ -27,28 +27,9 @@
     </div>
   </div>
   <div class="extra content">
-    <div id="info_{{expe.key}}" (click)="openModal()" onclick="$('.ui.modal').modal('show');" class="ui fluid inverted blue button">
+    <div id="info_{{expe.key}}" (click)="openModal()" class="ui fluid inverted blue button">
       <i class="info icon"></i>
       <!-- Ver detalles... -->
     </div>
   </div>
 </div>
-<ng-template let-context let-modal="modal" #modalTemplate>
-  <div class="header">Borrar experimento</div>
-  <div class="content">
-    <h2>{{ context.data }}</h2>
-  </div>
-  <div class="actions">
-    <button class="ui red button" (click)="modal.deny('denied')">Cancel</button>
-    <button class="ui green button" (click)="modal.approve('approved')" autofocus>OK</button>
-  </div>
-</ng-template>
-<ng-template let-context let-modal="modal" #modalTemplateEdit>
-  <div class="header">Editar experimento</div>
-  <div class="content">
-    <app-edit-experiment [experiment]="expe"></app-edit-experiment>
-  </div>
-  <div class="actions">
-    <button class="ui red button" (click)="modal.deny('denied')">Cerrar</button>
-  </div>
-</ng-template>

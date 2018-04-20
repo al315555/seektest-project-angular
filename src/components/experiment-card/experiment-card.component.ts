@@ -2,6 +2,9 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angu
 import { Experiment } from '../../models/experiment';
 import { ExperimentsService } from '../../app/experiments.service';
 import { SuiModalService, TemplateModalConfig, ModalTemplate, ModalConfig, ModalSize } from 'ng2-semantic-ui';
+import {ModalExperiment} from '../modal/experiment-modal.component';
+import {ModalConfirm} from '../modal/confirm-modal.component';
+import {ModalExperimentEdit} from '../modal/experiment-edit-modal.component';
 
 export interface IContext {
   data: string;
@@ -15,13 +18,7 @@ export interface IContext {
 })
 export class ExperimentCardComponent implements OnInit {
 
-  @Output() clickEvEm = new EventEmitter<any>();
   @Input() expe: any;
-  @ViewChild('modalTemplate')
-  public modalTemplate: ModalTemplate<IContext, string, string>
-
-  @ViewChild('modalTemplateEdit')
-  public modalTemplateEdit: ModalTemplate<IContext, string, string>
 
   isOwn: boolean;
 
@@ -48,31 +45,30 @@ export class ExperimentCardComponent implements OnInit {
   }
 
   openModal() {
-    this.clickEvEm.emit(this.expe);
+    this.modalService
+      .open(new ModalExperiment(this.expe.title, this.expe, this.expe.dates, ModalSize.Normal))
+      .onApprove(() => {console.log('Approved'); })
+      .onDeny(() => { console.log('Cancelled');  });
   }
 
-  deleteExperiment(dynamicContent: string = 'Desea eliminar el experimento ' + this.expe.title + '?') {
-    const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplate);
-    config.closeResult = 'Eliminado!';
-    config.context = { data: dynamicContent };
-    config.mustScroll = true;
-    config.size = ModalSize.Tiny;
+  deleteExperiment() {
     this.modalService
-      .open(config)
-      .onApprove(result => { this.deleteExperDb(); })
-      .onDeny(result => { });
+      .open(new ModalConfirm('Eliminar experimento',
+        '¿Está seguro de que desea eliminar el experimento? La acción no se puede deshacer.', ModalSize.Tiny))
+      .onApprove(() => {this.deleteExperDb(); })
+      .onDeny(() => { console.log('Cancelled'); });
   }
 
   editExperiment() {
-    const config = new TemplateModalConfig<IContext, string, string>(this.modalTemplateEdit);
-    config.isFullScreen = false;
-    config.closeResult = 'Editado!';
-    config.mustScroll = true;
-    config.size = ModalSize.Tiny;
     this.modalService
-      .open(config)
-      .onApprove(result => { })
-      .onDeny(result => { });
+      .open(new ModalExperimentEdit(this.expe.title , this.expe, ModalSize.Normal))
+      .onApprove(() => {this.actualizarExperimento(); })
+      .onDeny(() => { console.log('Cancelled'); });
+
+  }
+
+  actualizarExperimento() {
+    console.log('Actualizado en contrucción');
   }
 
 }
