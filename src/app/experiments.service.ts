@@ -80,5 +80,21 @@ export class ExperimentsService {
         inscriptions: experiment.inscriptions
       }).then(value => { console.log('Anyadida inscription'); });
   }
+
+  updateInscriptionsOfExperiment(experiment: Experiment) {
+    firebase.database().ref('experiments/' + experiment.key)
+      .set({
+        datePublished: experiment.datePublished,
+        dates: experiment.dates,
+        description: experiment.description,
+        duration: experiment.duration,
+        numberParticipants: experiment.numberParticipants,
+        place: experiment.place,
+        placeLatLon: experiment.placeLatLon,
+        title: experiment.title,
+        uidPublisher: experiment.uidPublisher,
+        inscriptions: experiment.inscriptions
+      }).then(value => { console.log('Anyadida inscription'); });
+  }
 }
 

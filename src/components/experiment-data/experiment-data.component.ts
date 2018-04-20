@@ -87,4 +87,19 @@ export class ExperimentDataComponent implements OnInit {
     });
   }
 
+  cancelarInscripcion(index: number) {
+    this.modalService
+      .open(new ModalConfirm('Cancelar asistencia a la sesión',
+        '¿Está seguro de que desea cancelar la inscripción?' +
+        'La acción se no puede deshacer.', ModalSize.Tiny))
+      .onApprove(() => {this.cancelarIns(index); })
+      .onDeny(() => { console.log('Cancelled'); });
+
+  }
+
+  private cancelarIns(index: number) {
+    this.item.inscriptions[index].state = 3;
+    this.experimentService.updateInscriptionsOfExperiment(this.item);
+  }
+
 }

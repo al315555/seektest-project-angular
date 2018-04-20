@@ -82,10 +82,15 @@
               </button>
               <p class="ui text bold" *ngIf="sesionesInscrito[i]" style="font-weight: bold;">
                 ¡Ya está inscrito en esta sesión! Estado actual:
-                  <a *ngIf="item.inscriptions[i].state === 0"> Sin respuesta </a>
-                  <a *ngIf="item.inscriptions[i].state === 1" style="color: green;"> Aceptado </a>
-                  <a *ngIf="item.inscriptions[i].state === 2" style="color: red;"> Denegado </a>
-                  <a *ngIf="item.inscriptions[i].state === 3" style="color: grey;"> Cancelado </a>
+                  <a *ngIf="item.inscriptions[i].state === 0">&nbsp;Sin respuesta&nbsp;&nbsp;</a>
+                  <a *ngIf="item.inscriptions[i].state === 1" style="color: green;">&nbsp;Aceptado&nbsp;</a>
+                  <a *ngIf="item.inscriptions[i].state === 2" style="color: red;">&nbsp;Denegado&nbsp;</a>
+                  <a *ngIf="item.inscriptions[i].state === 3" style="color: grey;">&nbsp;Cancelado&nbsp;</a>
+
+                  <button *ngIf="sesionesInscrito[i] && item.inscriptions[i].state === 0" class="ui button grey"
+                          (click)="cancelarInscripcion(i);">
+                    Cancelar inscripción
+                  </button>
               </p>
             </i>
           </div>
