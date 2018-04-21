@@ -73,7 +73,7 @@ export class ExperimentDataComponent implements OnInit {
     this.modalService
       .open(new ModalConfirm('Enviar petición de inscripción',
         '¿Está seguro de que desea inscribirse a esta sesión?' +
-        'Tendrá que esperar a ser aceptado por los investigadores. Una vez enviada la petición no se puede cancelar.', ModalSize.Tiny))
+        'Tendrá que esperar a ser aceptado por los investigadores.', ModalSize.Tiny))
       .onApprove(() => {this.inscribirse(inscription); })
       .onDeny(() => { console.log('Cancelled'); });
   }

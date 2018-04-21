@@ -121,6 +121,7 @@ export class AuthService {
       .signOut();
     localStorage.removeItem('usuario');
     localStorage.removeItem('uid_usuario');
+    localStorage.clear();
     this.functions.changeShowMainPageToTrue();
     this.functions.changeToNotLogged();
   }

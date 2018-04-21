@@ -16,7 +16,7 @@ interface IExperimentModalContext {
       <app-edit-experiment [experiment]="modal.context.item"></app-edit-experiment>
     </div>
     <div class="actions">
-      <button class="ui red button" (click)="modal.deny('denied')">Cerrar</button>
+      <button class="ui red button" (click)="modal.deny(undefined)">Cerrar</button>
     </div>
     `,
   styleUrls: ['./modal.component.css']
