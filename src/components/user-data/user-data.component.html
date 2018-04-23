@@ -25,19 +25,19 @@
             </div>
           </label>
         </div>
-        <div class="field">
+        <div class="required field">
           <label>Nombre</label>
           <input type="text" [(ngModel)]="user._name">
         </div>
-        <div class="field">
-          <label>Apellido</label>
+        <div class="required field">
+          <label>Apellidos</label>
           <input type="text" [(ngModel)]="user._surname">
         </div>
         <div *ngIf="!user._researcher">
-          <div class="field">
+          <div class="required field">
             <label>Fecha de nacimiento</label>
             <input suiDatepicker [(ngModel)]="fechaNacimiento"
-                   required autocomplete="off" [pickerMode]="mode"
+                   autocomplete="off" [pickerMode]="mode"
                    [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
           </div>
           <div class="field">
@@ -54,13 +54,14 @@
           </div>
         </div>
         <div style="margin-left: 20%; margin-right: 20%">
-          <br />
-          <button class="ui blue fluid button" (click)="guardarDatos()">
+          <br/>
+          <button class="ui blue fluid button" type="submit" (click)="guardarDatos()">
             <span class="ui text">Guardar</span>
           </button>
           <br/><br/>
 
-          <p class="ui text"><a (click)="openModalDeleteUser()" style="cursor: pointer; color: red">Borrar cuenta</a></p>
+          <p class="ui text"><a (click)="openModalDeleteUser()" style="cursor: pointer; color: red">Borrar cuenta</a>
+          </p>
 
         </div>
 

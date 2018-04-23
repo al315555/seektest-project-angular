@@ -97,10 +97,10 @@
               <div class="field">
                 <label>Sexo*</label>
                 <div class="ui radio">
-                  <input ng-model="sexo" type="radio" name="sexo" value="hombre" ng-value="hombre"
+                  <input ng-model="sexo" type="radio" name="sexo" required value="hombre" ng-value="hombre"
                          formControlName="sexo">
                   Hombre
-                  <input ng-model="sexo" type="radio" name="sexo" value="mujer" ng-value="mujer" formControlName="sexo">
+                  <input ng-model="sexo" type="radio" name="sexo" required value="mujer" ng-value="mujer" formControlName="sexo">
                   Mujer
                 </div>
               </div>
@@ -121,6 +121,7 @@
           <br/>
           <button type="submit" class="ui fluid inverted blue submit button" [disabled]="!detailForm.valid">Enviar
           </button>
+          <h5 *ngIf="!detailForm.valid" style="color: red">Los campos con * son obligatorios</h5>
         </div>
       </div>
     </div>
