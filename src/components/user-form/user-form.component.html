@@ -121,6 +121,7 @@
           <br/>
           <button type="submit" class="ui fluid inverted blue submit button" [disabled]="!detailForm.valid">Enviar
           </button>
+          <h5 *ngIf="!detailForm.valid" style="color: red">Los campos con * son obligatorios</h5>
         </div>
       </div>
     </div>
