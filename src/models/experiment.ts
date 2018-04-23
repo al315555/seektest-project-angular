@@ -5,9 +5,9 @@ export class Experiment {
   placeLatLon: {lat: number, lon: number};
   uidPublisher: string;
   datePublished: number;
-  title: String;
-  numberParticipants: String;
-  place: String;
+  title: string;
+  numberParticipants: string;
+  place: string;
   description: string;
   duration: number;
   gift: string;

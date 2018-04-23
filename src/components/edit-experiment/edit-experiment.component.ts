@@ -3,12 +3,15 @@ import { Experiment } from '../../models/experiment';
 import { MessageToastComponent } from '../message-toast/message-toast.component';
 import { MessageToast } from '../../models/message-toast';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { AngularFireDatabase, AngularFireObject, AngularFireList, snapshotChanges } from 'angularfire2/database';
+import { AngularFireObject, AngularFireList, snapshotChanges } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { FunctionsService } from '../../app/functions.service';
 import { ThrowStmt } from '@angular/compiler';
+import { UserProfile } from '../../models/user-profile';
+import { RangoEdad } from '../../models/rango-edad';
+import { ExperimentsService } from '../../app/experiments.service';
 
 
 @Component({
@@ -64,7 +67,7 @@ export class EditExperimentComponent implements OnInit {
 
   textoDesplegable: String;
 
-  constructor(private afAuth: AngularFireAuth, private afs: AngularFireDatabase, public functions: FunctionsService) {
+  constructor(private afAuth: AngularFireAuth, private experimentService: ExperimentsService, public functions: FunctionsService) {
     this.changingValueProgres = 100;
     this.collapse = true;
     this.messages = [];
@@ -99,17 +102,23 @@ export class EditExperimentComponent implements OnInit {
     });
     this.title = this.experiment.title;
     this.place = this.experiment.place;
-    // this.lat = this.experiment.placeLatLon.lat;
-    // this.lon = this.experiment.placeLatLon.lon;
+    if (this.isNotNull(this.experiment.placeLatLon)) {
+      this.lat = this.isNotNull(this.experiment.placeLatLon.lat) ? this.experiment.placeLatLon.lat : null;
+      this.lon = this.isNotNull(this.experiment.placeLatLon.lon) ? this.experiment.placeLatLon.lon : null;
+    }
     this.duration = this.experiment.duration;
-    // this.numberParticipants = parseInt(this.experiment.numberParticipants);
+    this.numberParticipants = parseInt(this.experiment.numberParticipants.toString(), 0);
     this.description = this.experiment.description;
     this.gift = this.experiment.gift;
-    this.perfilSexo = this.experiment.userProfile.sexo;
-    this.edadInicio = this.experiment.userProfile.rangoEdad.inicio;
-    this.edadFinal = this.experiment.userProfile.rangoEdad.final;
-    this.alergias = this.experiment.userProfile.alergias;
-    this.medicalObs = this.experiment.userProfile.medicalObs;
+
+    if (this.isNotNull(this.experiment.userProfile)) {
+      this.perfilSexo = this.experiment.userProfile.sexo;
+      this.edadInicio = this.experiment.userProfile.rangoEdad.inicio;
+      this.edadFinal = this.experiment.userProfile.rangoEdad.final;
+      this.alergias = this.experiment.userProfile.alergias;
+      this.medicalObs = this.experiment.userProfile.medicalObs;
+    }
+
   }
 
   cambiaMensaje() {
@@ -144,7 +153,7 @@ export class EditExperimentComponent implements OnInit {
     } else {
       // Alerta introducir hora
     }
-
+    this.buttonEnable();
   }
 
   deleteDate(i) {
@@ -153,6 +162,7 @@ export class EditExperimentComponent implements OnInit {
       this.dateHourEntered = false;
       this.changingValueProgres -= this.progresIncrement;
     }
+    this.buttonEnable();
   }
 
   changeTitle() {
@@ -220,14 +230,37 @@ export class EditExperimentComponent implements OnInit {
     this.buttonEnable();
   }
 
-  addExperiment() {
+  private isNotNull(item: any): boolean {
+    return item != null && item !== undefined;
+  }
+
+  editExperiment() {
     if (this.edadInicio != null && this.edadFinal != null && this.edadInicio > this.edadFinal) {
       this.messageToast.pushMessage({ title: 'Error!', description: 'La edad de inicio no puede ser mayor que la de fin.', type: 'error' });
     } else {
-      const userProfile = {
-        sexo: this.perfilSexo, rangoEdad: { inicio: this.edadInicio, final: this.edadFinal },
-        alergias: this.alergias, medicalObs: this.medicalObs
-      };
+
+      const userProfile: UserProfile = new UserProfile();
+      const rangoEdad: RangoEdad = new RangoEdad();
+
+      if (this.isNotNull(this.edadInicio)) {
+        rangoEdad.inicio = this.edadInicio.valueOf();
+      }
+
+      if (this.isNotNull(this.edadFinal)) {
+        rangoEdad.final = this.edadFinal.valueOf();
+      }
+
+      if (this.isNotNull(this.perfilSexo)) {
+        userProfile.sexo = this.perfilSexo.toString();
+      }
+
+      if (this.isNotNull(this.alergias)) {
+        userProfile.alergias = this.alergias.toString();
+      }
+
+      if (this.isNotNull(this.medicalObs)) {
+        userProfile.medicalObs = this.medicalObs.toString();
+      }
 
       this.spinnerLoading = true;
       // guardamos las fechas como numero time para poder formatearlo al recibirlo
@@ -239,30 +272,42 @@ export class EditExperimentComponent implements OnInit {
       if (this.experiment.inscriptions == null) {
         this.experiment.inscriptions = new Array();
       }
-        this.afs.list('experiments/').update(this.experiment.key,
-          {
-            uidPublisher: localStorage.getItem('uid_usuario'), datePublished: this.experiment.datePublished,
-            title: this.title, place: this.place, placeLatLon: {lat: this.lat, lon: this.lon},
-            numberParticipants: this.numberParticipants, inscriptions: this.experiment.inscriptions,
-            description: this.description, dates: dateNumberArray, gift: this.gift, duration: this.duration,
-            userProfile: userProfile
-          }
-        ).then((value) => {
-            this.messageToast.pushMessage({
-              title: 'Experimento modificado!', description: 'El experimento ha sido modificado correctamente',
-              type: 'success'
-            });
-            this.spinnerLoading = false;
-            window.scrollTo(0, 0);
-          }
-        ).catch((value) => {
-          this.messages.push({
-            title: 'Ha habido un error!',
-            description: 'No se ha podido modificar el experimento, intentelo mas tarde.', type: 'error'
-          });
-          this.spinnerLoading = false;
-          window.scrollTo(0, 0);
+
+      const exp: Experiment = new Experiment();
+
+      exp.uidPublisher = localStorage.getItem('uid_usuario');
+      exp.datePublished = this.experiment.datePublished;
+      exp.title = this.title.toString();
+      exp.place = this.place.toString();
+      if (this.isNotNull(this.lat)) {
+        exp.placeLatLon = { lat: this.lat, lon: this.lon };
+      }
+      exp.numberParticipants = this.numberParticipants.toString();
+      exp.inscriptions = this.experiment.inscriptions;
+      exp.description = this.description.toString();
+      exp.dates = dateNumberArray;
+      if (this.isNotNull(this.gift)) {
+        exp.gift = this.gift.toString();
+      }
+      exp.duration = this.duration;
+      exp.userProfile = userProfile;
+
+      this.experimentService.updateExeriment(this.experiment.key, exp).then((value) => {
+        this.messageToast.pushMessage({
+          title: 'Experimento modificado!', description: 'El experimento ha sido modificado correctamente',
+          type: 'success'
         });
+        this.spinnerLoading = false;
+        window.scrollTo(0, 0);
+      }
+      ).catch((value) => {
+        this.messages.push({
+          title: 'Ha habido un error!',
+          description: 'No se ha podido modificar el experimento, intentelo mas tarde.', type: 'error'
+        });
+        this.spinnerLoading = false;
+        window.scrollTo(0, 0);
+      });
     }
   }
 

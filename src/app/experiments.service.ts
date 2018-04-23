@@ -4,10 +4,10 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 
 import { Observable } from 'rxjs/Observable';
-import {FunctionsService} from './functions.service';
-import {User} from './core/User';
-import { AngularFirestore, AngularFirestoreDocument,  } from 'angularfire2/firestore';
-import {AngularFireDatabase, AngularFireObject, AngularFireList, snapshotChanges} from 'angularfire2/database';
+import { FunctionsService } from './functions.service';
+import { User } from './core/User';
+import { AngularFirestore, AngularFirestoreDocument, } from 'angularfire2/firestore';
+import { AngularFireDatabase, AngularFireObject, AngularFireList, snapshotChanges } from 'angularfire2/database';
 
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -18,15 +18,15 @@ import 'rxjs/add/operator/catch';
 
 import { switchMap } from 'rxjs/operators';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
-import {Experiment} from '../models/experiment';
-import {Inscription} from '../models/inscription';
+import { Experiment } from '../models/experiment';
+import { Inscription } from '../models/inscription';
 
 @Injectable()
 export class ExperimentsService {
   error: boolean;
   errorMessage: string;
 
-  constructor(public db: AngularFireDatabase) {}
+  constructor(public db: AngularFireDatabase) { }
 
   getAllExperimentsOrderedByTitle() {
     return this.db.list('experiments/', ref => ref.orderByChild('title'));
@@ -55,6 +55,18 @@ export class ExperimentsService {
 
   deleteExperiment(expKey: string) {
     this.db.list('experiments/' + expKey).remove();
+  }
+
+  addExperiment(experiment: Experiment) {
+    return this.db.list('experiments/').push(
+      experiment
+    );
+  }
+
+  updateExeriment(key: string, experiment: Experiment) {
+    return this.db.list('experiments/').update(key,
+      experiment
+    );
   }
 
   addInscriptionToExperiment(newInscription: Inscription, experiment: Experiment) {
