@@ -2,6 +2,23 @@
 <html lang="en">
 <head>
   <style>
+    /*
+    Otro metodo para centrar el modal
+    div.ui.modal {
+      position: absolute;
+      margin: auto;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+    */
+    div.ui.modal {
+      position: absolute;
+      left: 50%;
+      -webkit-transform: translateX(-50%);
+      transform: translateX(-50%);
+    }
   </style>
   <meta charset="utf-8">
   <title>SeekTest Project</title>
