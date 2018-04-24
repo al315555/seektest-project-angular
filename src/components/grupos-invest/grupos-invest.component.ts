@@ -17,7 +17,7 @@ export class GruposInvestComponent implements OnInit {
   ngOnInit() {
   }
 
-  goToNewGroup(){
+  goToNewGroup() {
     this.functionsService.SelectNewGroup();
   }
 }

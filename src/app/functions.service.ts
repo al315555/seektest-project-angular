@@ -90,7 +90,7 @@ export class FunctionsService {
     this.newGroupSelected = false;
   }
 
-  SelectNewGroup(){
+  SelectNewGroup() {
     this.perfilSelected = false;
     this.gruposSelected = false;
     this.myexperimentsSelected = false;
