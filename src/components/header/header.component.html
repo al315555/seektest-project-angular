@@ -28,6 +28,10 @@
        data-position="bottom center">
       <i class="user icon"></i>{{ authService.userDataJson._name }}&nbsp;{{ authService.userDataJson._surname }}
     </a>
+    <a class="{{gruposItem}}" (click)="selectGrupos()" data-tooltip="Mostrar grupos de investigación"
+       data-position="bottom center">
+      <i class="users icon"></i> Grupos de investigación
+    </a>
     <a *ngIf="authService.userDataJson._researcher" class="{{misExperimentosItem}}" (click)="goToMyExperiments()"
        data-tooltip="Mostrar mis experimentos"
        data-position="bottom center">
@@ -37,7 +41,7 @@
        data-position="bottom center">
       <i class="columns icon"></i> Buscar
     </a>
-    <a *ngIf="authService.userDataJson._researcher" class="{{nuevoExperimentoItem}}" (click)="goToNewExperiment()"
+    <a class="{{nuevoExperimentoItem}}" (click)="goToNewExperiment()"
        data-tooltip="Nuevo experimento"
        data-position="bottom center">
       <i class="left plus icon"></i> Nuevo

@@ -14,6 +14,7 @@ export class HeaderComponent {
   titleHeader = 'SeekTest';
 
   miPerfilItem = this.itemString;
+  gruposItem = this.itemString;
   misExperimentosItem = this.itemString;
   experimentosItem = this.itemActiveString;
   nuevoExperimentoItem = this.itemString;
@@ -28,14 +29,25 @@ export class HeaderComponent {
   selectPerfil() {
     this.functionsService.selectPerfil();
     this.miPerfilItem = this.itemActiveString;
+    this.gruposItem = this.itemString;
     this.misExperimentosItem = this.itemString;
     this.experimentosItem = this.itemString;
+    this.nuevoExperimentoItem = this.itemString;
+  }
+
+  selectGrupos(){
+    this.functionsService.selectGrupos();
+    this.gruposItem = this.itemActiveString;
+    this.misExperimentosItem = this.itemString;
+    this.experimentosItem = this.itemString;
+    this.miPerfilItem = this.itemString;
     this.nuevoExperimentoItem = this.itemString;
   }
 
   goToMyExperiments() {
     this.functionsService.selectMyExperiments();
     this.misExperimentosItem = this.itemActiveString;
+    this.gruposItem = this.itemString;
     this.experimentosItem = this.itemString;
     this.miPerfilItem = this.itemString;
     this.nuevoExperimentoItem = this.itemString;
@@ -44,6 +56,7 @@ export class HeaderComponent {
   goBackToExperiments() {
     this.functionsService.selectExperimentos();
     this.experimentosItem = this.itemActiveString;
+    this.gruposItem = this.itemString;
     this.misExperimentosItem = this.itemString;
     this.miPerfilItem = this.itemString;
     this.nuevoExperimentoItem = this.itemString;
@@ -53,6 +66,7 @@ export class HeaderComponent {
     this.functionsService.selectNewExperiment();
     this.experimentosItem = this.itemString;
     this.miPerfilItem = this.itemString;
+    this.gruposItem = this.itemString;
     this.misExperimentosItem = this.itemString;
     this.nuevoExperimentoItem = this.itemActiveString;
   }

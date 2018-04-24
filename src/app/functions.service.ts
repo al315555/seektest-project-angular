@@ -15,9 +15,11 @@ export class FunctionsService {
   showMainPage: boolean;
   isLogged: boolean;
   perfilSelected: boolean;
+  gruposSelected: boolean;
   myexperimentsSelected: boolean;
   experimentsSelected: boolean;
   newExperimentSelected: boolean;
+  newGroupSelected: boolean;
   reset: boolean;
 
   constructor() {
@@ -35,44 +37,74 @@ export class FunctionsService {
     }
 
     this.perfilSelected = false;
+    this.gruposSelected = false;
     this.experimentsSelected = true;
     this.myexperimentsSelected = false;
     this.newExperimentSelected = false;
+    this.newGroupSelected = false;
     this.reset = false;
   }
 
   selectPerfil() {
     this.perfilSelected = true;
+    this.gruposSelected = false;
     this.myexperimentsSelected = false;
     this.newExperimentSelected = false;
     this.experimentsSelected = false;
+    this.newGroupSelected = false;
+  }
+
+  selectGrupos() {
+    this.perfilSelected = false;
+    this.gruposSelected = true;
+    this.myexperimentsSelected = false;
+    this.newExperimentSelected = false;
+    this.experimentsSelected = false;
+    this.newGroupSelected = false;
   }
 
   selectExperimentos() {
     this.perfilSelected = false;
+    this.gruposSelected = false;
     this.myexperimentsSelected = false;
     this.newExperimentSelected = false;
     this.experimentsSelected = true;
+    this.newGroupSelected = false;
   }
 
   selectMyExperiments(){
     this.perfilSelected = false;
+    this.gruposSelected = false;
     this.myexperimentsSelected = true;
     this.newExperimentSelected = false;
     this.experimentsSelected = false;
+    this.newGroupSelected = false;
   }
 
   selectNewExperiment() {
     this.perfilSelected = false;
+    this.gruposSelected = false;
     this.myexperimentsSelected = false;
     this.newExperimentSelected = true;
     this.experimentsSelected = false;
+    this.newGroupSelected = false;
   }
-  changeShowMainPageToTrue() {
+
+  SelectNewGroup(){
     this.perfilSelected = false;
+    this.gruposSelected = false;
     this.myexperimentsSelected = false;
     this.newExperimentSelected = false;
     this.experimentsSelected = false;
+    this.newGroupSelected = true;
+  }
+  changeShowMainPageToTrue() {
+    this.perfilSelected = false;
+    this.gruposSelected = false;
+    this.myexperimentsSelected = false;
+    this.newExperimentSelected = false;
+    this.experimentsSelected = false;
+    this.newGroupSelected = false;
     this.showMainPage = true;
     this.isLogged = false;
     localStorage.setItem('status_showMainPage', 'true');
@@ -97,9 +129,11 @@ export class FunctionsService {
     console.log('reset true');
     this.reset = true;
     this.perfilSelected = false;
+    this.gruposSelected = false;
     this.myexperimentsSelected = false;
     this.newExperimentSelected = false;
     this.experimentsSelected = false;
+    this.newGroupSelected = false;
     this.showMainPage = false;
     this.isLogged = false;
   }

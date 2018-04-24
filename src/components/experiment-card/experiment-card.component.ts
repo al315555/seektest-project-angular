@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { Experiment } from '../../models/experiment';
-import { ExperimentsService } from '../../app/experiments.service';
-import { SuiModalService, TemplateModalConfig, ModalTemplate, ModalConfig, ModalSize } from 'ng2-semantic-ui';
+import {Component, OnInit, Input, Output, EventEmitter, ViewChild} from '@angular/core';
+import {Experiment} from '../../models/experiment';
+import {ExperimentsService} from '../../app/experiments.service';
+import {SuiModalService, TemplateModalConfig, ModalTemplate, ModalConfig, ModalSize} from 'ng2-semantic-ui';
 import {ModalExperiment} from '../modal/experiment-modal.component';
 import {ModalConfirm} from '../modal/confirm-modal.component';
 import {ModalExperimentEdit} from '../modal/experiment-edit-modal.component';
@@ -54,22 +54,32 @@ export class ExperimentCardComponent implements OnInit {
 
     this.modalService
       .open(new ModalExperiment(this.expe.title, this.expe, itemDates, ModalSize.Normal))
-      .onApprove(() => {console.log('Approved'); })
-      .onDeny(() => { console.log('Cancelled');  });
+      .onApprove(() => {
+        console.log('Approved');
+      })
+      .onDeny(() => {
+        console.log('Cancelled');
+      });
   }
 
   deleteExperiment() {
     this.modalService
       .open(new ModalConfirm('Eliminar experimento',
         '¿Está seguro de que desea eliminar el experimento? La acción no se puede deshacer.', ModalSize.Tiny))
-      .onApprove(() => {this.deleteExperDb(); })
-      .onDeny(() => { console.log('Cancelled'); });
+      .onApprove(() => {
+        this.deleteExperDb();
+      })
+      .onDeny(() => {
+        console.log('Cancelled');
+      });
   }
 
   editExperiment() {
     this.modalService
-      .open(new ModalExperimentEdit(this.expe.title , this.expe, ModalSize.Normal))
-      .onDeny(() => { console.log('Cancelled'); });
+      .open(new ModalExperimentEdit(this.expe.title, this.expe, ModalSize.Normal))
+      .onDeny(() => {
+        console.log('Cancelled');
+      });
 
   }
 

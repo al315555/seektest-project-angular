@@ -2,6 +2,8 @@
 <app-experiments *ngIf="functionsService.experimentsSelected"></app-experiments>
 <app-user-data *ngIf="functionsService.perfilSelected"></app-user-data>
 <div class="ui center aligned grid" style="margin-top: 10px">
-<app-new-experiment *ngIf="functionsService.newExperimentSelected"></app-new-experiment>
-<app-my-experiments *ngIf="functionsService.myexperimentsSelected"></app-my-experiments>
+  <app-new-experiment *ngIf="functionsService.newExperimentSelected"></app-new-experiment>
+  <app-my-experiments *ngIf="functionsService.myexperimentsSelected"></app-my-experiments>
+  <app-grupos-invest *ngIf="functionsService.gruposSelected"></app-grupos-invest>
+  <app-new-group *ngIf="functionsService.newGroupSelected"></app-new-group>
 </div>
