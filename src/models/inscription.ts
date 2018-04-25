@@ -3,6 +3,7 @@ export class Inscription {
   static ACEPTADO = 1;
   static DENEGADO = 2;
   static CANCELADO = 3;
+  key: string;
   uid: string;
   session: number;
   state: number;

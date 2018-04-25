@@ -17,7 +17,8 @@ export class NewGroupComponent {
   name: String;
   buttonEnabled: boolean;
 
-  constructor(private afAuth: AngularFireAuth) { //private groupsService: GroupsService  - añadir en constructor cuando funcione
+  constructor(private afAuth: AngularFireAuth, private groupsService: GroupsService) {
+    // private groupsService: GroupsService  - añadir en constructor cuando funcione
     this.buttonEnabled = false;
     this.messages = [];
   }

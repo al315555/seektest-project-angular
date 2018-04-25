@@ -21,6 +21,7 @@ export class FunctionsService {
   newExperimentSelected: boolean;
   newGroupSelected: boolean;
   reset: boolean;
+  myexperimentsInscriptionsSelected: boolean;
 
   constructor() {
     this.error = false;
@@ -43,9 +44,11 @@ export class FunctionsService {
     this.newExperimentSelected = false;
     this.newGroupSelected = false;
     this.reset = false;
+    this.myexperimentsInscriptionsSelected = false;
   }
 
   selectPerfil() {
+    this.myexperimentsInscriptionsSelected = false;
     this.perfilSelected = true;
     this.gruposSelected = false;
     this.myexperimentsSelected = false;
@@ -55,6 +58,7 @@ export class FunctionsService {
   }
 
   selectGrupos() {
+    this.myexperimentsInscriptionsSelected = false;
     this.perfilSelected = false;
     this.gruposSelected = true;
     this.myexperimentsSelected = false;
@@ -64,6 +68,7 @@ export class FunctionsService {
   }
 
   selectExperimentos() {
+    this.myexperimentsInscriptionsSelected = false;
     this.perfilSelected = false;
     this.gruposSelected = false;
     this.myexperimentsSelected = false;
@@ -72,13 +77,24 @@ export class FunctionsService {
     this.newGroupSelected = false;
   }
 
-  selectMyExperiments(){
+  selectMyExperiments() {
     this.perfilSelected = false;
     this.gruposSelected = false;
     this.myexperimentsSelected = true;
     this.newExperimentSelected = false;
     this.experimentsSelected = false;
     this.newGroupSelected = false;
+    this.myexperimentsInscriptionsSelected = false;
+  }
+
+  selectMyExperimentsInscriptions() {
+    this.perfilSelected = false;
+    this.gruposSelected = false;
+    this.myexperimentsSelected = false;
+    this.newExperimentSelected = false;
+    this.experimentsSelected = false;
+    this.newGroupSelected = false;
+    this.myexperimentsInscriptionsSelected = true;
   }
 
   selectNewExperiment() {
@@ -88,9 +104,11 @@ export class FunctionsService {
     this.newExperimentSelected = true;
     this.experimentsSelected = false;
     this.newGroupSelected = false;
+    this.myexperimentsInscriptionsSelected = false;
   }
 
   SelectNewGroup() {
+    this.myexperimentsInscriptionsSelected = false;
     this.perfilSelected = false;
     this.gruposSelected = false;
     this.myexperimentsSelected = false;
@@ -99,6 +117,7 @@ export class FunctionsService {
     this.newGroupSelected = true;
   }
   changeShowMainPageToTrue() {
+    this.myexperimentsInscriptionsSelected = false;
     this.perfilSelected = false;
     this.gruposSelected = false;
     this.myexperimentsSelected = false;
@@ -128,6 +147,7 @@ export class FunctionsService {
   changeToResetPassword() {
     console.log('reset true');
     this.reset = true;
+    this.myexperimentsInscriptionsSelected = false;
     this.perfilSelected = false;
     this.gruposSelected = false;
     this.myexperimentsSelected = false;

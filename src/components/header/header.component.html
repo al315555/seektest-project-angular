@@ -37,6 +37,11 @@
        data-position="bottom center">
       <i class="thumbtack icon"></i> Publicados
     </a>
+    <a *ngIf="!authService.userDataJson._researcher" class="{{misExperimentosInscritosItem}}" (click)="goToMyExperimentsInscriptions()"
+       data-tooltip="Mostrar los experimentos donde tengo inscripción"
+       data-position="bottom center">
+      <i class="tasks icon"></i> Inscritos
+    </a>
     <a class="{{experimentosItem}}" (click)="goBackToExperiments()" data-tooltip="Mostrar experimentos"
        data-position="bottom center">
       <i class="columns icon"></i> Buscar
