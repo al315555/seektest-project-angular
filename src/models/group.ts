@@ -1,3 +1,3 @@
 export class Group {
-  name: string;
+  nombre: string;
 }

@@ -47,6 +47,7 @@ import {ExperimentEditModalComponent} from '../components/modal/experiment-edit-
 import { GruposInvestComponent } from '../components/grupos-invest/grupos-invest.component';
 import { NewGroupComponent } from '../components/new-group/new-group.component';
 import {MyExperimentsInscriptionsComponent} from '../components/my-experiments-inscriptions/my-experiments-inscriptions.component';
+import { GroupCardComponent } from '../components/group-card/group-card.component';
 
 // import { AngularFirestoreModule } from 'angularfire2/firestore';
 
@@ -74,7 +75,9 @@ import {MyExperimentsInscriptionsComponent} from '../components/my-experiments-i
     ExperimentEditModalComponent,
     GruposInvestComponent,
     NewGroupComponent,
-    MyExperimentsInscriptionsComponent
+    MyExperimentsInscriptionsComponent,
+    NewGroupComponent,
+    GroupCardComponent
   ],
   entryComponents: [ConfirmModalComponent, ExperimentModalComponent, ExperimentEditModalComponent],
   imports: [
