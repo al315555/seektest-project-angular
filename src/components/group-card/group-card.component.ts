@@ -16,12 +16,24 @@ export class GroupCardComponent implements OnInit {
   @Input() grupo: any;
 
   isOwn: boolean;
-
+  messageBody:string;
+  messageHeader: string;
   private clicked: boolean;
 
-  constructor(public experimentService: ExperimentsService) { }
+  constructor(public experimentService: ExperimentsService, public modalService: SuiModalService) { 
+    
+  }
 
   ngOnInit() {
   }
 
+  seleccionarGrupo(){
+    console.log("Grupo seleccionado: ", this.grupo.nombre);
+    this.messageBody = '¿Estás seguro de que quieres añadirte al grupo?';
+    this.modalService
+      .open(new ModalConfirm(this.grupo.nombre, this.messageBody, ModalSize.Normal))
+      .onApprove(() => { //poner aquí la orden de envio
+         console.log('User has accepted.'); })
+      .onDeny(() => {console.log('User said close.'); });
+  }
 }

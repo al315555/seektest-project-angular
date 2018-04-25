@@ -7,13 +7,15 @@
     <i class="search icon"></i>
   </div>
   <div class="ui list">
-    <div class="column" *ngFor="let grupo of items" >
+    <div *ngFor="let grupo of items" >
       <app-group-card [grupo]="grupo"></app-group-card>
     </div>
-    <div class="column" *ngIf="(items == null) || (items.length <= 0)">
+    <div  *ngIf="(items == null) || (items.length <= 0)">
       <p class="text">No&nbsp;hay&nbsp;registros.</p>
     </div>
   </div>
+
+
   <div class="ui form">
     <div class="required field">
       <label>Nombre del grupo</label>
