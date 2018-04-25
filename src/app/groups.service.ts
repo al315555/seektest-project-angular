@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Group} from '../models/group';
 import {AngularFireDatabase} from 'angularfire2/database';
 
-import { AngularFireDatabaseModule } from 'angularfire2/database'
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 
 

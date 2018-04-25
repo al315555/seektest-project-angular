@@ -12,6 +12,9 @@ import { ThrowStmt } from '@angular/compiler';
 import { UserProfile } from '../../models/user-profile';
 import { RangoEdad } from '../../models/rango-edad';
 import { ExperimentsService } from '../../app/experiments.service';
+import {ModalSize, SuiModalService} from 'ng2-semantic-ui';
+import {ModalExperiment} from '../modal/experiment-modal.component';
+import {ModalInscripcionsUsers} from '../modal/inscripcions-users.component';
 
 
 @Component({
@@ -67,7 +70,8 @@ export class EditExperimentComponent implements OnInit {
 
   textoDesplegable: String;
 
-  constructor(private afAuth: AngularFireAuth, private experimentService: ExperimentsService, public functions: FunctionsService) {
+  constructor(private afAuth: AngularFireAuth, private experimentService: ExperimentsService, public functions: FunctionsService,
+              public modalService: SuiModalService) {
     this.changingValueProgres = 100;
     this.collapse = true;
     this.messages = [];
@@ -127,6 +131,18 @@ export class EditExperimentComponent implements OnInit {
     } else {
       this.textoDesplegable = 'Añadir un perfil de sujeto';
     }
+  }
+
+  mostrarUsuariosInscritos() {
+    const listaUsuariosInscritos = new Array();
+    this.modalService
+      .open(new ModalInscripcionsUsers('Lista de usuarios inscritos', listaUsuariosInscritos, [], ModalSize.Normal))
+      .onApprove(() => {
+        console.log('Approved');
+      })
+      .onDeny(() => {
+        console.log('Cancelled');
+      });
   }
 
   buttonEnable() {

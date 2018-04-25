@@ -48,6 +48,7 @@ import { GruposInvestComponent } from '../components/grupos-invest/grupos-invest
 import { NewGroupComponent } from '../components/new-group/new-group.component';
 import {MyExperimentsInscriptionsComponent} from '../components/my-experiments-inscriptions/my-experiments-inscriptions.component';
 import { GroupCardComponent } from '../components/group-card/group-card.component';
+import {InscripcionsUsersModalComponent, ModalInscripcionsUsers} from '../components/modal/inscripcions-users.component';
 
 // import { AngularFirestoreModule } from 'angularfire2/firestore';
 
@@ -77,9 +78,10 @@ import { GroupCardComponent } from '../components/group-card/group-card.componen
     NewGroupComponent,
     MyExperimentsInscriptionsComponent,
     NewGroupComponent,
-    GroupCardComponent
+    GroupCardComponent,
+    InscripcionsUsersModalComponent
   ],
-  entryComponents: [ConfirmModalComponent, ExperimentModalComponent, ExperimentEditModalComponent],
+  entryComponents: [ConfirmModalComponent, ExperimentModalComponent, ExperimentEditModalComponent, InscripcionsUsersModalComponent],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),

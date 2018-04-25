@@ -6,9 +6,7 @@ import {MessageToastComponent} from '../message-toast/message-toast.component';
 import {MessageToast} from '../../models/message-toast';
 import {AngularFireDatabase} from 'angularfire2/database';
 import { ExperimentsService } from '../../app/experiments.service';
-
-
-
+import {GroupsService} from '../../app/groups.service';
 
 @Component({
   selector: 'app-new-group',

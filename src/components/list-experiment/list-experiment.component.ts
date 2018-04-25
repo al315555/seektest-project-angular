@@ -32,15 +32,15 @@ export class ListExperimentComponent implements OnInit {
   op: number;
 
   constructor(public experimentService: ExperimentsService, public functions: FunctionsService) {
-    this.textoTitulo = ''; 
+    this.textoTitulo = '';
     this.numberLimit = 2;
     this.clicked = false;
-    this.item = new Experiment(); 
+    this.item = new Experiment();
     this.itemDates = new Array();
   }
 
   ngOnInit() {
-    console.log("get experimentos")
+    console.log('get experimentos');
     this.getExperiments();
   }
 
