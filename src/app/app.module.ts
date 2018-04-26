@@ -49,6 +49,7 @@ import { NewGroupComponent } from '../components/new-group/new-group.component';
 import {MyExperimentsInscriptionsComponent} from '../components/my-experiments-inscriptions/my-experiments-inscriptions.component';
 import { GroupCardComponent } from '../components/group-card/group-card.component';
 import {InscripcionsUsersModalComponent, ModalInscripcionsUsers} from '../components/modal/inscripcions-users.component';
+import { ListUsersInscriptionsComponent } from '../components/list-users-inscriptions/list-users-inscriptions.component';
 
 // import { AngularFirestoreModule } from 'angularfire2/firestore';
 
@@ -79,7 +80,8 @@ import {InscripcionsUsersModalComponent, ModalInscripcionsUsers} from '../compon
     MyExperimentsInscriptionsComponent,
     NewGroupComponent,
     GroupCardComponent,
-    InscripcionsUsersModalComponent
+    InscripcionsUsersModalComponent,
+    ListUsersInscriptionsComponent
   ],
   entryComponents: [ConfirmModalComponent, ExperimentModalComponent, ExperimentEditModalComponent, InscripcionsUsersModalComponent],
   imports: [

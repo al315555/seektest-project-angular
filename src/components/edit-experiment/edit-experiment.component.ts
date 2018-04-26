@@ -136,12 +136,15 @@ export class EditExperimentComponent implements OnInit {
   mostrarUsuariosInscritos() {
     const listaUsuariosInscritos = new Array();
     this.modalService
-      .open(new ModalInscripcionsUsers('Lista de usuarios inscritos', listaUsuariosInscritos, [], ModalSize.Normal))
+      .open(new ModalInscripcionsUsers('Lista de usuarios inscritos', this.experiment.key, this.experiment.inscriptions))
       .onApprove(() => {
-        console.log('Approved');
+        console.log('Approved without button clicked');
       })
       .onDeny(() => {
-        console.log('Cancelled');
+        if (this.experiment.inscriptions) {
+          this.experimentService.updateInscriptionsOfExperiment(this.experiment);
+        }
+        console.log('Closed');
       });
   }
 

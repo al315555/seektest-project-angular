@@ -139,6 +139,30 @@ export class ExperimentsService {
     return exps;
   }
 
+  obtenerUsuariosInscritosAExperimento(expKey: string) {
+    const items = []; const exps = [];
+    const refKeys = this.db.list('experimentsAndUsers/',
+      ref => ref.orderByChild('experimentKey').equalTo(expKey));
+    refKeys.snapshotChanges().map(actions => {
+      return actions.map(action => ({ key: action.key, ...action.payload.val() }));
+    }).subscribe((value) => {
+      value.forEach( item => {
+        const userKey = item.userUidInscripted;
+        const refExperiments = this.db.list('users/', ref => ref.orderByKey().equalTo(userKey));
+        refExperiments.snapshotChanges().map(actiones => {
+          return actiones.map(actione => ({ key: actione.key, ...actione.payload.val() }));
+        }).subscribe((valueExp) => {
+          valueExp.forEach( neu => {
+            exps.push(neu);
+          });
+          return valueExp.map(itema => itema.key);
+        });
+      });
+      return value.map(item => item.key);
+    });
+    return exps;
+  }
+
   updateInscriptionsOfExperiment(experiment: Experiment) {
     firebase.database().ref('experiments/' + experiment.key)
       .set({
@@ -152,7 +176,7 @@ export class ExperimentsService {
         title: experiment.title,
         uidPublisher: experiment.uidPublisher,
         inscriptions: experiment.inscriptions
-      }).then(value => { console.log('Anyadida inscription'); });
+      }).then(value => { console.log('editadas inscriptiones'); });
   }
 }
 

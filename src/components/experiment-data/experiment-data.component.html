@@ -72,7 +72,7 @@
             {{date| date: 'yyyy'}}
             &nbsp;a&nbsp;las&nbsp;{{date| date: 'HH:mm'}}&nbsp;&nbsp;
             <i *ngIf="!isOwn">
-              <button *ngIf="!sesionesInscrito[i]" class="ui button yellow" (click)="inscribirseA(date);">
+              <button *ngIf="!estaInscrito" class="ui button yellow" (click)="inscribirseA(date);">
                 Inscribirse
               </button>
               <p class="ui text bold" *ngIf="sesionesInscrito[i]" style="font-weight: bold;">

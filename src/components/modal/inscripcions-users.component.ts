@@ -2,11 +2,12 @@ import {SuiModal, ComponentModalConfig, ModalSize} from 'ng2-semantic-ui';
 import {Component} from '@angular/core';
 import {ConfirmModalComponent} from './confirm-modal.component';
 import {Experiment} from '../../models/experiment';
+import {Inscription} from '../../models/inscription';
 
 interface IInscripcionsModalContext {
   title: string;
-  items: any[];
-  itemDates: Date[];
+  item: string;
+  inscriptions: Inscription[];
   noDataString: string;
 }
 
@@ -15,7 +16,7 @@ interface IInscripcionsModalContext {
   template: `
     <div class="header">{{ modal.context.title }}</div>
     <div class="content">
-      ---EN DESARROLLO--- Aquí va la lista de usuarios y los botones.
+      <app-list-users-inscriptions [expKey]="modal.context.item" [inscripciones]="modal.context.inscriptions"></app-list-users-inscriptions>
     </div>
     <div class="actions">
       <button class="ui red button" (click)="modal.deny(undefined)">Cerrar</button>
@@ -28,8 +29,9 @@ export class InscripcionsUsersModalComponent {
 }
 
 export class ModalInscripcionsUsers extends ComponentModalConfig<IInscripcionsModalContext, void, void> {
-  constructor(title: string, items: any[], itemDates: Date[], noDataString: string = 'sin datos expecificados', size = ModalSize.Normal) {
-    super(InscripcionsUsersModalComponent, { title, items, itemDates, noDataString});
+  constructor(title: string, item: string, inscriptions: Inscription[],
+              noDataString: string = 'No hay inscripciones', size = ModalSize.Normal) {
+    super(InscripcionsUsersModalComponent, { title, item, inscriptions, noDataString});
 
     this.mustScroll = true;
     // this.isFullScreen = true;
