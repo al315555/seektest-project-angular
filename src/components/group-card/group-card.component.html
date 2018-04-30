@@ -17,11 +17,11 @@
     </a>
   </div>
   <div id="join" (click)="seleccionarGrupo()" class="ui fluid inverted blue button" *ngIf="!myGroup">
-    <i class="sign in alternate icon"></i>
+    <i class="sign in alternate icon"></i>Unirse
     <!-- UNIRSE AL GRUPO -->
   </div>
-  <div id="unjoin" (click)="abandonarGrupo()" class="ui fluid inverted red button" *ngIf="myGroup">
-    <i class="sign out alternate icon"></i>
+  <div id="unjoin" (click)="abandonarGrupo()" class="ui fluid inverted pink button" *ngIf="myGroup">
+    <i class="sign out alternate icon"></i>Abandonar
     <!-- ABANDORNAR EL GRUPO -->
   </div>
 </div>
