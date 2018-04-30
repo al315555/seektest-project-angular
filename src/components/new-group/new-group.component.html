@@ -1,25 +1,16 @@
 <div class="ui raised very padded text container segment">
+  <app-message-toast></app-message-toast>
   <h2 class="ui left floated header">Nuevo Grupo de Investigación</h2>
   <div class="ui clearing divider"></div>
-  <div class="ui icon input fluid">
-    <input type="text" style="border-radius: 25px;" placeholder="Search..." (input)="buscarGrupo()" (change)="buscarGrupo()"
-      [(ngModel)]="textoTitulo">
-    <i class="search icon"></i>
-  </div>
-  <div class="ui list">
-    <div *ngFor="let grupo of items" >
-      <app-group-card [grupo]="grupo"></app-group-card>
-    </div>
-    <div  *ngIf="(items == null) || (items.length <= 0)">
-      <p class="text">No&nbsp;hay&nbsp;registros.</p>
-    </div>
-  </div>
-
 
   <div class="ui form">
     <div class="required field">
-      <label>Nombre del grupo</label>
+      <label>Nombre del nuevo grupo de investigación</label>
       <input [(ngModel)]="name" type="text" placeholder="nombre" (input)="changeName()" required>
+    </div>
+    <div class="required field">
+      <label>Descripción del nuevo grupo de investigación</label>
+      <input [(ngModel)]="descripcion" type="text" placeholder="descripcion" (input)="changeDescripcion()" required>
     </div>
     <div>
       <button [ngClass]="{disabled : !buttonEnabled}" (click)="addGrupo()"

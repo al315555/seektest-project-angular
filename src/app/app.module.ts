@@ -50,6 +50,8 @@ import {MyExperimentsInscriptionsComponent} from '../components/my-experiments-i
 import { GroupCardComponent } from '../components/group-card/group-card.component';
 import {InscripcionsUsersModalComponent, ModalInscripcionsUsers} from '../components/modal/inscripcions-users.component';
 import { ListUsersInscriptionsComponent } from '../components/list-users-inscriptions/list-users-inscriptions.component';
+import {GroupsService} from './groups.service';
+import {ListGroupsComponent} from '../components/list-groups/list-groups.component';
 
 // import { AngularFirestoreModule } from 'angularfire2/firestore';
 
@@ -81,7 +83,8 @@ import { ListUsersInscriptionsComponent } from '../components/list-users-inscrip
     NewGroupComponent,
     GroupCardComponent,
     InscripcionsUsersModalComponent,
-    ListUsersInscriptionsComponent
+    ListUsersInscriptionsComponent,
+    ListGroupsComponent
   ],
   entryComponents: [ConfirmModalComponent, ExperimentModalComponent, ExperimentEditModalComponent, InscripcionsUsersModalComponent],
   imports: [
@@ -101,7 +104,7 @@ import { ListUsersInscriptionsComponent } from '../components/list-users-inscrip
       apiKey: 'AIzaSyAtfuI-iI5ecEch8sbJpJcJMLy1Jq0tRcM'
     })
   ],
-  providers: [AuthService, FunctionsService, AngularFireDatabase, ExperimentsService],
+  providers: [AuthService, FunctionsService, AngularFireDatabase, ExperimentsService, GroupsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

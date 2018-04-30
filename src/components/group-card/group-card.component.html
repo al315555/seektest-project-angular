@@ -1,6 +1,27 @@
 
-<div class="item">
-      <div class="content">
-        <a href="#" (click)="seleccionarGrupo()">{{grupo.nombre }}</a> 
-      </div>
+<div class="ui card item">
+  <div class="content">
+    <a class="header">{{grupo.nombre }}</a>
+    <div class="meta">
+      <span class="date">Creación:
+      {{ dateCreated | date:'dd/MM/yyyy'}}&nbsp;a&nbsp;las&nbsp; {{ dateCreated | date:'HH:mm'}}.</span>
     </div>
+    <div class="description">
+      {{grupo.description}}
+    </div>
+  </div>
+  <div class="extra content">
+    <a>
+      <i class="user icon"></i>
+      {{ grupo.researchers.length }} miembros
+    </a>
+  </div>
+  <div id="join" (click)="seleccionarGrupo()" class="ui fluid inverted blue button" *ngIf="!myGroup">
+    <i class="sign in alternate icon"></i>
+    <!-- UNIRSE AL GRUPO -->
+  </div>
+  <div id="unjoin" (click)="abandonarGrupo()" class="ui fluid inverted red button" *ngIf="myGroup">
+    <i class="sign out alternate icon"></i>
+    <!-- ABANDORNAR EL GRUPO -->
+  </div>
+</div>

@@ -37,12 +37,6 @@ export class ExperimentsService {
     return this.db.list('experiments/', ref => ref.orderByChild('datePublished').limitToLast(limit));
   }
 
-  getAllGrups(limit: number) { // borrar esto
-    return this.db.list('grupos/', ref => ref.orderByChild('datePublished').limitToLast(1000000)); // sin límite de grupos
-    // return this.db.list('experiments/', ref => ref.orderByChild('datePublished').limitToLast(limit));
-
-  }
-
   getExperimentsByTitle(byTitle: string, limit: number) {
     if (byTitle != null && byTitle !== '') {
       return this.db.list('experiments/', ref => ref.orderByChild('title').startAt(byTitle));

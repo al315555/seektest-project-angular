@@ -5,6 +5,8 @@ import {SuiModalService, TemplateModalConfig, ModalTemplate, ModalConfig, ModalS
 import {ModalExperiment} from '../modal/experiment-modal.component';
 import {ModalConfirm} from '../modal/confirm-modal.component';
 import {ModalExperimentEdit} from '../modal/experiment-edit-modal.component';
+import {GruposInvestComponent} from '../grupos-invest/grupos-invest.component';
+import {Group} from '../../models/group';
 
 
 @Component({
@@ -13,25 +15,40 @@ import {ModalExperimentEdit} from '../modal/experiment-edit-modal.component';
   styleUrls: ['./group-card.component.css']
 })
 export class GroupCardComponent implements OnInit {
-  @Input() grupo: any;
+  @Input() grupo: Group;
+  @Input() myGroup: boolean;
 
+  dateCreated: Date;
   isOwn: boolean;
   messageBody: string;
   messageHeader: string;
   private clicked: boolean;
 
-  constructor(public experimentService: ExperimentsService, public modalService: SuiModalService) { }
+  constructor(public experimentService: ExperimentsService, public modalService: SuiModalService) {
+    this.dateCreated = new Date();
+  }
 
   ngOnInit() {
+    this.dateCreated.setTime(this.grupo.dateCreated);
+  }
+
+  abandonarGrupo() {
+    this.messageBody = '¿Estás seguro de que quieres abandonar el grupo? Tendrás que volver unirte en un futuro.';
+    this.modalService
+      .open(new ModalConfirm(this.grupo.nombre, this.messageBody, ModalSize.Tiny))
+      .onApprove(() => { // poner aquí la orden de envio
+        console.log('User has accepted.');
+      })
+      .onDeny(() => {console.log('User said cancel.'); });
   }
 
   seleccionarGrupo() {
-    console.log('Grupo seleccionado: ', this.grupo.nombre);
-    this.messageBody = '¿Estás seguro de que quieres añadirte al grupo?';
+    this.messageBody = '¿Estás seguro de que quieres añadirte al grupo? Puedes abandonarlo cuando quieras.';
     this.modalService
-      .open(new ModalConfirm(this.grupo.nombre, this.messageBody, ModalSize.Normal))
+      .open(new ModalConfirm(this.grupo.nombre, this.messageBody, ModalSize.Tiny))
       .onApprove(() => { // poner aquí la orden de envio
-         console.log('User has accepted.'); })
-      .onDeny(() => {console.log('User said close.'); });
+         console.log('User has accepted.');
+      })
+      .onDeny(() => {console.log('User said cancel.'); });
   }
 }
