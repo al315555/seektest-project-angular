@@ -21,6 +21,7 @@ export class HeaderComponent {
   misExperimentosInscritosItem = this.itemString;
 
   constructor(public authService: AuthService, public functionsService: FunctionsService) {
+    this.authService.generateUserDataJson();
   }
 
   logout() {
