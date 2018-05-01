@@ -5,7 +5,7 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {MessageToastComponent} from '../message-toast/message-toast.component';
 import {MessageToast} from '../../models/message-toast';
 import {AngularFireDatabase} from 'angularfire2/database';
-import { ExperimentsService } from '../../app/experiments.service';
+import {ExperimentsService} from '../../app/experiments.service';
 import {GroupsService} from '../../app/groups.service';
 
 @Component({
@@ -26,9 +26,10 @@ export class NewGroupComponent implements OnInit {
   op: number;
   items: any[] = null;
   itemsAll: any[] = null;
+
   constructor(private afAuth: AngularFireAuth, private groupsService: GroupsService) {
-    // private groupsService: GroupsService  - añadir en constructor cuando funcione
-    this.textoTitulo = '';
+    this.name = '';
+    this.descripcion = '';
     this.buttonEnabled = false;
     this.messages = new Array();
     this.numberLimit = 5;
@@ -38,19 +39,11 @@ export class NewGroupComponent implements OnInit {
 
   }
 
-  changeName() {
-    if (this.name === '') {
-      this.buttonEnabled = false;
-    } else {
+  changeBoton() {
+    if (this.descripcion !== '' && this.name !== '') {
       this.buttonEnabled = true;
-    }
-  }
-
-  changeDescripcion() {
-    if (this.descripcion === '') {
-      this.buttonEnabled = false;
     } else {
-      this.buttonEnabled = true;
+      this.buttonEnabled = false;
     }
   }
 

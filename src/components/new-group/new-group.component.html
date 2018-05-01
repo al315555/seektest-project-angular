@@ -6,11 +6,11 @@
   <div class="ui form">
     <div class="required field">
       <label>Nombre del nuevo grupo de investigación</label>
-      <input [(ngModel)]="name" type="text" placeholder="nombre" (input)="changeName()" required>
+      <input [(ngModel)]="name" type="text" placeholder="nombre" (input)="changeBoton()" required>
     </div>
     <div class="required field">
       <label>Descripción del nuevo grupo de investigación</label>
-      <input [(ngModel)]="descripcion" type="text" placeholder="descripcion" (input)="changeDescripcion()" required>
+      <input [(ngModel)]="descripcion" type="text" placeholder="descripcion" (input)="changeBoton()" required>
     </div>
     <div>
       <button [ngClass]="{disabled : !buttonEnabled}" (click)="addGrupo()"
