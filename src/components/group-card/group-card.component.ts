@@ -8,6 +8,7 @@ import {ModalExperimentEdit} from '../modal/experiment-edit-modal.component';
 import {GruposInvestComponent} from '../grupos-invest/grupos-invest.component';
 import {Group} from '../../models/group';
 import {GroupsService} from '../../app/groups.service';
+import {AuthService} from '../../app/auth.service';
 
 
 @Component({
@@ -27,15 +28,32 @@ export class GroupCardComponent implements OnInit {
   messageBody: string;
   messageHeader: string;
   private clicked: boolean;
+  investigadores: string;
 
 
-  constructor(public experimentService: ExperimentsService, public modalService: SuiModalService, private groupsService: GroupsService) {
+  constructor(public experimentService: ExperimentsService, public modalService: SuiModalService, private groupsService: GroupsService
+              , private authService: AuthService) {
     this.dateCreated = new Date();
+    this.investigadores = '';
   }
 
   ngOnInit() {
-    console.log(this.grupo.dateCreated);
     this.dateCreated.setTime(this.grupo.dateCreated);
+    if (this.grupo.researchers !== undefined && this.grupo.researchers.length > 0) {
+      this.grupo.researchers.forEach(researcher => {
+        const refi = this.authService.getNameUserForGroups(researcher);
+        refi.snapshotChanges().subscribe(value => {
+          value.map(cosas => {
+            this.investigadores += ', ' +
+              cosas.payload.child('_name').exportVal() + ' ' +
+              cosas.payload.child('_surname').exportVal();
+          });
+        });
+      });
+      this.investigadores = this.investigadores.trim().substring(2, this.investigadores.length);
+    } else {
+      this.investigadores = 'No hay miembros';
+    }
     // this.hasGroup = this.hasGroup === null ? false : this.hasGroup;
   }
 

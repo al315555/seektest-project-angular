@@ -130,6 +130,11 @@ export class AuthService {
     return this.db.list('users/', ref => ref.orderByChild('_uid').equalTo(uid));
   }
 
+  getNameUserForGroups(uid: string) {
+    return this.db.list('users/',
+        ref => ref.orderByChild('_uid').equalTo(uid));
+  }
+
   /*
   getUser(uid: string) {
     return this.db.list('users/', ref => ref.orderByChild('_uid').equalTo(uid))
