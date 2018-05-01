@@ -3,6 +3,7 @@ import {FunctionsService} from '../../app/functions.service';
 import {AuthService} from '../../app/auth.service';
 import {GroupsService} from '../../app/groups.service';
 import {Group} from '../../models/group';
+import {GroupCardComponent} from '../group-card/group-card.component';
 
 @Component({
   selector: 'app-list-groups',
@@ -18,18 +19,26 @@ export class ListGroupsComponent implements OnInit {
   buttonEnabled: boolean;
   grupoActual: Group;
 
-  constructor(private groupsService: GroupsService) { this.numberLimit = 10;  this.textoTitulo = ''; this.buttonEnabled = false; }
+  constructor(private groupsService: GroupsService, private functionsService: FunctionsService) {
+    this.numberLimit = 10;
+    this.textoTitulo = '';
+    this.buttonEnabled = false;
+  }
 
+  goToNewGroup() {
+    this.functionsService.SelectNewGroup();
+  }
 
   ngOnInit() {
     this.getGrupos();
     this.grupoActual = this.groupsService.showMyGroup();
+
   }
 
   getGrupos() {
     this.groupsService.getAllGrups(this.numberLimit)
       .snapshotChanges().map(actions => {
-      return actions.map(action => ({ key: action.key, ...action.payload.val() }));
+      return actions.map(action => ({key: action.key, ...action.payload.val()}));
     }).subscribe((value) => {
       this.items = value;
       this.items.reverse();
@@ -77,5 +86,13 @@ export class ListGroupsComponent implements OnInit {
     cadena = cadena.replace(/ú/gi, 'u');
     cadena = cadena.replace(/ñ/gi, 'n');
     return cadena;
+  }
+
+  borrarGrupoActual(): void {
+    this.grupoActual = new Group();
+  }
+
+  actualizarGrupoActual(grupo: Group): void {
+    this.grupoActual = grupo;
   }
 }

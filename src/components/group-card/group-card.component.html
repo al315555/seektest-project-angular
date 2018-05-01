@@ -13,15 +13,15 @@
   <div class="extra content">
     <a>
       <i class="user icon"></i>
-      {{ grupo.researchers.length }} miembros
+      {{ grupo.researchers != undefined ? grupo.researchers.length : 0 }} miembros
     </a>
   </div>
-  <div id="join" (click)="seleccionarGrupo()" class="ui fluid inverted blue button" *ngIf="!myGroup">
+  <button id="join" (click)="seleccionarGrupo()" class="ui fluid inverted blue button" *ngIf="!myGroup && !hasGroup" >
     <i class="sign in alternate icon"></i>Unirse
     <!-- UNIRSE AL GRUPO -->
-  </div>
-  <div id="unjoin" (click)="abandonarGrupo()" class="ui fluid inverted pink button" *ngIf="myGroup">
+  </button>
+  <button id="leave" (click)="abandonarGrupo()" class="ui fluid inverted pink button" *ngIf="myGroup && hasGroup">
     <i class="sign out alternate icon"></i>Abandonar
     <!-- ABANDORNAR EL GRUPO -->
-  </div>
+  </button>
 </div>
