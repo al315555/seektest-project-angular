@@ -79,6 +79,16 @@ export class GroupCardComponent implements OnInit {
       .onDeny(() => {console.log('User said cancel.'); });
   }
 
+  cerrarGrupo() {
+    this.messageBody = '¿Quieres salir y eliminar el grupo?';
+    this.modalService
+      .open(new ModalConfirm(this.grupo.nombre, this.messageBody, ModalSize.Tiny))
+      .onApprove(() => {
+        console.log('User has accepted.');
+      })
+      .onDeny(() => {console.log('User said cancel.'); });
+  }
+
   seleccionarGrupo() {
     this.messageBody = '¿Estás seguro de que quieres añadirte al grupo? Puedes abandonarlo cuando quieras.';
     this.modalService
