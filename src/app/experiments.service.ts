@@ -33,7 +33,12 @@ export class ExperimentsService {
   }
 
   getAllExperiments(limit: number) {
-    return this.db.list('experiments/', ref => ref.orderByChild('datePublished').limitToLast(limit));
+    if (limit === -1) {
+      return this.db.list('experiments/', ref => ref.orderByChild('datePublished'));
+    } else {
+      return this.db.list('experiments/', ref => ref.orderByChild('datePublished').limitToLast(limit));
+    }
+
   }
 
   getAllGrups(limit: number) { //borrar esto
