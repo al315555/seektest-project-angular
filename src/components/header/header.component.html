@@ -29,7 +29,8 @@
       <i class="user icon"></i>{{ authService.userDataJson._name }}&nbsp;{{ authService.userDataJson._surname }}
     </a>
     <a class="{{gruposItem}}" (click)="selectGrupos()" data-tooltip="Mostrar grupos de investigación"
-       data-position="bottom center">
+       data-position="bottom center"
+       *ngIf="authService.userDataJson._researcher">
       <i class="users icon"></i> Grupos de investigación
     </a>
     <a *ngIf="authService.userDataJson._researcher" class="{{misExperimentosItem}}" (click)="goToMyExperiments()"
@@ -37,13 +38,19 @@
        data-position="bottom center">
       <i class="thumbtack icon"></i> Publicados
     </a>
+    <a *ngIf="!authService.userDataJson._researcher" class="{{misExperimentosInscritosItem}}" (click)="goToMyExperimentsInscriptions()"
+       data-tooltip="Mostrar los experimentos donde tengo inscripción"
+       data-position="bottom center">
+      <i class="tasks icon"></i> Inscritos
+    </a>
     <a class="{{experimentosItem}}" (click)="goBackToExperiments()" data-tooltip="Mostrar experimentos"
        data-position="bottom center">
       <i class="columns icon"></i> Buscar
     </a>
     <a class="{{nuevoExperimentoItem}}" (click)="goToNewExperiment()"
        data-tooltip="Nuevo experimento"
-       data-position="bottom center">
+       data-position="bottom center"
+       *ngIf="authService.userDataJson._researcher">
       <i class="left plus icon"></i> Nuevo
     </a>
     <a class="ui item" (click)="logout()" data-tooltip="Cerrar sesión" data-position="bottom center"

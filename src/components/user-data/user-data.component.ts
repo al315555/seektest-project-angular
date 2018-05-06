@@ -62,6 +62,7 @@ export class UserDataComponent {
         type: 'error'
       });
     }
+    window.scrollTo(0, 0);
     // this.functions.selectExperimentos();
   }
   borrarUsuario() {

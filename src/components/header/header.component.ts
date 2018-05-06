@@ -18,8 +18,10 @@ export class HeaderComponent {
   misExperimentosItem = this.itemString;
   experimentosItem = this.itemActiveString;
   nuevoExperimentoItem = this.itemString;
+  misExperimentosInscritosItem = this.itemString;
 
   constructor(public authService: AuthService, public functionsService: FunctionsService) {
+    this.authService.generateUserDataJson();
   }
 
   logout() {
@@ -33,15 +35,17 @@ export class HeaderComponent {
     this.misExperimentosItem = this.itemString;
     this.experimentosItem = this.itemString;
     this.nuevoExperimentoItem = this.itemString;
+    this.misExperimentosInscritosItem = this.itemString;
   }
 
-  selectGrupos(){
+  selectGrupos() {
     this.functionsService.selectGrupos();
     this.gruposItem = this.itemActiveString;
     this.misExperimentosItem = this.itemString;
     this.experimentosItem = this.itemString;
     this.miPerfilItem = this.itemString;
     this.nuevoExperimentoItem = this.itemString;
+    this.misExperimentosInscritosItem = this.itemString;
   }
 
   goToMyExperiments() {
@@ -51,10 +55,22 @@ export class HeaderComponent {
     this.experimentosItem = this.itemString;
     this.miPerfilItem = this.itemString;
     this.nuevoExperimentoItem = this.itemString;
+    this.misExperimentosInscritosItem = this.itemString;
+  }
+
+  goToMyExperimentsInscriptions() {
+    this.functionsService.selectMyExperimentsInscriptions();
+    this.misExperimentosItem = this.itemString;
+    this.gruposItem = this.itemString;
+    this.experimentosItem = this.itemString;
+    this.miPerfilItem = this.itemString;
+    this.nuevoExperimentoItem = this.itemString;
+    this.misExperimentosInscritosItem = this.itemActiveString;
   }
 
   goBackToExperiments() {
     this.functionsService.selectExperimentos();
+    this.misExperimentosInscritosItem = this.itemString;
     this.experimentosItem = this.itemActiveString;
     this.gruposItem = this.itemString;
     this.misExperimentosItem = this.itemString;
@@ -64,6 +80,7 @@ export class HeaderComponent {
 
   goToNewExperiment() {
     this.functionsService.selectNewExperiment();
+    this.misExperimentosInscritosItem = this.itemString;
     this.experimentosItem = this.itemString;
     this.miPerfilItem = this.itemString;
     this.gruposItem = this.itemString;

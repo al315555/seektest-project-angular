@@ -46,7 +46,12 @@ import {ExperimentModalComponent} from '../components/modal/experiment-modal.com
 import {ExperimentEditModalComponent} from '../components/modal/experiment-edit-modal.component';
 import { GruposInvestComponent } from '../components/grupos-invest/grupos-invest.component';
 import { NewGroupComponent } from '../components/new-group/new-group.component';
+import {MyExperimentsInscriptionsComponent} from '../components/my-experiments-inscriptions/my-experiments-inscriptions.component';
 import { GroupCardComponent } from '../components/group-card/group-card.component';
+import {InscripcionsUsersModalComponent, ModalInscripcionsUsers} from '../components/modal/inscripcions-users.component';
+import { ListUsersInscriptionsComponent } from '../components/list-users-inscriptions/list-users-inscriptions.component';
+import {GroupsService} from './groups.service';
+import {ListGroupsComponent} from '../components/list-groups/list-groups.component';
 
 // import { AngularFirestoreModule } from 'angularfire2/firestore';
 
@@ -74,9 +79,14 @@ import { GroupCardComponent } from '../components/group-card/group-card.componen
     ExperimentEditModalComponent,
     GruposInvestComponent,
     NewGroupComponent,
-    GroupCardComponent
+    MyExperimentsInscriptionsComponent,
+    NewGroupComponent,
+    GroupCardComponent,
+    InscripcionsUsersModalComponent,
+    ListUsersInscriptionsComponent,
+    ListGroupsComponent
   ],
-  entryComponents: [ConfirmModalComponent, ExperimentModalComponent, ExperimentEditModalComponent],
+  entryComponents: [ConfirmModalComponent, ExperimentModalComponent, ExperimentEditModalComponent, InscripcionsUsersModalComponent],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
@@ -94,7 +104,7 @@ import { GroupCardComponent } from '../components/group-card/group-card.componen
       apiKey: 'AIzaSyAtfuI-iI5ecEch8sbJpJcJMLy1Jq0tRcM'
     })
   ],
-  providers: [AuthService, FunctionsService, AngularFireDatabase, ExperimentsService],
+  providers: [AuthService, FunctionsService, AngularFireDatabase, ExperimentsService, GroupsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

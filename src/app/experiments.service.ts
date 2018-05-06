@@ -20,6 +20,7 @@ import { switchMap } from 'rxjs/operators';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { Experiment } from '../models/experiment';
 import { Inscription } from '../models/inscription';
+import {element} from 'protractor';
 
 @Injectable()
 export class ExperimentsService {
@@ -38,12 +39,6 @@ export class ExperimentsService {
     } else {
       return this.db.list('experiments/', ref => ref.orderByChild('datePublished').limitToLast(limit));
     }
-
-  }
-
-  getAllGrups(limit: number) { //borrar esto
-    return this.db.list('grupos/', ref => ref.orderByChild('datePublished').limitToLast(limit));
-    //return this.db.list('experiments/', ref => ref.orderByChild('datePublished').limitToLast(limit));
 
   }
 
@@ -66,6 +61,9 @@ export class ExperimentsService {
 
   deleteExperiment(expKey: string) {
     this.db.list('experiments/' + expKey).remove();
+    const refExperiments = this.db.list('experimentsAndUsers/',
+        ref => ref.orderByChild('experimentKey').equalTo(expKey));
+    refExperiments.remove();
   }
 
   addExperiment(experiment: Experiment) {
@@ -81,6 +79,8 @@ export class ExperimentsService {
   }
 
   addInscriptionToExperiment(newInscription: Inscription, experiment: Experiment) {
+    // const newPostKey = firebase.database().ref().child('posts').push().key;
+
     const itemArray = new Array();
     if (experiment.inscriptions) {
       experiment.inscriptions.forEach(value => {
@@ -102,6 +102,64 @@ export class ExperimentsService {
         uidPublisher: experiment.uidPublisher,
         inscriptions: experiment.inscriptions
       }).then(value => { console.log('Anyadida inscription'); });
+    firebase.database().ref('experimentsAndUsers/').push({
+        userUidInscripted: newInscription.uid,
+        experimentKey: experiment.key
+    });
+  }
+
+  /*
+    * En este método se filtran los experimentos que aparecen en la tabla experimentsAndUsers
+    * cogiendo los experimentos que aparezcan relacionados con el uid de usuario
+    * en dicha tabla.
+    * */
+  obtenerExperimentosInscrito() {
+    const items = []; const exps = [];
+    const user = localStorage.getItem('uid_usuario');
+    const refKeys = this.db.list('experimentsAndUsers/',
+        ref => ref.orderByChild('userUidInscripted').equalTo(user));
+    refKeys.snapshotChanges().map(actions => {
+      return actions.map(action => ({ key: action.key, ...action.payload.val() }));
+    }).subscribe((value) => {
+      value.forEach( item => {
+        const experimentKey = item.experimentKey;
+        const refExperiments = this.db.list('experiments/', ref => ref.orderByKey().equalTo(experimentKey));
+        refExperiments.snapshotChanges().map(actiones => {
+          return actiones.map(actione => ({ key: actione.key, ...actione.payload.val() }));
+        }).subscribe((valueExp) => {
+          valueExp.forEach( neu => {
+            exps.push(neu);
+          });
+          return valueExp.map(itema => itema.key);
+        });
+      });
+      return value.map(item => item.key);
+    });
+    return exps;
+  }
+
+  obtenerUsuariosInscritosAExperimento(expKey: string) {
+    const items = []; const exps = [];
+    const refKeys = this.db.list('experimentsAndUsers/',
+      ref => ref.orderByChild('experimentKey').equalTo(expKey));
+    refKeys.snapshotChanges().map(actions => {
+      return actions.map(action => ({ key: action.key, ...action.payload.val() }));
+    }).subscribe((value) => {
+      value.forEach( item => {
+        const userKey = item.userUidInscripted;
+        const refExperiments = this.db.list('users/', ref => ref.orderByKey().equalTo(userKey));
+        refExperiments.snapshotChanges().map(actiones => {
+          return actiones.map(actione => ({ key: actione.key, ...actione.payload.val() }));
+        }).subscribe((valueExp) => {
+          valueExp.forEach( neu => {
+            exps.push(neu);
+          });
+          return valueExp.map(itema => itema.key);
+        });
+      });
+      return value.map(item => item.key);
+    });
+    return exps;
   }
 
   updateInscriptionsOfExperiment(experiment: Experiment) {
@@ -117,7 +175,7 @@ export class ExperimentsService {
         title: experiment.title,
         uidPublisher: experiment.uidPublisher,
         inscriptions: experiment.inscriptions
-      }).then(value => { console.log('Anyadida inscription'); });
+      }).then(value => { console.log('editadas inscriptiones'); });
   }
 }
 

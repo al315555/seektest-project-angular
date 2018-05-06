@@ -29,7 +29,6 @@ export class ExperimentCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.expe);
     if (this.expe.uidPublisher === localStorage.getItem('uid_usuario')) {
       this.isOwn = true;
     } else {

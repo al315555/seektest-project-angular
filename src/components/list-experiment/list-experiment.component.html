@@ -1,22 +1,22 @@
 <div class="contenedor">
-<div class="ui icon input fluid">
+<div class="ui icon input fluid" >
   <input type="text" style="border-radius: 25px;" placeholder="Search..." (input)="buscarExperimentos()" (change)="buscarExperimentos()"
     [(ngModel)]="textoTitulo">
   <i class="search icon"></i>
 </div>
 <br>
-<div class="ui form">
+<div class="ui form" >
   <div class="grouped fields">
     <label>Ordenar por:</label>
     <div class="field">
       <div class="ui radio checkbox">
-        <input type="radio" name="radio" [value]="0" [(ngModel)]="op" (change)="buscarExperimentos()" checked="checked">
+        <input type="radio" name="radio" [value]="0" [(ngModel)]="op" (change)="buscarExperimentos()" checked="checked" >
         <label>Fecha de publicación</label>
       </div>
     </div>
     <div class="field">
       <div class="ui radio checkbox">
-        <input type="radio" name="radio"  [value]="1" [(ngModel)]="op" (change)="buscarExperimentos()">
+        <input type="radio" name="radio"  [value]="1" [(ngModel)]="op" (change)="buscarExperimentos()" >
         <label>Duración</label>
       </div>
     </div>

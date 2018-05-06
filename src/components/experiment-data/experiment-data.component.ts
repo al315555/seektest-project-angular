@@ -37,6 +37,8 @@ export class ExperimentDataComponent implements OnInit {
 
   sesionesInscrito: boolean[];
 
+  estaInscrito: boolean;
+
   constructor(public experimentService: ExperimentsService , public functions: FunctionsService, private auth: AuthService,
               private modalService: SuiModalService) {
     this.monthDates = new Array();
@@ -58,6 +60,7 @@ export class ExperimentDataComponent implements OnInit {
         let indice = 0;
         this.item.inscriptions.forEach(value => {
           this.sesionesInscrito.push(value.uid === localStorage.getItem('uid_usuario'));
+          this.estaInscrito = value.uid === localStorage.getItem('uid_usuario');
           indice++;
         });
     }
@@ -85,6 +88,7 @@ export class ExperimentDataComponent implements OnInit {
       this.sesionesInscrito.push(value.uid === localStorage.getItem('uid_usuario'));
       indice++;
     });
+    this.estaInscrito = true;
   }
 
   cancelarInscripcion(index: number) {

@@ -33,66 +33,58 @@ export class ListExperimentComponent implements OnInit {
 
   constructor(public experimentService: ExperimentsService, public functions: FunctionsService) {
     this.textoTitulo = '';
-    this.numberLimit = 4;
+    this.numberLimit = 2;
     this.clicked = false;
     this.item = new Experiment();
     this.itemDates = new Array();
   }
 
   ngOnInit() {
+    console.log('get experimentos');
     this.getExperiments();
   }
 
   getExperiments() {
     if (this.type === 0 || this.type == null) {
       this.experimentService.getAllExperiments(this.numberLimit)
-        .snapshotChanges().map(actions => {
-          return actions.map(action => ({ key: action.key, ...action.payload.val() }));
-        }).subscribe((value) => {
-          this.items = value;
-          this.items.reverse();
-          this.itemsAll = this.items;
-          this.orderExperiments();
-          return value.map(item => item.key);
-        });
+      .snapshotChanges().map(actions => {
+        return actions.map(action => ({ key: action.key, ...action.payload.val() }));
+      }).subscribe((value) => {
+        this.items = value;
+        this.items.reverse();
+        this.itemsAll = this.items;
+        return value.map(item => item.key);
+      });
     } else if (this.type === 1) {
       this.experimentService.getMyExperiments()
-        .snapshotChanges().map(actions => {
-          return actions.map(action => ({ key: action.key, ...action.payload.val() }));
-        }).subscribe((value) => {
-          this.items = value;
-          this.items.reverse();
-          this.itemsAll = this.items;
-          return value.map(item => item.key);
-        });
+      .snapshotChanges().map(actions => {
+        return actions.map(action => ({ key: action.key, ...action.payload.val() }));
+      }).subscribe((value) => {
+        this.items = value;
+        this.items.reverse();
+        this.itemsAll = this.items;
+        return value.map(item => item.key);
+      });
+    } else if (this.type === 2) {
+      this.items = this.experimentService.obtenerExperimentosInscrito();
+      this.items.reverse();
+      this.itemsAll = this.items;
     }
   }
 
   buscarExperimentos() {
 
-    if (this.textoTitulo === '') {
-      this.numberLimit = 4;
-    } else {
-      this.numberLimit = -1;
-    }
-
-    if (this.textoTitulo.length === 3) {
-      this.getExperiments();
-    }
-
-  }
-
-  private orderExperiments() {
     if (this.op === 0) {
       this.items.sort((a, b) => this.comparePubliDate(a, b));
     } else if (this.op === 1) {
       this.items.sort((a, b) => this.compareDuration(a, b));
     }
 
-    if (this.textoTitulo != '') {
+    if (this.textoTitulo !== '') {
       this.items = this.itemsAll;
       const it: any[] = new Array();
       this.items.forEach(element => {
+        console.log(this.compareTitle(element));
         if (this.compareTitle(element)) {
           it.push(element);
         }
@@ -113,8 +105,9 @@ export class ListExperimentComponent implements OnInit {
     if (a.datePublished >= b.datePublished) {
       return -1;
     } else {
-      if (a.datePublished < b.datePublished)
+      if (a.datePublished < b.datePublished) {
         return 1;
+      }
     }
     return 0;
   }
@@ -123,26 +116,27 @@ export class ListExperimentComponent implements OnInit {
     if (a.duration >= b.duration) {
       return 1;
     } else {
-      if (a.duration < b.duration)
+      if (a.duration < b.duration) {
         return -1;
+      }
     }
     return 0;
   }
 
   getCleanedString(cadena: String) {
-    const specialChars = "!@#$^&%*()+=-[]\/{}|:<>?,.";
+    const specialChars = '!@#$^&%*()+=-[]\/{}|:<>?,.';
     console.log(cadena);
-    for (const i = 0; i < specialChars.length; i++) {
+    for (let i = 0; i < specialChars.length; i++) {
       cadena = cadena.replace(new RegExp('\\' + specialChars[i], 'gi'), '');
     }
 
     cadena = cadena.toLowerCase();
-    cadena = cadena.replace(/á/gi, "a");
-    cadena = cadena.replace(/é/gi, "e");
-    cadena = cadena.replace(/í/gi, "i");
-    cadena = cadena.replace(/ó/gi, "o");
-    cadena = cadena.replace(/ú/gi, "u");
-    cadena = cadena.replace(/ñ/gi, "n");
+    cadena = cadena.replace(/á/gi, 'a');
+    cadena = cadena.replace(/é/gi, 'e');
+    cadena = cadena.replace(/í/gi, 'i');
+    cadena = cadena.replace(/ó/gi, 'o');
+    cadena = cadena.replace(/ú/gi, 'u');
+    cadena = cadena.replace(/ñ/gi, 'n');
     return cadena;
   }
 
