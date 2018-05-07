@@ -70,4 +70,8 @@ export class GroupsService {
       researchers: group.researchers
     }).then(result => console.log('Grupo actualizado correctamente. ::: ' + result));
   }
+
+  deleteGroup(grupoKey: String){
+    this.db.list('groups/' + grupoKey).remove();
+  }
 }
