@@ -30,11 +30,13 @@ export class ListExperimentComponent implements OnInit {
   numberLimit: number;
 
   op: number;
+  myGroupExperiments: boolean;
 
   constructor(public experimentService: ExperimentsService, public functions: FunctionsService) {
     this.textoTitulo = '';
     this.numberLimit = 2;
     this.clicked = false;
+    this.myGroupExperiments = false;
     this.item = new Experiment();
     this.itemDates = new Array();
   }
@@ -56,15 +58,21 @@ export class ListExperimentComponent implements OnInit {
         return value.map(item => item.key);
       });
     } else if (this.type === 1) {
-      this.experimentService.getMyExperiments()
-      .snapshotChanges().map(actions => {
-        return actions.map(action => ({ key: action.key, ...action.payload.val() }));
-      }).subscribe((value) => {
-        this.items = value;
+      if (this.myGroupExperiments) {
+        this.items = this.experimentService.getMyGroupExperiments();
         this.items.reverse();
         this.itemsAll = this.items;
-        return value.map(item => item.key);
-      });
+      } else {
+        this.experimentService.getMyExperiments()
+        .snapshotChanges().map(actions => {
+          return actions.map(action => ({ key: action.key, ...action.payload.val() }));
+        }).subscribe((value) => {
+          this.items = value;
+          this.items.reverse();
+          this.itemsAll = this.items;
+          return value.map(item => item.key);
+        });
+      }
     } else if (this.type === 2) {
       this.items = this.experimentService.obtenerExperimentosInscrito();
       this.items.reverse();
