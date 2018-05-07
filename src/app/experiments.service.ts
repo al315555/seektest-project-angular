@@ -31,7 +31,7 @@ export class ExperimentsService {
   error: boolean;
   errorMessage: string;
 
-  
+
 
   constructor(public db: AngularFireDatabase, public groupsService: GroupsService) { }
 
@@ -215,10 +215,10 @@ export class ExperimentsService {
       }).then(value => { console.log('editadas inscriptiones'); });
   }
 
-  valorarExperimento(experiment: Experiment, valoracion){
-    console.log("Valorar Experimento: ",experiment, valoracion)
-    let numValoraciones = experiment.numberVotaciones+1;
-    let totalValoraciones = experiment.mediaValoracion + valoracion;
+  valorarExperimento(experiment: Experiment, valoracion) {
+    console.log('Valorar Experimento: ', experiment, valoracion);
+    const numValoraciones = experiment.numberVotaciones + 1;
+    const totalValoraciones = experiment.mediaValoracion + valoracion;
     firebase.database().ref('experiments/' + experiment.key)
       .set({
         datePublished: experiment.datePublished,
@@ -234,6 +234,27 @@ export class ExperimentsService {
         uidPublisher: experiment.uidPublisher,
         inscriptions: experiment.inscriptions
       }).then(value => { console.log('editadas inscriptiones'); });
+    firebase.database().ref('experimentsUsersVotations/').push({
+      voteValue: valoracion,
+      uid: localStorage.getItem('uid_usuario'),
+      experimentKey: experiment.key
+    });
+  }
+  /** Si devuleve -1 es que no hay votación del usuario**/
+  getMyVoteToExperiment(experiment: Experiment): number {
+    const dataReturn = {number: -1};
+    const refKeys = this.db.list('experimentsAndUsers/',
+      ref => ref.orderByChild('experimentKey').equalTo(experiment.key));
+    refKeys.snapshotChanges().map(actions => {
+      return actions.map(action => ({ key: action.key, ...action.payload.val() }));
+    }).subscribe((value) => {
+      value.forEach(item => {
+        if (item.uid ===  localStorage.getItem('uid_usuario')) {
+          dataReturn.number = item.voteValue;
+        }
+      });
+    });
+    return dataReturn.number;
   }
 }
 

@@ -35,8 +35,8 @@ export class ListExperimentComponent implements OnInit {
 
   constructor(public experimentService: ExperimentsService, public functions: FunctionsService) {
     this.textoTitulo = '';
-    this.numberLimit = 2;
-    this.numberLimitOr = 2;
+    this.numberLimit = 6;
+    this.numberLimitOr = 6;
     this.clicked = false;
     this.myGroupExperiments = false;
     this.item = new Experiment();

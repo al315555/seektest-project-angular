@@ -1,127 +1,136 @@
-  <app-message-toast></app-message-toast>
 <!--<div style="margin-left: 40%; margin-right: 40%;">
   <button class="ui inverted blue labeled icon button" (click)="goBackToExperiments()">
     <i class="left arrow icon"></i>
     <span class="ui text">Volver</span>
   </button>
 </div>-->
-  <div class="ui raised very padded text container segment">
+<div class="ui basic segment">
+  <app-message-toast></app-message-toast>
+  <div class="ui container segment">
 
-  <h2 class="ui left floated header">Nuevo Experimento</h2>
-  <div class="ui clearing divider"></div>
-  <div class="ui form">
-    <div [suiCollapse]="!collapse">
-      <div class="field">
-        <label>Titulo del experimento*</label>
-        <input [(ngModel)]="title" type="text" placeholder="titulo" (input)="changeTitle()" required>
-      </div>
-      <div class="two fields">
+    <h2 class="ui left floated header">Nuevo Experimento</h2>
+    <div class="ui clearing divider"></div>
+    <div class="ui form">
+      <div [suiCollapse]="!collapse">
         <div class="field">
-          <label>Fechas de las sesiones*</label>
-          <div class="ui left icon input">
-            <i class="calendar icon"></i>
-            <input suiDatepicker [(ngModel)]="dateHourSelected" [pickerMode]="mode" [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
-          </div>
+          <label>Titulo del experimento*</label>
+          <input [(ngModel)]="title" type="text" placeholder="titulo" (input)="changeTitle()" required>
         </div>
-        <div class="field">
-          <label>&nbsp;</label>
-          <div class="ui vertical animated button maxsize hovergreen" (click)="addDate()" tabindex="0">
-            <div class="hidden content">Añadir</div>
-            <div class="visible content">
-              <i class="plus icon"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="field">
-        <label></label>
-        <div *ngFor='let date of dateHourArray; let i = index'>
-          <div class="ui animated hoverred maxsize fade button" (click)="deleteDate(i)" tabindex="0">
-            <div class="visible content">{{date| date: 'dd/MM/yyyy - hh:mm'}}</div>
-            <div class="hidden content">
-              Eliminar
-            </div>
-          </div>
-          <br>
-          <br>
-        </div>
-      </div>
-      <div class="field">
-        <label>Lugar*</label>
-        <input type="text" [(ngModel)]="place" placeholder="lugar" (input)="changePlace()" required>
-        <br><br>
-        Marca el lugar aproximado:
-        <br><br>
-        <agm-map [clickableIcons]="false"[latitude]="39.993913" [longitude]="-0.067066" [zoom]="15" (mapClick)="placeMarker($event)">
-          <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
-        </agm-map>
-      </div>
-      <div class="two fields">
-        <div class="field">
-          <label>Duración*</label>
-          <input type="number" [(ngModel)]="duration" placeholder="duración en minutos" (input)="changeDuration()" min="0" max="99999999"
-            required>
-        </div>
-        <div class="field">
-          <label>Numero de plazas*</label>
-          <input type="number" [(ngModel)]="numberParticipants" placeholder="número de plazas" (input)="changeNumberParticipants()"
-            min="0" max="99999999" required>
-        </div>
-      </div>
-      <div class="field">
-        <label>Descripcion*</label>
-        <textarea placeholder="descripción" [(ngModel)]="description" rows="4" (input)="changeDescription()" required></textarea>
-      </div>
-      <div class="field">
-        <label>Premio</label>
-        <input type="text" [(ngModel)]="gift" placeholder="premio">
-      </div>
-    </div>
-    <br>
-    <div class="field">
-      <button class="ui primary button maxsize" (click)="collapse = !collapse; cambiaMensaje()">
-        {{textoDesplegable}}
-      </button>
-      <br>
-      <br>
-      <div [suiCollapse]="collapse">
-        <h4 class="ui header">Perfil de sujeto a buscar</h4>
         <div class="two fields">
           <div class="field">
-            <label>Rango de edad</label>
-            De &nbsp;
-            <input [(ngModel)]="edadInicio" type="number" placeholder="años" min="0" max="999999">
+            <label>Fechas de las sesiones*</label>
+            <div class="ui left icon input">
+              <i class="calendar icon"></i>
+              <input suiDatepicker [(ngModel)]="dateHourSelected" [pickerMode]="mode"
+                     [pickerFirstDayOfWeek]="firstDayOfWeek" [pickerUseNativeOnMobile]="false">
+            </div>
           </div>
           <div class="field">
             <label>&nbsp;</label>
-            a &nbsp;
-            <input [(ngModel)]="edadFinal" type="number" placeholder="años" min="0" max="999999">
+            <div class="ui vertical animated button maxsize hovergreen" (click)="addDate()" tabindex="0">
+              <div class="hidden content">Añadir</div>
+              <div class="visible content">
+                <i class="plus icon"></i>
+              </div>
+            </div>
           </div>
         </div>
         <div class="field">
-          <label>Sexo de preferencia</label>
-          <div class="ui radio">
-            <input [(ngModel)]="perfilSexo" type="radio" name="sexo" value="hombre"> Hombre &nbsp;
-            <input [(ngModel)]="perfilSexo" type="radio" name="sexo" value="mujer"> Mujer &nbsp;
-            <input [(ngModel)]="perfilSexo" type="radio" name="sexo" value=null> Indefinido
+          <label></label>
+          <div *ngFor='let date of dateHourArray; let i = index'>
+            <div class="ui animated hoverred maxsize fade button" (click)="deleteDate(i)" tabindex="0">
+              <div class="visible content">{{date| date: 'dd/MM/yyyy - hh:mm'}}</div>
+              <div class="hidden content">
+                Eliminar
+              </div>
+            </div>
+            <br>
+            <br>
           </div>
         </div>
         <div class="field">
-          <label>Alergias</label>
-          <input [(ngModel)]="alergias" type="text" class="input">
+          <label>Lugar*</label>
+          <input type="text" [(ngModel)]="place" placeholder="lugar" (input)="changePlace()" required>
+          <br><br>
+          Marca el lugar aproximado:
+          <br><br>
+          <agm-map [clickableIcons]="false" [latitude]="39.993913" [longitude]="-0.067066" [zoom]="15"
+                   (mapClick)="placeMarker($event)">
+            <agm-marker [latitude]="lat" [longitude]="lon"></agm-marker>
+          </agm-map>
+        </div>
+        <div class="two fields">
+          <div class="field">
+            <label>Duración*</label>
+            <input type="number" [(ngModel)]="duration" placeholder="duración en minutos" (input)="changeDuration()"
+                   min="0" max="99999999"
+                   required>
+          </div>
+          <div class="field">
+            <label>Numero de plazas*</label>
+            <input type="number" [(ngModel)]="numberParticipants" placeholder="número de plazas"
+                   (input)="changeNumberParticipants()"
+                   min="0" max="99999999" required>
+          </div>
         </div>
         <div class="field">
-          <label>Observaciones Médicas</label>
-          <input [(ngModel)]="medicalObs" type="text" class="input">
+          <label>Descripcion*</label>
+          <textarea placeholder="descripción" [(ngModel)]="description" rows="4" (input)="changeDescription()"
+                    required></textarea>
         </div>
-        <br>
+        <div class="field">
+          <label>Premio</label>
+          <input type="text" [(ngModel)]="gift" placeholder="premio">
+        </div>
       </div>
-      <button [ngClass]="{disabled : !buttonEnabled}" (click)="addExperiment()" class="ui fluid inverted blue submit button">Crear nuevo experimento</button>
+      <br>
+      <div class="field">
+        <button class="ui primary button maxsize" (click)="collapse = !collapse; cambiaMensaje()">
+          {{textoDesplegable}}
+        </button>
+        <br>
+        <br>
+        <div [suiCollapse]="collapse">
+          <h4 class="ui header">Perfil de sujeto a buscar</h4>
+          <div class="two fields">
+            <div class="field">
+              <label>Rango de edad</label>
+              De &nbsp;
+              <input [(ngModel)]="edadInicio" type="number" placeholder="años" min="0" max="999999">
+            </div>
+            <div class="field">
+              <label>&nbsp;</label>
+              a &nbsp;
+              <input [(ngModel)]="edadFinal" type="number" placeholder="años" min="0" max="999999">
+            </div>
+          </div>
+          <div class="field">
+            <label>Sexo de preferencia</label>
+            <div class="ui radio">
+              <input [(ngModel)]="perfilSexo" type="radio" name="sexo" value="hombre"> Hombre &nbsp;
+              <input [(ngModel)]="perfilSexo" type="radio" name="sexo" value="mujer"> Mujer &nbsp;
+              <input [(ngModel)]="perfilSexo" type="radio" name="sexo" value=null> Indefinido
+            </div>
+          </div>
+          <div class="field">
+            <label>Alergias</label>
+            <input [(ngModel)]="alergias" type="text" class="input">
+          </div>
+          <div class="field">
+            <label>Observaciones Médicas</label>
+            <input [(ngModel)]="medicalObs" type="text" class="input">
+          </div>
+          <br>
+        </div>
+        <button [ngClass]="{disabled : !buttonEnabled}" (click)="addExperiment()"
+                class="ui fluid inverted blue submit button">Crear nuevo experimento
+        </button>
+      </div>
     </div>
-  </div>
-  <sui-progress class="bottom attached indicating active" [value]="changingValueProgres">Progreso</sui-progress>
-  <div *ngIf="spinnerLoading" class="ui active inverted dimmer">
-    <div class="ui text loader">Subiendo experimento...</div>
-  </div>
+    <sui-progress class="bottom attached indicating active" [value]="changingValueProgres">Progreso</sui-progress>
+    <div *ngIf="spinnerLoading" class="ui active inverted dimmer">
+      <div class="ui text loader">Subiendo experimento...</div>
+    </div>
 
+  </div>
 </div>
