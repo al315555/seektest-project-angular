@@ -99,4 +99,17 @@ export class GroupCardComponent implements OnInit {
     this.messageBody = '¿Estás seguro de que quieres añadirte al grupo? Puedes abandonarlo cuando quieras.';
     this.modalService
       .open(new ModalConfirm(this.grupo.nombre, this.messageBody, ModalSize.Tiny))
-      .onApprove(() => { // poner aquí la orde
+      .onApprove(() => { // poner aquí la orden de envio
+        console.log('User has accepted.');
+        if (this.grupo.researchers === undefined) {
+          this.grupo.researchers = new Array();
+        }
+        this.grupo.researchers.push(localStorage.getItem('uid_usuario'));
+        this.groupsService.updateGroupData(this.grupo);
+        this.dadoDeAlta.emit({dadaDeAlta: true});
+      })
+      .onDeny(() => {
+        console.log('User said cancel.');
+      });
+  }
+}
