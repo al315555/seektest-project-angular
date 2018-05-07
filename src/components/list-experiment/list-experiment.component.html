@@ -30,11 +30,9 @@
 </div>
 <br>
 <br>
-<div class="ui grid">
-    <div class="column">
-        <div class="ui centered cards" *ngFor="let expe of items">
-            <app-experiment-card [expe]="expe"></app-experiment-card>
-        </div>
+<div class="ui three column doubling grid container">
+    <div class="ui column" *ngFor="let expe of items">
+        <app-experiment-card [expe]="expe"></app-experiment-card>
     </div>
 </div>
   

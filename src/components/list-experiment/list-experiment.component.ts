@@ -66,6 +66,7 @@ export class ListExperimentComponent implements OnInit {
         this.items = this.experimentService.getMyGroupExperiments();
         this.items.reverse();
         this.itemsAll = this.items;
+        this.ordenarExperimentos();
       } else {
         this.experimentService.getMyExperiments()
         .snapshotChanges().map(actions => {

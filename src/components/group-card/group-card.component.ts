@@ -9,6 +9,7 @@ import {GruposInvestComponent} from '../grupos-invest/grupos-invest.component';
 import {Group} from '../../models/group';
 import {GroupsService} from '../../app/groups.service';
 import {AuthService} from '../../app/auth.service';
+import { User } from '../../app/core/User';
 
 
 @Component({
@@ -41,16 +42,22 @@ export class GroupCardComponent implements OnInit {
     this.dateCreated.setTime(this.grupo.dateCreated);
     if (this.grupo.researchers !== undefined && this.grupo.researchers.length > 0) {
       this.grupo.researchers.forEach(researcher => {
-        const refi = this.authService.getNameUserForGroups(researcher);
-        refi.snapshotChanges().subscribe(value => {
-          value.map(cosas => {
-            this.investigadores += ', ' +
-              cosas.payload.child('_name').exportVal() + ' ' +
-              cosas.payload.child('_surname').exportVal();
-          });
+        const refi = this.authService.getUser(researcher);
+        refi.snapshotChanges()
+        .map(actions => {
+          return actions.map(action => ({ key: action.key, ...action.payload.val() }));
+        })
+        .subscribe((value) => {
+          if (value !== undefined) {
+            value.forEach((val: User) => {
+              if (val._name !== undefined) {
+                this.investigadores += val._name + ' ' + val._surname + ', ';
+              }
+            });
+          }
         });
       });
-      this.investigadores = this.investigadores.trim().substring(2, this.investigadores.length);
+      //this.investigadores = this.investigadores.trim().substring(2, this.investigadores.length);
     } else {
       this.investigadores = 'No hay miembros';
     }
