@@ -57,6 +57,7 @@ export class ListExperimentComponent implements OnInit {
         this.items = value;
         this.items.reverse();
         this.itemsAll = this.items;
+        this.buscExperimentos();
         this.ordenarExperimentos();
         return value.map(item => item.key);
       });
@@ -73,6 +74,7 @@ export class ListExperimentComponent implements OnInit {
           this.items = value;
           this.items.reverse();
           this.itemsAll = this.items;
+          this.ordenarExperimentos();
           return value.map(item => item.key);
         });
       }
@@ -80,10 +82,11 @@ export class ListExperimentComponent implements OnInit {
       this.items = this.experimentService.obtenerExperimentosInscrito();
       this.items.reverse();
       this.itemsAll = this.items;
+      this.ordenarExperimentos();
     }
   }
 
-  ordenarExperimentos() {
+  buscExperimentos() {
     this.items = this.itemsAll;
       const it: any[] = new Array();
       this.items.forEach(element => {
@@ -95,13 +98,15 @@ export class ListExperimentComponent implements OnInit {
       });
   }
 
-  buscarExperimentos() {
-
+  ordenarExperimentos() {
     if (this.op === 0) {
       this.items.sort((a, b) => this.comparePubliDate(a, b));
     } else if (this.op === 1) {
       this.items.sort((a, b) => this.compareDuration(a, b));
     }
+  }
+
+  buscarExperimentos() {
 
     if (this.numberLimit !== -1) {
       this.numberLimitOr = this.numberLimit;
