@@ -7,6 +7,8 @@ export class Experiment {
   datePublished: number;
   title: string;
   numberParticipants: string;
+  numberVotaciones: number;
+  mediaValoracion: number;
   place: string;
   description: string;
   duration: number;

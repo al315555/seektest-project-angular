@@ -31,6 +31,8 @@ export class ExperimentsService {
   error: boolean;
   errorMessage: string;
 
+  
+
   constructor(public db: AngularFireDatabase, public groupsService: GroupsService) { }
 
   getAllExperimentsOrderedByTitle() {
@@ -128,6 +130,8 @@ export class ExperimentsService {
         description: experiment.description,
         duration: experiment.duration,
         numberParticipants: experiment.numberParticipants,
+        numberVotaciones: experiment.numberVotaciones,
+        mediaValoracion: experiment.mediaValoracion,
         place: experiment.place,
         placeLatLon: experiment.placeLatLon,
         title: experiment.title,
@@ -202,6 +206,29 @@ export class ExperimentsService {
         description: experiment.description,
         duration: experiment.duration,
         numberParticipants: experiment.numberParticipants,
+        numberVotaciones: experiment.numberVotaciones,
+        mediaValoracion: experiment.mediaValoracion,
+        place: experiment.place,
+        placeLatLon: experiment.placeLatLon,
+        title: experiment.title,
+        uidPublisher: experiment.uidPublisher,
+        inscriptions: experiment.inscriptions
+      }).then(value => { console.log('editadas inscriptiones'); });
+  }
+
+  valorarExperimento(experiment: Experiment, valoracion){
+    console.log("Valorar Experimento: ",experiment, valoracion)
+    let numValoraciones = experiment.numberVotaciones+1;
+    let totalValoraciones = experiment.mediaValoracion + valoracion;
+    firebase.database().ref('experiments/' + experiment.key)
+      .set({
+        datePublished: experiment.datePublished,
+        dates: experiment.dates,
+        description: experiment.description,
+        duration: experiment.duration,
+        numberParticipants: experiment.numberParticipants,
+        numberVotaciones: numValoraciones,
+        mediaValoracion: totalValoraciones,
         place: experiment.place,
         placeLatLon: experiment.placeLatLon,
         title: experiment.title,

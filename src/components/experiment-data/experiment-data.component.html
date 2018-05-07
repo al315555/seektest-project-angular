@@ -65,6 +65,7 @@
     <br/><br/>
 
     <div class="text">
+    <i *ngIf="!experimentoRealizado">
       <h3>Sesiones disponibles</h3>
       <div *ngFor='let date of itemDates; let i = index'>
         <div class="visible content">
@@ -91,6 +92,14 @@
           </div>
         </div><br/>
       </div>
+    </i>
+      <i *ngIf="experimentoRealizado">
+          <h3>Valorar Experimento</h3>
+          <sui-rating class="star"  [(ngModel)]="numeroEstrellas" [maximum]="5"></sui-rating>
+          <button class="ui button blue" (click)="obtenerValor();">
+              Votar
+            </button>
+      </i>
     </div>
   </div>
 </div>

@@ -14,6 +14,7 @@ import {ModalConfirm} from '../modal/confirm-modal.component';
 import {ModalSize, SuiModalService} from 'ng2-semantic-ui';
 
 
+
 @Component({
   selector: 'app-experiment-data',
   templateUrl: './experiment-data.component.html',
@@ -28,6 +29,9 @@ export class ExperimentDataComponent implements OnInit {
   mes: string;
 
   isOwn: boolean;
+  experimentoRealizado: boolean;
+
+  numeroEstrellas: number;
 
   @Input() item: any;
   @Input() itemDates: Date[];
@@ -47,7 +51,7 @@ export class ExperimentDataComponent implements OnInit {
 
   ngOnInit() {
     this.itemDates.forEach(value => {
-      console.log(value);
+      console.log("Valor:",value);
       this.monthDates.push(value.getMonth());
     });
     if (this.item.uidPublisher === localStorage.getItem('uid_usuario')) {
@@ -55,6 +59,21 @@ export class ExperimentDataComponent implements OnInit {
     } else {
       this.isOwn = false;
     }
+    if (this.item.inscriptions && this.item.inscriptions.length > 0) {
+      this.numeroEstrellas = 2;
+      this.item.inscriptions.forEach(element => {
+        if(element.uid == localStorage.getItem('uid_usuario')){
+          console.log(this.compararFechas(new Date(element.session), new Date()))
+        }
+      });
+      
+    }
+    
+    /*if (this.item.date === ) {
+      this.isOwn = true;
+    } else {
+      this.isOwn = false;
+    }*/
 
     if (this.item.inscriptions && this.item.inscriptions.length > 0) {
         let indice = 0;
@@ -105,5 +124,16 @@ export class ExperimentDataComponent implements OnInit {
     this.item.inscriptions[index].state = 3;
     this.experimentService.updateInscriptionsOfExperiment(this.item);
   }
+  
+  compararFechas(dateExperimento, dateActual) {
+    console.log("Fechas: ",dateExperimento, dateActual)
+    this.experimentoRealizado = dateExperimento<dateActual
+  }
 
+  obtenerValor(){
+    this.experimentService.valorarExperimento(this.item,this.numeroEstrellas);
+    //console.log("Valoracion",this.numeroEstrellas)
+  }
 }
+
+
