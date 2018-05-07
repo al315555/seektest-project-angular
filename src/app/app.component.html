@@ -1,9 +1,8 @@
-<div class="ui aligned centered" *ngIf="functionsService.showMainPage">
-    <div class="ui raised segment">
+    <div class="ui basic segment" style="background-color: white !important; height: 100%;" *ngIf="functionsService.showMainPage">
       <img class="ui centered image" src="../../assets/images/Logofinal.png">
-      <br/><br/><br/><br/>
+      <br/><br/>
       <div class="ui middle aligned centered grid">
-        <div class="ui raised segment">
+        <div class="ui basic segment">
           <button class="ui fluid huge inverted blue button"style="margin-bottom: 20px" (click)="clickOnLogin()" >
             Iniciar Sesión
           </button>
@@ -13,9 +12,7 @@
           </button>
         </div>
       </div>
-      <br/><br/><br/><br/>
     </div>
-</div>
 
 <app-user-form *ngIf="register && !functionsService.showMainPage && !login"></app-user-form>
 <app-login *ngIf="!register && ((functionsService.isLogged)||(login && !functionsService.showMainPage)) && !functionsService.reset"></app-login>
