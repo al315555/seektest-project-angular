@@ -28,9 +28,11 @@ export class GroupsService {
 
   }
 
-  getAllGrups(limit: number) {
-    return this.db.list('groups/', ref => ref.orderByChild('dateCreated').limitToLast(limit));
+  getAllGrups() {
+    return this.db.list('groups/', ref => ref.orderByChild('dateCreated'));
   }
+  /*
+  Not used
 
   showMyGroup(): Group {
     const group =  new Group();
@@ -50,7 +52,6 @@ export class GroupsService {
                 group.nombre = item.nombre;
                 group.description = item.description;
                 group.key = item.key;
-                console.log(group);
               }
             });
           }
@@ -61,6 +62,7 @@ export class GroupsService {
     console.log(group);
     return group;
   }
+  */
 
   updateGroupData(group: Group) {
     firebase.database().ref('groups/' + group.key).set({
@@ -69,5 +71,9 @@ export class GroupsService {
       nombre: group.nombre,
       researchers: group.researchers
     }).then(result => console.log('Grupo actualizado correctamente. ::: ' + result));
+  }
+
+  deleteGroup(grupoKey: String){
+    this.db.list('groups/' + grupoKey).remove();
   }
 }
