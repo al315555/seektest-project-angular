@@ -23,20 +23,23 @@
     <div class="field" *ngIf="(type == 1)">
       <div class="ui toggle checkbox">
         <input type="checkbox" name="public" [(ngModel)]="myGroupExperiments" (change)="getExperiments()">
-        <label>Mostrar experimentos de grupo</label>
+        <label>Mostrar experimentos de mi grupo de investigación</label>
       </div>
     </div>
   </div>
 </div>
-<div class="ui four column grid items stackable">
-  <div class="column" *ngFor="let expe of items" >
-    <app-experiment-card [expe]="expe"></app-experiment-card>
-  </div>
+<br>
+<br>
+<div class="ui three column doubling grid container">
+    <div class="ui column" *ngFor="let expe of items">
+        <app-experiment-card [expe]="expe"></app-experiment-card>
+    </div>
+</div>
+  
   <div class="column" *ngIf="(items == null) || (items.length <= 0)">
     <p class="text">No&nbsp;hay&nbsp;registros.</p>
   </div>
-</div>
 <br/>
 <br/>
-<div class="ui inverted pink bottom attached button" (click)="masResultados()">Más resultados...</div>
+<div *ngIf="(type == 0) && (textoTitulo === '') " class="ui inverted pink bottom attached button" (click)="masResultados()">Más resultados...</div>
 </div>

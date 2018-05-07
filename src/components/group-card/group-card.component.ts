@@ -9,6 +9,7 @@ import {GruposInvestComponent} from '../grupos-invest/grupos-invest.component';
 import {Group} from '../../models/group';
 import {GroupsService} from '../../app/groups.service';
 import {AuthService} from '../../app/auth.service';
+import { User } from '../../app/core/User';
 
 
 @Component({
@@ -32,7 +33,7 @@ export class GroupCardComponent implements OnInit {
 
 
   constructor(public experimentService: ExperimentsService, public modalService: SuiModalService, private groupsService: GroupsService
-              , private authService: AuthService) {
+    , private authService: AuthService) {
     this.dateCreated = new Date();
     this.investigadores = '';
   }
@@ -41,16 +42,22 @@ export class GroupCardComponent implements OnInit {
     this.dateCreated.setTime(this.grupo.dateCreated);
     if (this.grupo.researchers !== undefined && this.grupo.researchers.length > 0) {
       this.grupo.researchers.forEach(researcher => {
-        const refi = this.authService.getNameUserForGroups(researcher);
-        refi.snapshotChanges().subscribe(value => {
-          value.map(cosas => {
-            this.investigadores += ', ' +
-              cosas.payload.child('_name').exportVal() + ' ' +
-              cosas.payload.child('_surname').exportVal();
-          });
+        const refi = this.authService.getUser(researcher);
+        refi.snapshotChanges()
+        .map(actions => {
+          return actions.map(action => ({ key: action.key, ...action.payload.val() }));
+        })
+        .subscribe((value) => {
+          if (value !== undefined) {
+            value.forEach((val: User) => {
+              if (val._name !== undefined) {
+                this.investigadores += val._name + ' ' + val._surname + ', ';
+              }
+            });
+          }
         });
       });
-      this.investigadores = this.investigadores.trim().substring(2, this.investigadores.length);
+      //this.investigadores = this.investigadores.trim().substring(2, this.investigadores.length);
     } else {
       this.investigadores = 'No hay miembros';
     }
@@ -73,25 +80,43 @@ export class GroupCardComponent implements OnInit {
         });
         this.grupo.researchers = newMembers;
         this.groupsService.updateGroupData(this.grupo);
-
         this.dadoDeBaja.emit({dadoDeBaja: true});
       })
-      .onDeny(() => {console.log('User said cancel.'); });
+      .onDeny(() => {
+        console.log('User said cancel.');
+      });
   }
+
+  cerrarGrupo() {
+    this.messageBody = '¿Solo quedas tu en el grupo, si sales se eliminará, estás seguro?.';
+    this.modalService
+      .open(new ModalConfirm(this.grupo.nombre, this.messageBody, ModalSize.Tiny))
+      .onApprove(() => {
+        console.log('User has accepted.');
+        this.dadoDeBaja.emit({dadoDeBaja: true});
+        this.groupsService.deleteGroup(this.grupo.key);
+      })
+      .onDeny(() => {
+        console.log('User said cancel.');
+      });
+  }
+
 
   seleccionarGrupo() {
     this.messageBody = '¿Estás seguro de que quieres añadirte al grupo? Puedes abandonarlo cuando quieras.';
     this.modalService
       .open(new ModalConfirm(this.grupo.nombre, this.messageBody, ModalSize.Tiny))
       .onApprove(() => { // poner aquí la orden de envio
-         console.log('User has accepted.');
-         if ( this.grupo.researchers === undefined) {
-           this.grupo.researchers = new Array();
-         }
-         this.grupo.researchers.push(localStorage.getItem('uid_usuario'));
-         this.groupsService.updateGroupData(this.grupo);
-         this.dadoDeAlta.emit({dadaDeAlta: true});
+        console.log('User has accepted.');
+        if (this.grupo.researchers === undefined) {
+          this.grupo.researchers = new Array();
+        }
+        this.grupo.researchers.push(localStorage.getItem('uid_usuario'));
+        this.groupsService.updateGroupData(this.grupo);
+        this.dadoDeAlta.emit({dadaDeAlta: true});
       })
-      .onDeny(() => {console.log('User said cancel.'); });
+      .onDeny(() => {
+        console.log('User said cancel.');
+      });
   }
 }

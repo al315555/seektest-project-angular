@@ -16,13 +16,19 @@
       {{ grupo.researchers != undefined ? grupo.researchers.length : 0 }} miembros
     </a>
   </div>
-  <button id="join" (click)="seleccionarGrupo()" class="ui fluid inverted blue button" *ngIf="!myGroup && !hasGroup" >
+  <button id="join" (click)="seleccionarGrupo()" class="ui fluid inverted blue button" *ngIf="!myGroup && !hasGroup">
     <i class="sign in alternate icon"></i>Unirse
     <!-- UNIRSE AL GRUPO -->
   </button>
-  <button id="leave" (click)="abandonarGrupo()" class="ui fluid inverted pink button" *ngIf="myGroup && hasGroup">
+  <button id="leave" (click)="abandonarGrupo()" class="ui fluid inverted pink button"
+          *ngIf="myGroup && hasGroup && grupo.researchers.length > 1">
     <i class="sign out alternate icon"></i>Abandonar
     <!-- ABANDORNAR EL GRUPO -->
+  </button>
+  <button id="close" (click)="cerrarGrupo()" class="ui fluid inverted pink button"
+          *ngIf="myGroup && hasGroup && grupo.researchers.length ==1">
+    <i class="sign out alternate icon"></i>Abandonar y eliminar
+    <!-- SALIR Y BORRAR EL GRUPO -->
   </button>
 </div>
 <br/>

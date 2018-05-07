@@ -63,7 +63,7 @@ export class ExperimentsService {
     return null;
   }
 
-  getMyGroupExperiments(): any[] {
+  getMyGroupExperiments(): Experiment[] {
     const exps = new Array();
     const user = localStorage.getItem('uid_usuario');
     this.db.list('groups/').valueChanges().take(1).toPromise().then((value) => {
