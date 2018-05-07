@@ -20,6 +20,12 @@
         <label>Duración</label>
       </div>
     </div>
+    <div class="field" *ngIf="(type == 1)">
+      <div class="ui toggle checkbox">
+        <input type="checkbox" name="public" [(ngModel)]="myGroupExperiments" (change)="getExperiments()">
+        <label>Mostrar experimentos de grupo</label>
+      </div>
+    </div>
   </div>
 </div>
 <div class="ui four column grid items stackable">
