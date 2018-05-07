@@ -31,6 +31,8 @@ export class NewExperimentComponent {
   dateHourSelected: Date;
   dateHourEntered: boolean;
 
+  numberVotaciones: number;
+  mediaValoracion: number;
   title: String;
   titleEntered: boolean;
 
@@ -76,6 +78,9 @@ export class NewExperimentComponent {
     this.gift = null;
     this.lat = null;
     this.lat = null;
+
+    this.numberVotaciones = 0;
+    this.mediaValoracion = 0;
 
     this.durationEntered = false;
     this.titleEntered = false;
@@ -265,6 +270,8 @@ export class NewExperimentComponent {
       exp.numberParticipants = this.numberParticipants.toString();
       exp.description = this.description.toString();
       exp.dates = dateNumberArray;
+      exp.numberVotaciones = 0;
+      exp.mediaValoracion = 0;
       if (this.isNotNull(this.gift)) {
         exp.gift = this.gift.toString();
       }
