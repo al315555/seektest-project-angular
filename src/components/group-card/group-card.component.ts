@@ -80,7 +80,6 @@ export class GroupCardComponent implements OnInit {
         });
         this.grupo.researchers = newMembers;
         this.groupsService.updateGroupData(this.grupo);
-
         this.dadoDeBaja.emit({dadoDeBaja: true});
       })
       .onDeny(() => {
@@ -94,6 +93,7 @@ export class GroupCardComponent implements OnInit {
       .open(new ModalConfirm(this.grupo.nombre, this.messageBody, ModalSize.Tiny))
       .onApprove(() => {
         console.log('User has accepted.');
+        this.dadoDeBaja.emit({dadoDeBaja: true});
         this.groupsService.deleteGroup(this.grupo.key);
       })
       .onDeny(() => {
