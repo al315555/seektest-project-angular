@@ -132,7 +132,6 @@ export class ExperimentsService {
     });
     return exps;
   }
-
   obtenerUsuariosInscritosAExperimento(expKey: string) {
     const items = []; const exps = [];
     const refKeys = this.db.list('experimentsAndUsers/',
