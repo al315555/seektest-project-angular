@@ -179,6 +179,7 @@ export class AuthService {
         _alergias: this.userDataJson._alergias,
         _infoAdicional: this.userDataJson._infoAdicional,
         _observacionesMedicas: this.userDataJson._observacionesMedicas,
+        _researcher: this.userDataJson._researcher,
         _sexo: this.userDataJson._sexo,
         _fechaNacimiento: this.userDataJson._fechaNacimiento,
         _photoURL: this.userDataJson._photoURL
