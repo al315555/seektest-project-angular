@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {FunctionsService} from '../../app/functions.service';
 import {AuthService} from '../../app/auth.service';
+import {ModalSize, SuiModalService} from 'ng2-semantic-ui';
+import {ModalConfirm} from '../modal/confirm-modal.component';
 
 @Component({
   selector: 'app-header',
@@ -19,13 +21,21 @@ export class HeaderComponent {
   experimentosItem = this.itemActiveString;
   nuevoExperimentoItem = this.itemString;
   misExperimentosInscritosItem = this.itemString;
+  messageBody: string;
 
-  constructor(public authService: AuthService, public functionsService: FunctionsService) {
+
+  constructor(public authService: AuthService, public functionsService: FunctionsService, public modalService: SuiModalService) {
     this.authService.generateUserDataJson();
   }
 
   logout() {
-    this.authService.logout();
+    this.messageBody = '¿Deseas cerrar la sesión?';
+    this.modalService.open(new ModalConfirm('Cerrar sesión', this.messageBody, ModalSize.Tiny)).onApprove(()=> {
+      console.log('User has accepted.');
+      this.authService.logout();
+    }).onDeny(()=> {
+      console.log('User said cancel.');
+    });
   }
 
   selectPerfil() {
