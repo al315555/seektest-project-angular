@@ -100,7 +100,7 @@ export class UserFormComponent implements OnInit {
   }
 
   get fechaNacimiento() {
-    //return this.detailForm.get('fechaNacimiento');
+    // return this.detailForm.get('fechaNacimiento');
     return !this.isResearcher ? this.fechaNacimientoDate.getTime() : null;
   }
 

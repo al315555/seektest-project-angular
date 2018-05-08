@@ -17,10 +17,12 @@ export class ListUsersInscriptionsComponent implements OnInit {
   listaUsuariosInscritos: User[];
   listasesiones: number[];
 
-  constructor(public experimentService: ExperimentsService) { this.listasesiones = new Array(); }
+  constructor(public experimentService: ExperimentsService) { this.listasesiones = new Array(); this.listaUsuariosInscritos = []; }
 
   ngOnInit() {
+    console.log(this.expKey);
     this.listaUsuariosInscritos = this.experimentService.obtenerUsuariosInscritosAExperimento(this.expKey);
+    console.log(this.listaUsuariosInscritos);
   }
 
   obtenerEdad(fechaNacimiento: number): number {

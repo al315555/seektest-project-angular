@@ -5,6 +5,7 @@ import {SuiModalService, TemplateModalConfig, ModalTemplate, ModalConfig, ModalS
 import {ModalExperiment} from '../modal/experiment-modal.component';
 import {ModalConfirm} from '../modal/confirm-modal.component';
 import {ModalExperimentEdit} from '../modal/experiment-edit-modal.component';
+import {ModalInscripcionsUsers} from '../modal/inscripcions-users.component';
 
 export interface IContext {
   data: string;
@@ -41,6 +42,21 @@ export class ExperimentCardComponent implements OnInit {
     if (this.isOwn) {
       this.experimentService.deleteExperiment(this.expe.key);
     }
+  }
+
+  mostrarUsuariosInscritos() {
+    const listaUsuariosInscritos = new Array();
+    this.modalService
+      .open(new ModalInscripcionsUsers('Lista de usuarios inscritos', this.expe.key, this.expe.inscriptions))
+      .onApprove(() => {
+        console.log('Approved without button clicked');
+      })
+      .onDeny(() => {
+        if (this.expe.inscriptions) {
+          this.experimentService.updateInscriptionsOfExperiment(this.expe);
+        }
+        console.log('Closed');
+      });
   }
 
   openModal() {

@@ -13,13 +13,13 @@
         <a class="item" (click)="sidebar.toggle()">
             <i class="sidebar icon"></i> Menu
         </a>
-        <a class="item" (click)="goBackToExperiments()">
-            <img src="../../assets/images/logo_seekTest.png" class="image" width="10px" height="50px">
+        <a class="item" (click)="goBackToExperiments()" style="padding-left: 195px;">
+            <img src="../../assets/images/logoheader.png" class="image" style="height: 35px; width: auto;" >
         </a>
       </div>
         <sui-sidebar-container class="ui bottom attached segment">
           <sui-sidebar class="vertical" #sidebar>
-          
+
             <div class="right menu">
               <a class="{{miPerfilItem}}" (click)="selectPerfil()">
                  <h3>
@@ -30,7 +30,7 @@
                  *ngIf="authService.userDataJson._researcher">
                 <i class="users icon"></i> <h3>
                     Grupos de investigación
-                </h3> 
+                </h3>
               </a>
               <a *ngIf="authService.userDataJson._researcher" class="{{misExperimentosItem}}" (click)="goToMyExperiments()">
                  <h3>
@@ -65,7 +65,7 @@
              <div class="ui basic segment">
             <app-experiments *ngIf="functionsService.experimentsSelected"></app-experiments>
             <app-user-data *ngIf="functionsService.perfilSelected"></app-user-data>
-            
+
               <app-new-experiment *ngIf="functionsService.newExperimentSelected"></app-new-experiment>
               <app-my-experiments *ngIf="functionsService.myexperimentsSelected"></app-my-experiments>
               <app-grupos-invest *ngIf="functionsService.gruposSelected"></app-grupos-invest>

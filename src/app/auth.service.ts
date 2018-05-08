@@ -61,7 +61,7 @@ export class AuthService {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password);
   }
 
-  updateUser(user: User, data: any): string {
+  updateUser(user: User, data: any) {
     const data1: User = {
       _uid: data._uid,
       _name: data._name,
@@ -74,7 +74,6 @@ export class AuthService {
       _sexo: data._sexo,
       _researcher: user._researcher,
       _photoURL: data._photoURL};
-    return this.addUser(data1, data1._uid);
   }
 
 // Sets user data to firestore after succesful login

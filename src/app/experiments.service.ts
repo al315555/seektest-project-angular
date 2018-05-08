@@ -171,6 +171,7 @@ export class ExperimentsService {
       });
       return value.map(item => item.key);
     });
+    console.log(exps);
     return exps;
   }
   obtenerUsuariosInscritosAExperimento(expKey: string) {
@@ -182,11 +183,14 @@ export class ExperimentsService {
     }).subscribe((value) => {
       value.forEach( item => {
         const userKey = item.userUidInscripted;
-        const refExperiments = this.db.list('users/', ref => ref.orderByKey().equalTo(userKey));
+        console.log(userKey);
+        const refExperiments = this.db.list('users/', ref => ref.orderByChild('_uid').equalTo(userKey));
         refExperiments.snapshotChanges().map(actiones => {
           return actiones.map(actione => ({ key: actione.key, ...actione.payload.val() }));
         }).subscribe((valueExp) => {
+          console.log(valueExp);
           valueExp.forEach( neu => {
+            console.log(neu);
             exps.push(neu);
           });
           return valueExp.map(itema => itema.key);
@@ -194,6 +198,7 @@ export class ExperimentsService {
       });
       return value.map(item => item.key);
     });
+    console.log(exps);
     return exps;
   }
 
