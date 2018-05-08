@@ -2,7 +2,6 @@
     <app-header></app-header>
     <app-experiments *ngIf="functionsService.experimentsSelected"></app-experiments>
       <app-user-data *ngIf="functionsService.perfilSelected"></app-user-data>
-      
         <app-new-experiment *ngIf="functionsService.newExperimentSelected"></app-new-experiment>
         <app-my-experiments *ngIf="functionsService.myexperimentsSelected"></app-my-experiments>
         <app-grupos-invest *ngIf="functionsService.gruposSelected"></app-grupos-invest>
@@ -22,48 +21,39 @@
           <sui-sidebar class="vertical" #sidebar>
           
             <div class="right menu">
-              <a class="{{miPerfilItem}}" (click)="selectPerfil()" data-tooltip="Mostrar datos de perfil"
-                 data-position="bottom center">
+              <a class="{{miPerfilItem}}" (click)="selectPerfil()">
                  <h3>
                 <i class="user icon"></i>{{ authService.userDataJson._name }}&nbsp;{{ authService.userDataJson._surname }}
                 </h3>
               </a>
-              <a class="{{gruposItem}}" (click)="selectGrupos()" data-tooltip="Mostrar grupos de investigación"
-                 data-position="bottom center"
+              <a class="{{gruposItem}}" (click)="selectGrupos()"
                  *ngIf="authService.userDataJson._researcher">
                 <i class="users icon"></i> <h3>
                     Grupos de investigación
                 </h3> 
               </a>
-              <a *ngIf="authService.userDataJson._researcher" class="{{misExperimentosItem}}" (click)="goToMyExperiments()"
-                 data-tooltip="Mostrar mis experimentos"
-                 data-position="bottom center">
+              <a *ngIf="authService.userDataJson._researcher" class="{{misExperimentosItem}}" (click)="goToMyExperiments()">
                  <h3>
                 <i class="thumbtack icon"></i> Publicados
               </h3>
               </a>
-              <a *ngIf="!authService.userDataJson._researcher" class="{{misExperimentosInscritosItem}}" (click)="goToMyExperimentsInscriptions()"
-                 data-tooltip="Mostrar los experimentos donde tengo inscripción"
-                 data-position="bottom center">
+              <a *ngIf="!authService.userDataJson._researcher" class="{{misExperimentosInscritosItem}}" (click)="goToMyExperimentsInscriptions()">
                  <h3>
                 <i class="tasks icon"></i> Inscritos
                 </h3>
               </a>
-              <a class="{{experimentosItem}}" (click)="goBackToExperiments()" data-tooltip="Mostrar experimentos"
-                 data-position="bottom center">
+              <a class="{{experimentosItem}}" (click)="goBackToExperiments()" >
                 <h3>
                 <i class="columns icon"></i> Buscar
                 </h3>
               </a>
               <a class="{{nuevoExperimentoItem}}" (click)="goToNewExperiment()"
-                 data-tooltip="Nuevo experimento"
-                 data-position="bottom center"
                  *ngIf="authService.userDataJson._researcher">
                  <h3>
                     <i class="left plus icon"></i> Nuevo
                  </h3>
               </a>
-              <a class="ui item" (click)="logout()" data-tooltip="Cerrar sesión" data-position="bottom center"
+              <a class="ui item" (click)="logout()"
                  style="margin-: 80px; ">
                  <h3>
                     <i class="sign out icon"></i> Cerrar sesión
