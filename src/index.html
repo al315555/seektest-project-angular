@@ -13,12 +13,29 @@
       left: 0;
     }
     */
+    .padded, body {
+      background-color: rgb(230, 236, 240) !important;
+      height: 100% !important;
+    }
+    .container {
+      background-color: rgb(250, 250, 250) !important;
+    }
+
+    .secondary, .pointing, .menu {
+      background-color: rgb(250, 250, 250) !important;
+    }
+
     div.ui.modal {
       position: absolute;
       left: 50%;
       -webkit-transform: translateX(-50%);
       transform: translateX(-50%);
     }
+
+    .ui.padded.segment{
+      height: 100%;
+    }
+
   </style>
   <meta charset="utf-8">
   <title>SeekTest Project</title>
@@ -28,5 +45,6 @@
 </head>
 <body>
   <app-root></app-root>
+  <div class="footer"></div>
 </body>
 </html>

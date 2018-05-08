@@ -7,10 +7,10 @@
     </button>
   </div>
   <br/><br/>-->
-  <div class="ui padded segment form-size">
+  <div class="ui basic segment form-size">
+    <app-message-toast></app-message-toast>
     <div class="ui raised very padded text container segment">
       <h2 class="ui header">Mis datos</h2>
-      <app-message-toast></app-message-toast>
       <div class="ui large form" *ngIf="authService.userDataJson as user">
         <div class="field">
           <label>Correo electrónico</label>

@@ -12,15 +12,13 @@ import {GroupCardComponent} from '../group-card/group-card.component';
 })
 export class ListGroupsComponent implements OnInit {
 
-  items: any[] = null;
-  itemsAll: any[] = null;
-  numberLimit: number;
+  items: Group[] = null;
+  itemsAll: Group[] = null;
   textoTitulo: string;
   buttonEnabled: boolean;
   grupoActual: Group;
 
   constructor(private groupsService: GroupsService, private functionsService: FunctionsService) {
-    this.numberLimit = 10;
     this.textoTitulo = '';
     this.buttonEnabled = false;
   }
@@ -31,20 +29,42 @@ export class ListGroupsComponent implements OnInit {
 
   ngOnInit() {
     this.getGrupos();
-    this.grupoActual = this.groupsService.showMyGroup();
-
   }
 
   getGrupos() {
-    this.groupsService.getAllGrups(this.numberLimit)
-      .snapshotChanges().map(actions => {
+    const group =  new Group();
+    const user = localStorage.getItem('uid_usuario');
+    this.groupsService.getAllGrups()
+    .snapshotChanges().map(actions => {
       return actions.map(action => ({key: action.key, ...action.payload.val()}));
     }).subscribe((value) => {
+      if (value !== undefined) {
       this.items = value;
       this.items.reverse();
       this.itemsAll = this.items;
-      return value.map(item => item.key);
+        value.forEach(item => {
+          const researchers = item.researchers;
+          if (researchers !== undefined) {
+            researchers.forEach(researcher => {
+              if (user === researcher) {
+                group.researchers = item.researchers;
+                group.dateCreated = item.dateCreated;
+                group.nombre = item.nombre;
+                group.description = item.description;
+                group.key = item.key;
+              }
+            });
+          }
+          this.items.forEach(element => {
+            if (element.key === this.grupoActual.key || element.nombre === undefined) {
+              this.items.splice(this.items.indexOf(element), 1);
+            }
+          });
+          return value.map(item2 => item2.key);
+        });
+      }
     });
+    this.grupoActual = group;
   }
 
 
@@ -53,7 +73,6 @@ export class ListGroupsComponent implements OnInit {
       this.items = this.itemsAll;
       const it: any[] = new Array();
       this.items.forEach(element => {
-        // console.log(this.compareTitle(element));
         if (this.compareTitle(element)) {
           it.push(element);
         }

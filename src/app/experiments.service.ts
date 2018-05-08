@@ -16,25 +16,36 @@ import { NotifyService } from './core/notify.service';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/catch';
 
-import { switchMap } from 'rxjs/operators';
+import { switchMap, retry } from 'rxjs/operators';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { Experiment } from '../models/experiment';
 import { Inscription } from '../models/inscription';
 import {element} from 'protractor';
+import { iterateListLike } from '@angular/core/src/change_detection/change_detection_util';
+import { Group } from '../models/group';
+import { GroupsService } from './groups.service';
+import { PARAMETERS } from '@angular/core/src/util/decorators';
 
 @Injectable()
 export class ExperimentsService {
   error: boolean;
   errorMessage: string;
 
-  constructor(public db: AngularFireDatabase) { }
+
+
+  constructor(public db: AngularFireDatabase, public groupsService: GroupsService) { }
 
   getAllExperimentsOrderedByTitle() {
     return this.db.list('experiments/', ref => ref.orderByChild('title'));
   }
 
   getAllExperiments(limit: number) {
-    return this.db.list('experiments/', ref => ref.orderByChild('datePublished').limitToLast(limit));
+    if (limit === -1) {
+      return this.db.list('experiments/', ref => ref.orderByChild('datePublished'));
+    } else {
+      return this.db.list('experiments/', ref => ref.orderByChild('datePublished').limitToLast(limit));
+    }
+
   }
 
   getExperimentsByTitle(byTitle: string, limit: number) {
@@ -52,6 +63,34 @@ export class ExperimentsService {
       return this.db.list('experiments/', ref => ref.orderByChild('uidPublisher').equalTo(user));
     }
     return null;
+  }
+
+  getMyGroupExperiments(): Experiment[] {
+    const exps = new Array();
+    const user = localStorage.getItem('uid_usuario');
+    this.db.list('groups/').valueChanges().take(1).toPromise().then((value) => {
+      if (value !== undefined) {
+        value.forEach((val: Group) => {
+          if (val.researchers !== undefined) {
+            if (val.researchers.includes(user)) {
+              val.researchers.forEach((researcher) => {
+                console.log(researcher);
+                this.db.list('experiments/', ref => ref.orderByChild('uidPublisher').equalTo(researcher))
+                .valueChanges().take(1).toPromise().then((expVal) => {
+                  expVal.forEach((exp: Experiment) => {
+                    if (exp !== undefined) {
+                      exps.push(exp);
+                    }
+                  });
+                });
+              });
+              return exps;
+            }
+          }
+        });
+      }
+      });
+    return exps;
   }
 
   deleteExperiment(expKey: string) {
@@ -91,6 +130,8 @@ export class ExperimentsService {
         description: experiment.description,
         duration: experiment.duration,
         numberParticipants: experiment.numberParticipants,
+        numberVotaciones: experiment.numberVotaciones,
+        mediaValoracion: experiment.mediaValoracion,
         place: experiment.place,
         placeLatLon: experiment.placeLatLon,
         title: experiment.title,
@@ -132,7 +173,6 @@ export class ExperimentsService {
     });
     return exps;
   }
-
   obtenerUsuariosInscritosAExperimento(expKey: string) {
     const items = []; const exps = [];
     const refKeys = this.db.list('experimentsAndUsers/',
@@ -165,12 +205,56 @@ export class ExperimentsService {
         description: experiment.description,
         duration: experiment.duration,
         numberParticipants: experiment.numberParticipants,
+        numberVotaciones: experiment.numberVotaciones,
+        mediaValoracion: experiment.mediaValoracion,
         place: experiment.place,
         placeLatLon: experiment.placeLatLon,
         title: experiment.title,
         uidPublisher: experiment.uidPublisher,
         inscriptions: experiment.inscriptions
       }).then(value => { console.log('editadas inscriptiones'); });
+  }
+
+  valorarExperimento(experiment: Experiment, valoracion) {
+    console.log('Valorar Experimento: ', experiment, valoracion);
+    const numValoraciones = experiment.numberVotaciones + 1;
+    const totalValoraciones = experiment.mediaValoracion + valoracion;
+    firebase.database().ref('experiments/' + experiment.key)
+      .set({
+        datePublished: experiment.datePublished,
+        dates: experiment.dates,
+        description: experiment.description,
+        duration: experiment.duration,
+        numberParticipants: experiment.numberParticipants,
+        numberVotaciones: numValoraciones,
+        mediaValoracion: totalValoraciones,
+        place: experiment.place,
+        placeLatLon: experiment.placeLatLon,
+        title: experiment.title,
+        uidPublisher: experiment.uidPublisher,
+        inscriptions: experiment.inscriptions
+      }).then(value => { console.log('editadas inscriptiones'); });
+    firebase.database().ref('experimentsUsersVotations/').push({
+      voteValue: valoracion,
+      uid: localStorage.getItem('uid_usuario'),
+      experimentKey: experiment.key
+    });
+  }
+  /** Si devuleve -1 es que no hay votación del usuario**/
+  getMyVoteToExperiment(experiment: Experiment): number {
+    const dataReturn = {number: -1};
+    const refKeys = this.db.list('experimentsAndUsers/',
+      ref => ref.orderByChild('experimentKey').equalTo(experiment.key));
+    refKeys.snapshotChanges().map(actions => {
+      return actions.map(action => ({ key: action.key, ...action.payload.val() }));
+    }).subscribe((value) => {
+      value.forEach(item => {
+        if (item.uid ===  localStorage.getItem('uid_usuario')) {
+          dataReturn.number = item.voteValue;
+        }
+      });
+    });
+    return dataReturn.number;
   }
 }
 

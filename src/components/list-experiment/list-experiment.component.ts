@@ -28,13 +28,17 @@ export class ListExperimentComponent implements OnInit {
   object: any;
   textoTitulo: string;
   numberLimit: number;
+  numberLimitOr: number;
 
   op: number;
+  myGroupExperiments: boolean;
 
   constructor(public experimentService: ExperimentsService, public functions: FunctionsService) {
     this.textoTitulo = '';
-    this.numberLimit = 2;
+    this.numberLimit = 6;
+    this.numberLimitOr = 6;
     this.clicked = false;
+    this.myGroupExperiments = false;
     this.item = new Experiment();
     this.itemDates = new Array();
   }
@@ -53,35 +57,38 @@ export class ListExperimentComponent implements OnInit {
         this.items = value;
         this.items.reverse();
         this.itemsAll = this.items;
+        this.buscExperimentos();
+        this.ordenarExperimentos();
         return value.map(item => item.key);
       });
     } else if (this.type === 1) {
-      this.experimentService.getMyExperiments()
-      .snapshotChanges().map(actions => {
-        return actions.map(action => ({ key: action.key, ...action.payload.val() }));
-      }).subscribe((value) => {
-        this.items = value;
+      if (this.myGroupExperiments) {
+        this.items = this.experimentService.getMyGroupExperiments();
         this.items.reverse();
         this.itemsAll = this.items;
-        return value.map(item => item.key);
-      });
+        this.ordenarExperimentos();
+      } else {
+        this.experimentService.getMyExperiments()
+        .snapshotChanges().map(actions => {
+          return actions.map(action => ({ key: action.key, ...action.payload.val() }));
+        }).subscribe((value) => {
+          this.items = value;
+          this.items.reverse();
+          this.itemsAll = this.items;
+          this.ordenarExperimentos();
+          return value.map(item => item.key);
+        });
+      }
     } else if (this.type === 2) {
       this.items = this.experimentService.obtenerExperimentosInscrito();
       this.items.reverse();
       this.itemsAll = this.items;
+      this.ordenarExperimentos();
     }
   }
 
-  buscarExperimentos() {
-
-    if (this.op === 0) {
-      this.items.sort((a, b) => this.comparePubliDate(a, b));
-    } else if (this.op === 1) {
-      this.items.sort((a, b) => this.compareDuration(a, b));
-    }
-
-    if (this.textoTitulo !== '') {
-      this.items = this.itemsAll;
+  buscExperimentos() {
+    this.items = this.itemsAll;
       const it: any[] = new Array();
       this.items.forEach(element => {
         console.log(this.compareTitle(element));
@@ -90,10 +97,30 @@ export class ListExperimentComponent implements OnInit {
         }
         this.items = it;
       });
-    } else {
-      this.items = this.itemsAll;
+  }
+
+  ordenarExperimentos() {
+    if (this.op === 0) {
+      this.items.sort((a, b) => this.comparePubliDate(a, b));
+    } else if (this.op === 1) {
+      this.items.sort((a, b) => this.compareDuration(a, b));
+    }
+  }
+
+  buscarExperimentos() {
+
+    if (this.numberLimit !== -1) {
+      this.numberLimitOr = this.numberLimit;
     }
 
+    if (this.textoTitulo !== '') {
+      this.numberLimit = -1;
+      this.getExperiments();
+    } else {
+      this.numberLimit = this.numberLimitOr;
+      this.getExperiments();
+      this.items = this.itemsAll;
+    }
   }
 
   compareTitle(elem: Experiment) {

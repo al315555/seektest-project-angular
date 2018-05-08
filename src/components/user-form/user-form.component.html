@@ -1,9 +1,8 @@
-<ng-container *ngIf="(auth.user | async) || {} as user" class="ui">
-  <form [formGroup]="signupForm" *ngIf="!user.uid" (ngSubmit)="signup()">
-    <br/><br/><br/>
-    <div class="ui middle aligned centered grid">
+<ng-container *ngIf="(auth.user | async) || {} as user" style="background-color: white !important;height: 101% !important;">
+  <form [formGroup]="signupForm" *ngIf="!user.uid" (ngSubmit)="signup()" style="background-color: white !important;height: 101% !important;">
+    <div class="ui middle aligned centered grid" style="background-color: white !important;height: 101% !important;">
       <div class="ui column">
-        <h1 class="ui image header" style="margin-left: 10%; margin-right: 10%">
+        <h1 class="ui image header" style="margin-left: 10%; margin-right: 10%; margin-top: 15%;">
           <img src="../../assets/images/logo_seekTest.png" class="image">
           <div class="content" style="color: #2a5569">
             Registro <br> SeekTest
@@ -66,7 +65,8 @@
       </div>
     </div>
   </form>
-  <form [formGroup]="detailForm" *ngIf="user.uid && !user.age" (ngSubmit)="setUserInfo(user)">
+  <form [formGroup]="detailForm" *ngIf="user.uid && !user.age" (ngSubmit)="setUserInfo(user)"
+        style="background-color: white !important;height: 101% !important;">
     <div class="ui middle aligned centered grid">
       <div class="ui column">
         <h1 class="ui image header" style="margin-left: 10%; margin-right: 10%">
