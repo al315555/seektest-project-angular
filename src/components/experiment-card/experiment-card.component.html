@@ -3,13 +3,16 @@
     <!--<i class="file outline icon"></i>-->
     <div class="header">
       <div *ngIf="isOwn" style="position: absolute; top: 2px; right: 1px; margin-bottom: 15px;">
-        <button class="circular ui mini basic icon button" (click)="mostrarUsuariosInscritos()">
+        <button class="circular ui mini basic icon button" (click)="mostrarUsuariosInscritos()"
+                data-tooltip="Inscripciones al experimento" data-position="top">
           <i class="address book icon"></i>
         </button>
-        <button class="circular ui mini basic icon button" (click)="editExperiment()">
+        <button class="circular ui mini basic icon button" (click)="editExperiment()"
+                data-tooltip="Editar experimento" data-position="top">
           <i class="edit icon"></i>
         </button>
-        <button class="circular ui mini basic icon button" (click)="deleteExperiment()">
+        <button class="circular ui mini basic icon button" (click)="deleteExperiment()"
+          data-tooltip="Eliminar experimento" data-position="top">
           <i class="times icon"></i>
         </button>
       </div>
