@@ -1,6 +1,6 @@
 
 <div class="ui form" >
-    <div class="content">
+  <div class="content">
     <div class="description">
       <div clas="scrolling content">
         <p>{{item.description}}</p>
@@ -22,8 +22,8 @@
       {{ item.gift }}
     </div>
     <div class="text">
-        <i class="map marker alternate icon"></i>
-        {{ item.place }}
+      <i class="map marker alternate icon"></i>
+      {{ item.place }}
     </div>
 
     <div *ngIf="item.placeLatLon">
@@ -31,41 +31,40 @@
       <h3>Ubicacion</h3>
       <br>
       <agm-map [clickableIcons]="false"[latitude]="item.placeLatLon.lat" [longitude]="item.placeLatLon.lon" [zoom]="19">
-          <agm-marker [latitude]="item.placeLatLon.lat" [longitude]="item.placeLatLon.lon"></agm-marker>
+        <agm-marker [latitude]="item.placeLatLon.lat" [longitude]="item.placeLatLon.lon"></agm-marker>
       </agm-map>
     </div>
 
     <br/><br/>
 
     <div class="text">
-        <h3>Perfil de usuario</h3>
-        <div *ngIf="item.userProfile">
-          <div class="text" >
-            <p class="text">Género&nbsp;
-              <i class="mars icon" *ngIf="item.userProfile.sexo === 'hombre'"></i>
-              <i class="venus icon" *ngIf="item.userProfile.sexo === 'mujer'"></i>
-              <i class="genderless icon" *ngIf="item.userProfile.sexo === 'null'"></i>
-              <span *ngIf="item.userProfile.rangoEdad &&
+      <h3>Perfil de usuario</h3>
+      <div *ngIf="item.userProfile">
+        <div class="text" >
+          <p class="text">Género&nbsp;
+            <i class="mars icon" *ngIf="item.userProfile.sexo === 'hombre'"></i>
+            <i class="venus icon" *ngIf="item.userProfile.sexo === 'mujer'"></i>
+            <i class="genderless icon" *ngIf="item.userProfile.sexo === 'null'"></i>
+            <span *ngIf="item.userProfile.rangoEdad &&
                item.userProfile.rangoEdad.inicio &&
                item.userProfile.rangoEdad.final">
               &nbsp;Entre&nbsp;{{item.userProfile.rangoEdad.inicio}}&nbsp;años&nbsp;
               y&nbsp;{{item.userProfile.rangoEdad.final}}&nbsp;años</span>
-              <br/>Alergias&nbsp;<i class="exclamation icon" ></i>
-              <span *ngIf="item.userProfile.alergias != null">{{item.userProfile.alergias}}</span>
-              <span *ngIf="item.userProfile.alergias == null">{{noDataString}}</span>
-              <br/>Observaciones médicas&nbsp;<i class="eye icon" ></i>
-              <span *ngIf="item.userProfile.medicalObs != null">{{item.userProfile.medicalObs}}</span>
-              <span *ngIf="item.userProfile.medicalObs == null">{{noDataString}}</span>
-            </p>
-          </div>
+            <br/>Alergias&nbsp;<i class="exclamation icon" ></i>
+            <span *ngIf="item.userProfile.alergias != null">{{item.userProfile.alergias}}</span>
+            <span *ngIf="item.userProfile.alergias == null">{{noDataString}}</span>
+            <br/>Observaciones médicas&nbsp;<i class="eye icon" ></i>
+            <span *ngIf="item.userProfile.medicalObs != null">{{item.userProfile.medicalObs}}</span>
+            <span *ngIf="item.userProfile.medicalObs == null">{{noDataString}}</span>
+          </p>
         </div>
-        <div *ngIf="item.userProfile == null">{{noDataString}}</div>
+      </div>
+      <div *ngIf="item.userProfile == null">{{noDataString}}</div>
     </div>
 
     <br/><br/>
 
     <div class="text">
-    <i *ngIf="!experimentoRealizado">
       <h3>Sesiones disponibles</h3>
       <div *ngFor='let date of itemDates; let i = index'>
         <div class="visible content">
@@ -73,40 +72,25 @@
             {{date| date: 'yyyy'}}
             &nbsp;a&nbsp;las&nbsp;{{date| date: 'HH:mm'}}&nbsp;&nbsp;
             <i *ngIf="!isOwn">
-              <button *ngIf=" (!estaInscrito) && (!yaHaPasado(date))" class="ui button yellow" (click)="inscribirseA(date);">
+              <button *ngIf="!estaInscrito" class="ui button yellow" (click)="inscribirseA(date);">
                 Inscribirse
               </button>
               <p class="ui text bold" *ngIf="sesionesInscrito[i]" style="font-weight: bold;">
                 ¡Ya está inscrito en esta sesión! Estado actual:
-                  <a *ngIf="item.inscriptions[i].state === 0">&nbsp;Sin respuesta&nbsp;&nbsp;</a>
-                  <a *ngIf="item.inscriptions[i].state === 1" style="color: green;">&nbsp;Aceptado&nbsp;</a>
-                  <a *ngIf="item.inscriptions[i].state === 2" style="color: red;">&nbsp;Denegado&nbsp;</a>
-                  <a *ngIf="item.inscriptions[i].state === 3" style="color: grey;">&nbsp;Cancelado&nbsp;</a>
+                <a *ngIf="item.inscriptions[i].state === 0">&nbsp;Sin respuesta&nbsp;&nbsp;</a>
+                <a *ngIf="item.inscriptions[i].state === 1" style="color: green;">&nbsp;Aceptado&nbsp;</a>
+                <a *ngIf="item.inscriptions[i].state === 2" style="color: red;">&nbsp;Denegado&nbsp;</a>
+                <a *ngIf="item.inscriptions[i].state === 3" style="color: grey;">&nbsp;Cancelado&nbsp;</a>
 
-                  <button *ngIf="sesionesInscrito[i] && item.inscriptions[i].state === 0" class="ui button grey"
-                          (click)="cancelarInscripcion(i);">
-                    Cancelar inscripción
-                  </button>
+                <button *ngIf="sesionesInscrito[i] && item.inscriptions[i].state === 0" class="ui button grey"
+                        (click)="cancelarInscripcion(i);">
+                  Cancelar inscripción
+                </button>
               </p>
             </i>
           </div>
         </div><br/>
       </div>
-    </i>
-      <i *ngIf="experimentoRealizado && estaInscrito">
-          <h3 *ngIf="myVote === -1">Valorar Experimento</h3>
-          <sui-rating class="star" *ngIf="myVote === -1" [(ngModel)]="numeroEstrellas" [maximum]="5" ></sui-rating>
-          <button *ngIf="myVote === -1" class="ui button blue" (click)="obtenerValor();">
-            Votar
-          </button>
-          <h3 *ngIf="myVote !== -1">Mi valoración al experimento</h3>
-          <sui-rating *ngIf="myVote !== -1"class="star" [(ngModel)]="myVote" [maximum]="5" [isReadonly]="true"></sui-rating>
-      </i>
-      <i *ngIf="experimentoRealizado">
-        <h3>Valoración media del experimento</h3>
-        <sui-rating class="star"  [(ngModel)]="numeroEstrellasMedias" [maximum]="5" [isReadonly]="true"></sui-rating>
-        {{numeroEstrellasMedias}}
-      </i>
     </div>
   </div>
 </div>
