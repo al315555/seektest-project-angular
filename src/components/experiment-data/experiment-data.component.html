@@ -72,7 +72,7 @@
             {{date| date: 'yyyy'}}
             &nbsp;a&nbsp;las&nbsp;{{date| date: 'HH:mm'}}&nbsp;&nbsp;
             <i *ngIf="!isOwn">
-              <button *ngIf="!estaInscrito" class="ui button yellow" (click)="inscribirseA(date);">
+              <button *ngIf="!estaInscrito && !finalizado" class="ui button yellow" (click)="inscribirseA(date);">
                 Inscribirse
               </button>
               <p class="ui text bold" *ngIf="sesionesInscrito[i]" style="font-weight: bold;">
@@ -83,14 +83,25 @@
                 <a *ngIf="item.inscriptions[i].state === 3" style="color: grey;">&nbsp;Cancelado&nbsp;</a>
 
                 <button *ngIf="sesionesInscrito[i] && item.inscriptions[i].state === 0" class="ui button grey"
-                        (click)="cancelarInscripcion(i);">
+                        (click)="cancelarInscripcion(i);" [disabled]="finalizado">
                   Cancelar inscripción
                 </button>
+              <br/>
+              <i class="text" *ngIf="finalizado">
+                Tu valoración&nbsp;
+                <sui-rating class="star" [(ngModel)]="this.item.inscriptions[i].expeValue" [maximum]="5"
+                            [isReadonly]="this.item.inscriptions[i].expeValue > 0"></sui-rating>
+                <button class="ui inverted blue small button" (click)="valorarInscripcion(i)" [disabled]="valorada">Valorar</button>
+              </i>
               </p>
             </i>
           </div>
         </div><br/>
       </div>
+    </div>
+    <div class="text" *ngIf="finalizado && (numeroEstrellasMedias>0)">
+      <h3>Valoración media del experimento</h3>
+      <sui-rating class="star" [(ngModel)]="numeroEstrellasMedias" [maximum]="5" [isReadonly]="true"></sui-rating>
     </div>
   </div>
 </div>

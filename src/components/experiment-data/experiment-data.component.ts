@@ -32,17 +32,25 @@ export class ExperimentDataComponent implements OnInit {
   @Input() item: any;
   @Input() itemDates: Date[];
 
+  finalizado: boolean;
   monthDates: number[];
   noDataString = 'sin datos definidos';
 
   sesionesInscrito: boolean[];
 
   estaInscrito: boolean;
+  numeroEstrellasMedias: number;
+
+  valorada: boolean;
+
 
   constructor(public experimentService: ExperimentsService , public functions: FunctionsService, private auth: AuthService,
               private modalService: SuiModalService) {
     this.monthDates = new Array();
     this.sesionesInscrito = new Array();
+    this.finalizado = false;
+    this.numeroEstrellasMedias = 0;
+    this.valorada = false;
   }
 
   ngOnInit() {
@@ -55,13 +63,27 @@ export class ExperimentDataComponent implements OnInit {
     } else {
       this.isOwn = false;
     }
-
+    this.finalizado = true;
+    this.item.dates.forEach(value => {
+      if (value > new Date().getTime()) {
+        console.log('FECHA_: ' + value);
+        this.finalizado = false;
+      }
+    });
+    if (this.item.mediaValoracion > 0 && this.item.numberVotaciones > 0) {
+      this.numeroEstrellasMedias = Math.round(this.item.mediaValoracion / this.item.numberVotaciones);
+    }
     if (this.item.inscriptions && this.item.inscriptions.length > 0) {
-      let indice = 0;
+      let encontrada = false;
       this.item.inscriptions.forEach(value => {
         this.sesionesInscrito.push(value.uid === localStorage.getItem('uid_usuario'));
-        this.estaInscrito = value.uid === localStorage.getItem('uid_usuario');
-        indice++;
+        if (!encontrada) {
+          encontrada = value.uid === localStorage.getItem('uid_usuario');
+          if (encontrada) {
+            this.valorada = value.expeValue > 0;
+            this.estaInscrito = true;
+          }
+        }
       });
     }
     console.log(this.sesionesInscrito);
@@ -72,6 +94,8 @@ export class ExperimentDataComponent implements OnInit {
     inscription.session = date.getTime();
     inscription.state = Inscription.PENDIENTE;
     inscription.uid = localStorage.getItem('uid_usuario');
+    inscription.expeValue = 0;
+    inscription.userValue = 0;
     console.log('Creada inscripción: ' + inscription);
     this.modalService
       .open(new ModalConfirm('Enviar petición de inscripción',
@@ -82,13 +106,12 @@ export class ExperimentDataComponent implements OnInit {
   }
 
   private inscribirse(inscription: Inscription) {
+    if (this.item.inscriptions === undefined) {
+      this.item.inscriptions = [];
+    }
+    this.item.inscriptions.push(inscription);
     this.experimentService.addInscriptionToExperiment(inscription, this.item);
-    let indice = 0;
-    this.item.inscriptions.forEach(value => {
-      this.sesionesInscrito.push(value.uid === localStorage.getItem('uid_usuario'));
-      indice++;
-    });
-    this.estaInscrito = true;
+    this.refrescarExperimento();
   }
 
   cancelarInscripcion(index: number) {
@@ -101,9 +124,21 @@ export class ExperimentDataComponent implements OnInit {
 
   }
 
-  private cancelarIns(index: number) {
-    this.item.inscriptions[index].state = 3;
+  valorarInscripcion(index: number) {
+    this.item.mediaValoracion += this.item.inscriptions[index].expeValue;
+    this.item.numberVotaciones++;
     this.experimentService.updateInscriptionsOfExperiment(this.item);
+    // this.refrescarExperimento();
   }
 
+  private cancelarIns(index: number) {
+    this.item.inscriptions[index].state = Inscription.CANCELADO;
+    this.experimentService.updateInscriptionsOfExperiment(this.item);
+    this.refrescarExperimento();
+  }
+
+  private refrescarExperimento() {
+    // this.item = this.experimentService.getExperimentByKey(this.item.key);
+    this.ngOnInit();
+  }
 }

@@ -115,14 +115,6 @@ export class ExperimentsService {
   addInscriptionToExperiment(newInscription: Inscription, experiment: Experiment) {
     // const newPostKey = firebase.database().ref().child('posts').push().key;
 
-    const itemArray = new Array();
-    if (experiment.inscriptions) {
-      experiment.inscriptions.forEach(value => {
-        itemArray.push(value);
-      });
-    }
-    itemArray.push(newInscription);
-    experiment.inscriptions = itemArray;
     firebase.database().ref('experiments/' + experiment.key)
       .set({
         datePublished: experiment.datePublished,
@@ -220,31 +212,6 @@ export class ExperimentsService {
       }).then(value => { console.log('editadas inscriptiones'); });
   }
 
-  valorarExperimento(experiment: Experiment, valoracion) {
-    console.log('Valorar Experimento: ', experiment, valoracion);
-    const numValoraciones = experiment.numberVotaciones + 1;
-    const totalValoraciones = experiment.mediaValoracion + valoracion;
-    firebase.database().ref('experiments/' + experiment.key)
-      .set({
-        datePublished: experiment.datePublished,
-        dates: experiment.dates,
-        description: experiment.description,
-        duration: experiment.duration,
-        numberParticipants: experiment.numberParticipants,
-        numberVotaciones: numValoraciones,
-        mediaValoracion: totalValoraciones,
-        place: experiment.place,
-        placeLatLon: experiment.placeLatLon,
-        title: experiment.title,
-        uidPublisher: experiment.uidPublisher,
-        inscriptions: experiment.inscriptions
-      }).then(value => { console.log('editadas inscriptiones'); });
-    firebase.database().ref('experimentsUsersVotations/').push({
-      voteValue: valoracion,
-      uid: localStorage.getItem('uid_usuario'),
-      experimentKey: experiment.key
-    });
-  }
   /** Si devuleve -1 es que no hay votación del usuario**/
   getMyVoteToExperiment(experiment: Experiment): number {
     const dataReturn = {number: -1};
@@ -260,6 +227,18 @@ export class ExperimentsService {
       });
     });
     return dataReturn.number;
+  }
+
+  getExperimentByKey(key: string): any {
+    let res: any = {};
+    const ref = this.db.list('experiments/' + key);
+    ref.snapshotChanges().map(actions => {
+      return actions.map(action => (res = { key: action.key, ...action.payload.val() }));
+    }).subscribe((value) => {
+
+    });
+    console.log(res);
+    return res;
   }
 }
 

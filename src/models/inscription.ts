@@ -7,4 +7,6 @@ export class Inscription {
   uid: string;
   session: number;
   state: number;
+  userValue: number = 0;
+  expeValue: number = 0;
 }

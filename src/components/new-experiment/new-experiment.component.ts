@@ -11,6 +11,7 @@ import { UserProfile } from '../../models/user-profile';
 import { RangoEdad } from '../../models/rango-edad';
 import { Experiment } from '../../models/experiment';
 import { ExperimentsService } from '../../app/experiments.service';
+import {Inscription} from '../../models/inscription';
 
 @Component({
   selector: 'app-new-experiment',
@@ -277,7 +278,12 @@ export class NewExperimentComponent {
       }
       exp.duration = this.duration;
       exp.userProfile = userProfile;
-
+      exp.inscriptions = [];
+      /*const inscripcion: Inscription = new Inscription();
+      inscripcion.session = 0;
+      inscripcion.uid = '';
+      inscripcion.state = Inscription.CANCELADO;
+      exp.inscriptions.push(inscripcion);*/
 
       this.experimentService.addExperiment(exp).then((value) => {
         this.clearFields();
