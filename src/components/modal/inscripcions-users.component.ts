@@ -20,6 +20,7 @@ interface IInscripcionsModalContext {
     </div>
     <div class="actions">
       <button class="ui red button" (click)="modal.deny(undefined)">Cerrar</button>
+      <button class="ui blue button" (click)="modal.approve(undefined)">Guardar&nbsp;y&nbsp;cerrar</button>
     </div>
     `,
   styleUrls: ['./modal.component.css']

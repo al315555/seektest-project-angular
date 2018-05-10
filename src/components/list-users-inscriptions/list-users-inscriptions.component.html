@@ -1,47 +1,44 @@
-<table class="ui celled table stackable" *ngIf="listaUsuariosInscritos.length > 0">
-  <thead>
-  <tr>
-    <th>Perfil Usuario</th>
-    <th>Acción/Estado</th>
-  </tr>
-  </thead>
-  <tbody *ngFor="let usuario of listaUsuariosInscritos; let i = index">
-    <tr>
-      <td>
-        <h4 class="ui image header">
+<div class="ui basic segment" *ngIf="listaUsuariosInscritos.length > 0">
+  <div *ngFor="let usuario of listaUsuariosInscritos; let i = index">
+      <div class="ui label {{devolverColor(inscripciones[i].state)}}">
+        <h4 class="ui image header" style="color:white;">
             <img src="{{usuario._photoURL}}" class="ui mini rounded image">
             <div class="content">
               {{usuario._name}}&nbsp;{{usuario._surname}}
             <div class="sub header">
-              {{obtenerEdad(usuario._fechaNacimiento)}}&nbsp;años&nbsp;
-              <i class="mars icon" *ngIf="usuario._sexo === 'hombre'"></i>
-              <i class="venus icon" *ngIf="usuario._sexo === 'mujer'"></i>
-              <i class="genderless icon" *ngIf="usuario._sexo === 'null'"></i>
+              <i style="color:white;">{{obtenerEdad(usuario._fechaNacimiento)}}&nbsp;años&nbsp;</i>
+              <i style="color:white;" class="mars icon" *ngIf="usuario._sexo === 'hombre'"></i>
+              <i style="color:white;" class="venus icon" *ngIf="usuario._sexo === 'mujer'"></i>
+              <i style="color:white;" class="genderless icon" *ngIf="usuario._sexo === 'null'"></i>
               &nbsp;
-              <i class="text" suiPopup [popupHeader]="usuario._observacionesMedicas">Observaciones médicas</i>
+              <i class="text white" style="color:white;" suiPopup [popupHeader]="usuario._observacionesMedicas">Observaciones médicas</i>
               &nbsp;
-              <i class="text" suiPopup [popupHeader]="usuario._alergias">Alergias</i>
+              <i class="text white" style="color:white;" suiPopup [popupHeader]="usuario._alergias">Alergias</i>
               &nbsp;
-              <i class="text" suiPopup [popupHeader]="usuario._infoAdicional">Información adicional</i>
+              <i class="text white" style="color:white;" suiPopup [popupHeader]="usuario._infoAdicional">Información adicional</i>
               <br/>
               <div>
-                Inscrito en la sesión {{obtenerFechaEnString(inscripciones[i].session)}}
+                <i style="color:white;">Inscrito en la sesión {{obtenerFechaEnString(inscripciones[i].session)}}</i>
               </div>
             </div>
           </div>
         </h4>
-      </td>
-      <td>
-        <button class="ui green button checkmark icon" (click)="aceptarEnExperimento(usuario._uid)"
-                *ngIf="inscripciones[i].state === 0" data-tooltip="Aceptar participación"><i class="checkmark icon"></i></button>
-        <button class="ui red button ban icon" (click)="denegarEnExperimento(usuario._uid)"
-                *ngIf="inscripciones[i].state === 0" data-tooltip="Denegar participación"><i class="times icon"></i></button>
-        <i class="times icon red" *ngIf="inscripciones[i].state === 2"></i>
-        <i class="checkmark icon green" *ngIf="inscripciones[i].state === 1"></i>
-      </td>
-    </tr>
+        <div class="ui buttons" *ngIf="inscripciones[i].state === 0 && !finalizado">
+          <button class="ui mini green positive button checkmark icon" (click)="aceptarEnExperimento(usuario._uid)"
+                  data-tooltip="Aceptar participación"><i class="checkmark icon"></i></button>
+          <button class="ui mini red negative button ban icon" (click)="denegarEnExperimento(usuario._uid)"
+                  data-tooltip="Denegar participación"><i class="times icon"></i></button>
+        </div>
+        <div class="text" *ngIf="finalizado && inscripciones[i].state === 1">
+          <i class="text">&nbsp;Valoración:&nbsp;</i>
+          <sui-rating class="star" [(ngModel)]="inscripciones[i].userValue" [maximum]="5"
+                      [isReadonly]="inscripciones[i].userValue > 0"></sui-rating>
+        </div>
 
-  </tbody>
+        <!--<i class="times icon red" *ngIf="inscripciones[i].state === 2"></i>
+        <i class="checkmark icon green" *ngIf="inscripciones[i].state === 1"></i>-->
+      </div>
+  </div>
   <!--<tfoot>
   <tr><th colspan="3">
     <div class="ui right floated pagination menu">
@@ -58,6 +55,6 @@
     </div>
   </th>
   </tr></tfoot>-->
-</table>
+</div>
 
 <div class="label text" *ngIf="listaUsuariosInscritos.length < 1" >No hay inscripciones por el momento</div>

@@ -16,6 +16,7 @@ export class ListUsersInscriptionsComponent implements OnInit {
 
   listaUsuariosInscritos: User[];
   listasesiones: number[];
+  finalizado: boolean;
 
   constructor(public experimentService: ExperimentsService) { this.listasesiones = new Array(); this.listaUsuariosInscritos = []; }
 
@@ -23,6 +24,13 @@ export class ListUsersInscriptionsComponent implements OnInit {
     console.log(this.expKey);
     this.listaUsuariosInscritos = this.experimentService.obtenerUsuariosInscritosAExperimento(this.expKey);
     console.log(this.listaUsuariosInscritos);
+    this.finalizado = true;
+    this.inscripciones.forEach(value => {
+      if (value.session > new Date().getTime()) {
+        console.log('FECHA_: ' + value);
+        this.finalizado = false;
+      }
+    });
   }
 
   obtenerEdad(fechaNacimiento: number): number {
@@ -30,6 +38,21 @@ export class ListUsersInscriptionsComponent implements OnInit {
     const dif = today - fechaNacimiento;
     const age = Math.round(dif / 3.154e10); /*MILISEGUNDOS EN UN AÑO*/
     return age;
+  }
+
+  devolverColor(state: number) {
+    switch (state) {
+      case Inscription.DENEGADO:
+        return 'red';
+      case Inscription.ACEPTADO:
+        return 'green';
+      case Inscription.PENDIENTE:
+        return 'blue';
+      case Inscription.CANCELADO:
+        return 'grey';
+      default:
+        return 'black';
+    }
   }
 
   obtenerFechaEnString(sesion: number): string {

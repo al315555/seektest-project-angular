@@ -49,13 +49,11 @@ export class ExperimentCardComponent implements OnInit {
     this.modalService
       .open(new ModalInscripcionsUsers('Lista de usuarios inscritos', this.expe.key, this.expe.inscriptions))
       .onApprove(() => {
-        console.log('Approved without button clicked');
-      })
-      .onDeny(() => {
         if (this.expe.inscriptions) {
           this.experimentService.updateInscriptionsOfExperiment(this.expe);
         }
-        console.log('Closed');
+      })
+      .onDeny(() => {
       });
   }
 
