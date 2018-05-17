@@ -33,7 +33,8 @@ export class ModalExperimentEdit extends ComponentModalConfig<IExperimentModalCo
     // this.isFullScreen = true;
     // this.isBasic = true;
     this.isClosable = true;
-    this.transitionDuration = 500;
+    this.transitionDuration = 0;
+    this.transition = 'none';
     this.size = size;
   }
 }

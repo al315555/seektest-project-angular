@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -52,6 +51,7 @@ import {InscripcionsUsersModalComponent, ModalInscripcionsUsers} from '../compon
 import { ListUsersInscriptionsComponent } from '../components/list-users-inscriptions/list-users-inscriptions.component';
 import {GroupsService} from './groups.service';
 import {ListGroupsComponent} from '../components/list-groups/list-groups.component';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 // import { AngularFirestoreModule } from 'angularfire2/firestore';
 
@@ -84,7 +84,7 @@ import {ListGroupsComponent} from '../components/list-groups/list-groups.compone
     GroupCardComponent,
     InscripcionsUsersModalComponent,
     ListUsersInscriptionsComponent,
-    ListGroupsComponent
+    ListGroupsComponent,
   ],
   entryComponents: [ConfirmModalComponent, ExperimentModalComponent, ExperimentEditModalComponent, InscripcionsUsersModalComponent],
   imports: [
@@ -94,6 +94,7 @@ import {ListGroupsComponent} from '../components/list-groups/list-groups.compone
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     FormsModule,
+    HttpClientModule,
     HttpModule,
     FormsModule,
     AppRoutingModule,

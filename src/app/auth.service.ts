@@ -19,6 +19,9 @@ import 'rxjs/add/operator/catch';
 import { switchMap } from 'rxjs/operators';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import {AngularFireStorage} from 'angularfire2/storage';
+import * as httpC from '@angular/http';
+import {HttpClient, HttpClientModule, HttpHeaders} from '@angular/common/http';
+// import * as nodemailer from 'nodemailer';
 
 @Injectable()
 export class AuthService {
@@ -49,7 +52,8 @@ export class AuthService {
 
 
   constructor(private afAuth: AngularFireAuth, public firebaseAuth: AngularFireAuth, public functions: FunctionsService,
-              private notify: NotifyService, public db: AngularFireDatabase, public st: AngularFireStorage) {
+              private notify: NotifyService, public db: AngularFireDatabase, public st: AngularFireStorage,
+              private http: HttpClient) {
     this.datosUsuario = false;
     this.user = firebaseAuth.authState;
     this.items = db.list('/users');
@@ -126,6 +130,10 @@ export class AuthService {
   }
 
   getUser(uid: string) {
+    return this.db.list('users/', ref => ref.orderByChild('_uid').equalTo(uid));
+  }
+
+  getUserEmail(uid: string) {
     return this.db.list('users/', ref => ref.orderByChild('_uid').equalTo(uid));
   }
 
@@ -278,4 +286,50 @@ verificarCorreo() {
     console.log(error);
   });
 }
+
+  sendEmail(to: string, subject: string, body: string) {
+    /*const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'seektest1050@gmail.com',
+        pass: 'metodosagiles'
+      }
+    });
+
+    const mailOptions = {
+      from: 'seektest1050@gmail.com',
+      to: to,
+      subject: subject,
+      text: body
+    };
+
+    transporter.sendMail(mailOptions, function(error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    }); */
+
+
+
+
+    /*const url = `https://us-central1-seektest-3e130.cloudfunctions.net/httpEmail`;
+    const params: URLSearchParams = new URLSearchParams();
+    const headers = new HttpHeaders({'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+    params.set('to', to);
+    params.set('from', 'seektest1050@gmail.com');
+    params.set('subject', subject);
+    params.set('content', body);
+
+    return this.http.post(url, params, headers)
+      .toPromise()
+      .then( res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    */
+  }
 }

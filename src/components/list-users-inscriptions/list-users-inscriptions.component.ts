@@ -18,7 +18,8 @@ export class ListUsersInscriptionsComponent implements OnInit {
   listasesiones: number[];
   finalizado: boolean;
 
-  constructor(public experimentService: ExperimentsService) { this.listasesiones = new Array(); this.listaUsuariosInscritos = []; }
+  constructor(public experimentService: ExperimentsService,
+  private auth: AuthService) { this.listasesiones = new Array(); this.listaUsuariosInscritos = []; }
 
   ngOnInit() {
     console.log(this.expKey);
@@ -67,6 +68,23 @@ export class ListUsersInscriptionsComponent implements OnInit {
       const uidIns = inscription.uid;
       if (uidIns === userUid) {
         inscription.state = Inscription.ACEPTADO;
+        const user = this.auth.getUserEmail(uidIns);
+        // envio de email al usuario aceptado
+        user.snapshotChanges()
+          .map(actions => {
+            return actions.map(action => ({ key: action.key, ...action.payload.val() }));
+          })
+          .subscribe((value) => {
+            if (value !== undefined) {
+              value.forEach((val: User) => {
+                if (val._name !== undefined) {
+                  console.log(val._name + ' --> ' + val._email );
+                  this.auth.sendEmail(val._email, 'SEEKTEST: Inscripción a experimento ACEPTADA',
+                    'cuerpo del correo');
+                }
+              });
+            }
+          });
       }
     });
   }

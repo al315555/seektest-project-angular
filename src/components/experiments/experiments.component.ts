@@ -9,6 +9,8 @@ import {AuthService} from '../../app/auth.service';
 })
 export class ExperimentsComponent {
 
-  constructor(public authService: AuthService, public functionsService: FunctionsService) {  }
+  constructor(public authService: AuthService, public functionsService: FunctionsService) {
+    console.log('resultado ' + this.authService.getUserEmail(localStorage.getItem('uid_usuario')));
+  }
 
 }

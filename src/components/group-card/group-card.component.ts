@@ -57,7 +57,7 @@ export class GroupCardComponent implements OnInit {
           }
         });
       });
-      //this.investigadores = this.investigadores.trim().substring(2, this.investigadores.length);
+      // this.investigadores = this.investigadores.trim().substring(2, this.investigadores.length);
     } else {
       this.investigadores = 'No hay miembros';
     }
